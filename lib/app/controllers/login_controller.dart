@@ -82,6 +82,7 @@ class LoginController extends GetxController {
         ),
       ]);
     } catch (e) {
+      print(e);
       // rethrow;
       _status.value = ProcessingStatus.error;
       Get.defaultDialog(
@@ -107,6 +108,7 @@ class LoginController extends GetxController {
       data['device_name'] = await getDeviceName();
 
       // print(data);
+
       await _authService.loginFromData(data);
     }
     // restart();

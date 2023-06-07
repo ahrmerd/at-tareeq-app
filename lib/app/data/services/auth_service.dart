@@ -2,6 +2,7 @@ import 'package:at_tareeq/app/data/models/user_type.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/dependancies.dart';
+import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
@@ -109,13 +110,17 @@ class AuthService extends GetxService {
   //   return res;
   // }
 
-  Future<dio.Response> registerFromData(
+  Future<dio.Response?> registerFromData(
       {required Map<String, dynamic> data}) async {
-    final res = await _apiClient.req.post('register', data: data);
-    print(res);
+    try {
+      final res = await _apiClient.req.post('register', data: data);
+      print(res);
 
-    await loginLocally(res.data);
-    return res;
+      await loginLocally(res.data);
+      return res;
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future loginLocally(dynamic data) async {
@@ -127,7 +132,8 @@ class AuthService extends GetxService {
         id: userdetails['id'],
         name: userdetails['name'],
         email: userdetails['email'],
-        userType: userdetails['type'] ?? ServerUserTypes.listener,
+        userType:
+            dynamicIntParsing(userdetails['type']) ?? ServerUserTypes.listener,
         token: token);
     _apiClient.refreshToken();
     // Get.delete<ApiClient>();

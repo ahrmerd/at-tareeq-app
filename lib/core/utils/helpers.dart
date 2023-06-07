@@ -67,3 +67,17 @@ Future<String?> getStorageDirectory(String folder) async {
   }
   return null;
 }
+
+int dynamicIntParsing(dynamic val) {
+  if (val is int) {
+    return val;
+  } else if (val is String) {
+    // try {
+    return int.parse(val);
+    // } catch (e) {
+    // return 0;
+    // }
+  } else {
+    return 0;
+  }
+}

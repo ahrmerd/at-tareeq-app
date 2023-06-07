@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:at_tareeq/core/utils/helpers.dart';
+
 Lecture lectureFromJson(Map<String, dynamic> json) => Lecture.fromJson(json);
 
 List<Lecture> lectureListFromJson(List<dynamic> json) =>
@@ -57,9 +59,9 @@ class Lecture {
         path: json["path"],
         live: json["live"],
         visible: json["visible"],
-        userId: json["user_id"],
-        interestId: json["interest_id"],
-        duration: json["duration"],
+        userId: dynamicIntParsing(json["user_id"]),
+        interestId: dynamicIntParsing(json["interest_id"]),
+        duration: dynamicIntParsing(json["duration"]),
         description: json["description"],
         deletedAt: json["deleted_at"],
         downloaded: json["downloaded"],
