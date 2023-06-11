@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:at_tareeq/core/utils/helpers.dart';
+
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
 List<User> userListFromJson(List<dynamic> json) =>
@@ -48,7 +50,7 @@ class User {
         email: json["email"],
         phoneNo: json["phone_no"],
         emailVerifiedAt: json["email_verified_at"],
-        type: json["type"],
+        type: dynamicIntParsing(json["type"]),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"],

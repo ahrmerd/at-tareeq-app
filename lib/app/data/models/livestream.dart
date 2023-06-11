@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:at_tareeq/app/data/enums/livestream_status.dart';
 import 'package:at_tareeq/app/data/models/user.dart';
+import 'package:at_tareeq/core/utils/helpers.dart';
 
 List<Livestream> livestreamListFromJson(List<dynamic> json) =>
     List<Livestream>.from(json.map((x) => Livestream.fromJson(x)));
@@ -44,9 +45,10 @@ class Livestream {
         id: json["id"],
         title: json["title"],
         description: json["description"],
-        interestId: json["interest_id"],
-        userId: json["user_id"],
-        status: LivestreamStatus.fromInt(json["status"] ?? 1),
+        interestId: dynamicIntParsing(json["interest_id"]),
+        userId: dynamicIntParsing(json["user_id"]),
+        status:
+            LivestreamStatus.fromInt(dynamicIntParsing(json["status"]) ?? 1),
         channel: json["channel"],
         startTime: DateTime.parse(json["start_time"]),
         createdAt: DateTime.parse(json["created_at"]),

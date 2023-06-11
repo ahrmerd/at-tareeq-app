@@ -14,6 +14,9 @@ void showErrorDialogue([String message = "an error occured"]) {
 
 void showDialogue(
     {String title = 'Info', String message = "an error occured"}) {
+  if (Get.isDialogOpen ?? false) {
+    Get.back();
+  }
   Get.defaultDialog(title: title, middleText: message, actions: [
     TextButton(
       onPressed: () {

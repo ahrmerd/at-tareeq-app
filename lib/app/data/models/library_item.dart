@@ -1,4 +1,5 @@
 import 'package:at_tareeq/app/data/models/lecture.dart';
+import 'package:at_tareeq/core/utils/helpers.dart';
 
 class Library {
   int id;
@@ -20,7 +21,7 @@ class Library {
   factory Library.fromJson(Map<String, dynamic> json) => Library(
         id: json["id"],
         userId: json["user_id"],
-        lectureId: json["lecture_id"],
+        lectureId: dynamicIntParsing(json["lecture_id"]),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         lecture: Lecture.fromJson(json["lecture"]),

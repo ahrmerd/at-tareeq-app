@@ -204,6 +204,7 @@ class AddLectureController extends GetxController
         Get.back();
         // createLecture(name: name, sectionId: sectionId)
       } on Dio.DioError catch (e) {
+        print(e);
         change(null, status: RxStatus.error('Failed to Upload '));
         ApiClient.showErrorDialogue(e);
         print(e);

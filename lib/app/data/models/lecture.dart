@@ -24,7 +24,7 @@ class Lecture {
     required this.title,
     required this.path,
     required this.live,
-    required this.visible,
+    required this.approved,
     required this.userId,
     required this.interestId,
     required this.duration,
@@ -41,7 +41,7 @@ class Lecture {
   String title;
   String path;
   bool live;
-  bool visible;
+  bool? approved;
   int userId;
   int interestId;
   int duration;
@@ -58,7 +58,7 @@ class Lecture {
         title: json["title"],
         path: json["path"],
         live: json["live"],
-        visible: json["visible"],
+        approved: json["approved"],
         userId: dynamicIntParsing(json["user_id"]),
         interestId: dynamicIntParsing(json["interest_id"]),
         duration: dynamicIntParsing(json["duration"]),
@@ -76,7 +76,7 @@ class Lecture {
         "title": title,
         "path": path,
         "live": live,
-        "visible": visible,
+        "visible": approved,
         "user_id": userId,
         "interest_id": interestId,
         "duration": duration,

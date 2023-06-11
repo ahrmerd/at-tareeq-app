@@ -2,6 +2,8 @@
 
 import 'dart:async';
 import 'package:at_tareeq/app/dependancies.dart';
+import 'package:at_tareeq/core/styles/text_styles.dart';
+import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
 import 'dart:math';
@@ -22,6 +24,7 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
   bool isPlaying = false;
+  bool isReady = false;
 
   @override
   void initState() {
@@ -57,7 +60,7 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xffD2CEF6), Color(0xffD9D9D9)],
+            colors: [primaryColor, primaryLightColor],
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
           ),
@@ -91,7 +94,12 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
                   child: Container(
                     margin: const EdgeInsets.only(
                         top: 38, bottom: 38, left: 38, right: 38),
-                    child: Placeholder(),
+                    child: isReady
+                        ? Icon(
+                            Icons.music_video,
+                            size: 50,
+                          )
+                        : CircularProgressIndicator(),
                   ),
                 ),
               ),
@@ -101,13 +109,14 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
               bottom: Get.height * 0.325,
               left: 0,
               right: 0,
-              child: Center(
-                child: Text(widget.songName,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500,
-                    )),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text(widget.songName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: bigTextStyle.copyWith(color: lightColor)),
+                ),
               ),
             ),
             Positioned(
@@ -185,15 +194,6 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
                       ),
                     ),
                   ),
-                  const IconButton(
-                    onPressed: null,
-                    padding: EdgeInsets.all(0),
-                    icon: Icon(
-                      Icons.fast_rewind,
-                      size: 40,
-                      color: Colors.black,
-                    ),
-                  ),
                   Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -209,42 +209,21 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
                         onPressed: () async {
                           setState(() {
                             if (isPlaying) {
+                              pauseAudio();
                               // await audioPlayer.pause();
                             } else {
+                              playAudio();
+
                               // await audioPlayer.resume();
                             }
                           });
                         },
-                        icon: Icon(Icons.play_arrow),
+                        icon: isPlaying
+                            ? Icon(Icons.pause)
+                            : Icon(Icons.play_arrow),
                       ),
                     ),
                   ),
-                  const IconButton(
-                    padding: EdgeInsets.all(0),
-                    onPressed: null,
-                    icon: Icon(
-                      Icons.fast_forward,
-                      size: 40,
-                      color: Colors.black,
-                    ),
-                  ),
-                  IconButton(
-                      padding: const EdgeInsets.all(0),
-                      onPressed: () async {
-                        setState(() {
-                          selected[0] = !selected[0];
-                          selected[0]
-                              ? audioPlayer.setReleaseMode(ReleaseMode.loop)
-                              : audioPlayer.setReleaseMode(ReleaseMode.release);
-                        });
-                      },
-                      icon: Icon(
-                        selected[0]
-                            ? Icons.repeat_one_on_rounded
-                            : Icons.repeat_rounded,
-                        size: 35,
-                        color: Colors.black,
-                      )),
                 ],
               ),
               bottom: Get.height * 0.13,
@@ -271,5 +250,30 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
   Future setAudio() async {
     String url = widget.songUrl;
     await audioPlayer.setSourceUrl(url);
+    setState(() {
+      isReady = true;
+    });
+  }
+
+  Future playAudio() async {
+    await audioPlayer.resume();
+    setState(() {
+      isPlaying = true;
+    });
+  }
+
+  Future replayAudio() async {
+    await audioPlayer.seek(Duration.zero);
+    await audioPlayer.resume();
+    setState(() {
+      isPlaying = true;
+    });
+  }
+
+  Future pauseAudio() async {
+    await audioPlayer.pause();
+    setState(() {
+      isPlaying = false;
+    });
   }
 }

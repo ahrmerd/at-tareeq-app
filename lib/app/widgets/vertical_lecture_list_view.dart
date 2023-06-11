@@ -75,7 +75,7 @@ class _VerticalLectureListViewState extends State<VerticalLectureListView> {
           return ListTile(
             onTap: () {
               Get.to(() => LecturePlayerScreen(item.title, item.url));
-              playAudio(item);
+              // playAudio(item);
             },
             leading: Container(
                 height: 60,
@@ -84,8 +84,11 @@ class _VerticalLectureListViewState extends State<VerticalLectureListView> {
                 decoration: BoxDecoration(
                     // color: Colors.black,
                     borderRadius: BorderRadius.circular(9))),
-            title: Text(item.title),
-            subtitle: Text(item.title),
+            title: Text(
+              item.title,
+              overflow: TextOverflow.ellipsis,
+            ),
+            // subtitle: Text(item.description),
             trailing: SizedBox(
               width: 130,
               child: Row(
