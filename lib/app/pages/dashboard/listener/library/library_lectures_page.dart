@@ -21,9 +21,9 @@ class LibraryLecturesPage extends GetView<LibraryController> {
           onAddToFavorite: addToFavorite,
           onAddToPlaylater: addToPlaylater,
         ),
-        onEmpty: EmptyScreen(),
-        onError: (error) => ErrorScreen(),
-        onLoading: LoadingScreen(),
+        onEmpty: const EmptyScreen(),
+        onError: (error) => const ErrorScreen(),
+        onLoading: const LoadingScreen(),
       ),
     );
   }

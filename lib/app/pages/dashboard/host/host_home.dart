@@ -25,14 +25,14 @@ class HostHome extends GetView<HostController> {
             // color: controller.isOpen.value ? Colors.red : Colors.blue,
             height: controller.isExpanded.value ? 200 : Get.height / 2,
             duration: controller.animationDuration,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 color: primaryColor,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20))),
             child: GridView(
-                padding: EdgeInsets.all(50),
-                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.all(50),
+                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 70,
@@ -77,7 +77,7 @@ class HostHome extends GetView<HostController> {
                 ]),
           );
         }),
-        VerticalSpace(),
+        const VerticalSpace(),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -93,8 +93,8 @@ class HostHome extends GetView<HostController> {
                       controller.openMore();
                     },
                     child: AnimatedCrossFade(
-                        firstChild: Text('Expand'),
-                        secondChild: Text('Collapse'),
+                        firstChild: const Text('Expand'),
+                        secondChild: const Text('Collapse'),
                         crossFadeState: !controller.isExpanded.value
                             ? CrossFadeState.showFirst
                             : CrossFadeState.showSecond,
@@ -108,9 +108,9 @@ class HostHome extends GetView<HostController> {
             (state) => HostLecturesList(
               lectures: state!,
             ),
-            onEmpty: EmptyScreen(),
-            onError: (error) => ErrorScreen(),
-            onLoading: LoadingScreen(),
+            onEmpty: const EmptyScreen(),
+            onError: (error) => const ErrorScreen(),
+            onLoading: const LoadingScreen(),
           ),
         ),
       ],

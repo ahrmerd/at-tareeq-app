@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/data/models/onboarding_page_item.dart';
-import 'package:at_tareeq/app/data/services/auth_service.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';

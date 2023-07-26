@@ -4,8 +4,6 @@ import 'package:at_tareeq/app/widgets/my_tab_view.dart';
 import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 
 class ListenerHome extends StatelessWidget {
@@ -25,8 +23,8 @@ class ListenerHome extends StatelessWidget {
             onTap: () {
               Get.toNamed(Routes.LIVES);
             },
-            child: Row(
-              children: const [
+            child: const Row(
+              children: [
                 Icon(Icons.broadcast_on_personal),
                 SizedBox(
                   width: 9,

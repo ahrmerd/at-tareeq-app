@@ -24,7 +24,7 @@ class PlayButton extends StatelessWidget {
               padding: const EdgeInsets.all(5),
               decoration: const BoxDecoration(
                   color: primaryLightColor, shape: BoxShape.circle),
-              child: CircularProgressIndicator()),
+              child: const CircularProgressIndicator()),
         );
       case PlayingStatus.playing:
         return Row(

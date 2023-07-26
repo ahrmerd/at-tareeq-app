@@ -17,7 +17,7 @@ class BrowseLectures extends GetView<BrowseLecturesController> {
     return Obx(() {
       switch (controller.status) {
         case ProcessingStatus.initial:
-          return LoadingScreen();
+          return const LoadingScreen();
         case ProcessingStatus.success:
           return Column(
             children: [
@@ -56,9 +56,9 @@ class BrowseLectures extends GetView<BrowseLecturesController> {
             ],
           );
         case ProcessingStatus.error:
-          return ErrorScreen();
+          return const ErrorScreen();
         case ProcessingStatus.loading:
-          return LoadingScreen();
+          return const LoadingScreen();
       }
     });
   }

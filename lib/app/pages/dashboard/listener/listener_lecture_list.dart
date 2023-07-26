@@ -1,13 +1,9 @@
-import 'package:at_tareeq/app/controllers/guest_controller.dart';
 import 'package:at_tareeq/app/controllers/lecture_list_controller.dart';
 import 'package:at_tareeq/app/data/enums/lectures_filter.dart';
-import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/repositories/library_repository.dart';
-import 'package:at_tareeq/app/widgets/playbutton.dart';
 import 'package:at_tareeq/app/widgets/screens/empty_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
-import 'package:at_tareeq/core/themes/colors.dart';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,8 +44,8 @@ class _ListenerLectureListState extends State<ListenerLectureList> {
             lectures: state ?? [],
           ));
     },
-        onError: (error) => ErrorScreen(),
-        onLoading: LoadingScreen(),
-        onEmpty: EmptyScreen());
+        onError: (error) => const ErrorScreen(),
+        onLoading: const LoadingScreen(),
+        onEmpty: const EmptyScreen());
   }
 }

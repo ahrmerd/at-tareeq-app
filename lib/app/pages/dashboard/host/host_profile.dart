@@ -1,14 +1,11 @@
-import 'package:at_tareeq/app/data/enums/library_type.dart';
 import 'package:at_tareeq/app/data/models/my_list_item.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
-import 'package:at_tareeq/app/data/services/auth_service.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/upload_profile_picture_widget.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
-import 'package:at_tareeq/core/values/const.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -55,7 +52,7 @@ class _HostProfileState extends State<HostProfile> {
                 GestureDetector(
                   onTap: () => Get.defaultDialog(
                     title: 'upload profile picture',
-                    content: UploadProfilePictureWidget(),
+                    content: const UploadProfilePictureWidget(),
 
                     // onConfirm: () => build(Get.context!),
                   ).then((value) {
@@ -94,17 +91,17 @@ class _HostProfileState extends State<HostProfile> {
                           // ),
                         ),
                       ),
-                      Positioned(
+                      const Positioned(
                           top: 0,
                           right: 0,
-                          child: const Icon(
+                          child: Icon(
                             Icons.add_a_photo,
                             color: primaryDarkColor,
                           ))
                     ],
                   ),
                 ),
-                HorizontalSpace(),
+                const HorizontalSpace(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

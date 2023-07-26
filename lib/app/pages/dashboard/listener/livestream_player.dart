@@ -24,32 +24,32 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
               child: Container(
                 height: 200,
                 width: 200,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: primaryLightColor,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.music_note,
                   size: 100,
                   color: primaryDarkColor,
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Obx(() => Text(
                   controller.livestream.value.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,
                   ),
                 )),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Obx(() => Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       controller.isPlaying.value ? "LIVE" : "",
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.red,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -71,7 +71,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                       )
                   ],
                 )),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Obx(() => Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -79,12 +79,25 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                       onTap: () {
                         controller.togglePlayer();
                       },
+                      danger: false,
+                      color: lightColor,
+                      bgColor: primaryColor,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
                       child: Icon(
                         controller.isPlaying.value
                             ? Icons.stop
                             : Icons.play_arrow,
                         color: lightColor,
                       ),
+                    ),
+                    const SizedBox(width: 10),
+                    MyButton(
+                      onTap: () {
+                        controller.toggleMute();
+                      },
                       danger: false,
                       color: lightColor,
                       bgColor: primaryColor,
@@ -92,24 +105,11 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                         horizontal: 10,
                         vertical: 10,
                       ),
-                    ),
-                    SizedBox(width: 10),
-                    MyButton(
-                      onTap: () {
-                        controller.toggleMute();
-                      },
                       child: Icon(
                         controller.isMuted.value
                             ? Icons.volume_up_outlined
                             : Icons.volume_off,
                         color: lightColor,
-                      ),
-                      danger: false,
-                      color: lightColor,
-                      bgColor: primaryColor,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 10,
                       ),
                     ),
                   ],

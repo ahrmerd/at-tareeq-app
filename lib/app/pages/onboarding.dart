@@ -49,7 +49,7 @@ class Onboarding extends StatelessWidget {
                   right: 10,
                   child: MyButton(
                     onTap: _controller.navigateToNext,
-                    child: Row(
+                    child: const Row(
                       children: [Text('Skip')],
                     ),
                   ),
@@ -84,7 +84,7 @@ class Onboarding extends StatelessWidget {
                   onTap: _controller.forward,
                   child: Obx(() {
                     return Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                           color: primaryColor,
                           borderRadius: BorderRadius.circular(9)),
@@ -127,60 +127,68 @@ class PageViewBuilder extends StatelessWidget {
   }
 
   Widget pageItemBuilder(OnBoardingPageItem item) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          alignment: Alignment.center,
-          // padding: EdgeInsets.all(10),
-          width: 300,
-          height: 300,
-          child: Image.asset(item.imageAsset),
-        ),
-        const VerticalSpace(),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(18.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                item.name,
-                style: biggestTextStyle,
-                textWidthBasis: TextWidthBasis.longestLine,
-              ),
-              // Row(
-              //   children: [],
-              // ),
-              VerticalSpace(),
-              Text(
-                item.description,
-                style: bigTextStyle,
-              ),
-            ],
-          ),
-        )
-        // Row(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //   children: List.generate(
-        //       _controller.onBoardingPages.length,
-        //       (index) => Obx(() {
-        //             return Container(
-        //               padding: EdgeInsets.all(10),
-        //               margin: EdgeInsets.all(10),
-        //               height: 10,
-        //               width: 10,
-        //               decoration: BoxDecoration(
-        //                   color: _controller.onPageIndex.value == index
-        //                       ? Colors.black
-        //                       : Colors.red,
-        //                   borderRadius: BorderRadius.circular(10)),
-        //             );
-        //           })),
-        // ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Container(
+          //   alignment: Alignment.center,
+          //   // padding: EdgeInsets.all(10),
+          //   width: 300,
+          //   height: 300,
+          //   child: Image.asset(item.imageAsset),
+          // ),
+          Image.asset(item.imageAsset),
+          const VerticalSpace(32),
+          BigText(item.name),
+          const VerticalSpace(16),
+          SmallText(item.description)
+
+          // Container(
+          //   width: double.infinity,
+          //   padding: const EdgeInsets.all(18.0),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Text(
+          //         item.name,
+          //         style: biggestTextStyle,
+          //         textWidthBasis: TextWidthBasis.longestLine,
+          //       ),
+          //       // Row(
+          //       //   children: [],
+          //       // ),
+          //       VerticalSpace(),
+          //       Text(
+          //         item.description,
+          //         style: bigTextStyle,
+          //       ),
+          //     ],
+          //   ),
+          // )
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: List.generate(
+          //       _controller.onBoardingPages.length,
+          //       (index) => Obx(() {
+          //             return Container(
+          //               padding: EdgeInsets.all(10),
+          //               margin: EdgeInsets.all(10),
+          //               height: 10,
+          //               width: 10,
+          //               decoration: BoxDecoration(
+          //                   color: _controller.onPageIndex.value == index
+          //                       ? Colors.black
+          //                       : Colors.red,
+          //                   borderRadius: BorderRadius.circular(10)),
+          //             );
+          //           })),
+          // ),
+        ],
+      ),
     );
   }
 }

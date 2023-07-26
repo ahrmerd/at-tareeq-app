@@ -61,7 +61,7 @@ class AuthService extends GetxService {
   }
 
   Future<void> logout() async {
-    Get.defaultDialog(title: 'Loading', content: CircularProgressIndicator());
+    Get.defaultDialog(title: 'Loading', content: const CircularProgressIndicator());
     await _apiClient.req.post('logout');
     await SharedPreferencesHelper.clearUserData();
     _signedIn.value = false;
@@ -121,6 +121,7 @@ class AuthService extends GetxService {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
   Future loginLocally(dynamic data) async {
@@ -132,8 +133,7 @@ class AuthService extends GetxService {
         id: userdetails['id'],
         name: userdetails['name'],
         email: userdetails['email'],
-        userType:
-            dynamicIntParsing(userdetails['type']) ?? ServerUserTypes.listener,
+        userType: dynamicIntParsing(userdetails['type']),
         token: token);
     _apiClient.refreshToken();
     // Get.delete<ApiClient>();

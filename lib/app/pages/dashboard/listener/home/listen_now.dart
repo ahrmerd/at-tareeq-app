@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/controllers/listen_now_controller.dart';
-import 'package:at_tareeq/app/data/enums/lectures_filter.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/app/widgets/horizontal_lectures_list_tiles.dart';
@@ -17,7 +16,7 @@ class ListenNow extends GetView<ListenNowController> {
     return Obx(() {
       switch (controller.status) {
         case ProcessingStatus.initial:
-          return LoadingScreen();
+          return const LoadingScreen();
         case ProcessingStatus.success:
           return Column(
             children: [
@@ -38,9 +37,9 @@ class ListenNow extends GetView<ListenNowController> {
             ],
           );
         case ProcessingStatus.error:
-          return ErrorScreen();
+          return const ErrorScreen();
         case ProcessingStatus.loading:
-          return LoadingScreen();
+          return const LoadingScreen();
       }
     });
   }

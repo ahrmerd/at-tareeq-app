@@ -11,7 +11,7 @@ class MyLivesPage extends GetView<MyLivesController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Livestreams'),
+        title: const Text('My Livestreams'),
       ),
       body: controller.obx((state) {
         return ListView.builder(

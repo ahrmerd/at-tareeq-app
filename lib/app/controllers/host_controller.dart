@@ -17,7 +17,7 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
 
   final List<HostAction> hostActions = [
     HostAction('Record Lecture',
-        icon: Icon(
+        icon: const Icon(
           Icons.mic,
           size: actionIconSize,
           color: Colors.green,
@@ -26,7 +26,7 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
           arguments: {'mode': AddLectureMode.recording});
     }),
     HostAction('Upload Lecture',
-        icon: Icon(
+        icon: const Icon(
           Icons.upload,
           size: actionIconSize,
           color: Colors.green,
@@ -35,7 +35,7 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
           arguments: {'mode': AddLectureMode.uploading});
     }),
     HostAction('Live Audio',
-        icon: Icon(
+        icon: const Icon(
           MdiIcons.podcast,
           size: actionIconSize,
           color: Colors.red,
@@ -43,7 +43,7 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
       Get.toNamed(Routes.ADDLIVE);
     }),
     HostAction('My Live',
-        icon: Icon(
+        icon: const Icon(
           MdiIcons.podcast,
           size: actionIconSize,
           color: Colors.blue,

@@ -1,4 +1,3 @@
-import 'package:at_tareeq/app/data/services/auth_service.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -1,8 +1,5 @@
-import 'package:at_tareeq/app/data/models/lecture.dart';
-import 'package:at_tareeq/app/data/models/section_or_interest.dart';
 import 'package:at_tareeq/app/data/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class OrganizationsListTiles extends StatelessWidget {
   final String label;
@@ -40,12 +37,12 @@ class OrganizationsListTiles extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
-                          child: Image.network(user.thumb),
                           height: 90,
                           width: 100,
                           margin: const EdgeInsets.only(right: 9),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(9)),
+                          child: Image.network(user.thumb),
                         ),
                         Text(user.organization ?? 'Unknown Organization'),
                         // Text()

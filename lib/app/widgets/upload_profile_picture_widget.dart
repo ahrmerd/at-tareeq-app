@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
@@ -35,12 +34,12 @@ class _UploadProfilePictureWidgetState
           // height: Get.height - 50,
           child: SingleChildScrollView(
             child: Column(children: [
-              VerticalSpace(20),
+              const VerticalSpace(20),
               MyButton(
                 onTap: onPickImage,
-                child: Text('Pick Image'),
+                child: const Text('Pick Image'),
               ),
-              VerticalSpace(15),
+              const VerticalSpace(15),
               if (file != null) ...[
                 SizedBox(
                   height: 400,
@@ -50,21 +49,21 @@ class _UploadProfilePictureWidgetState
                     fit: BoxFit.cover,
                   ),
                 ),
-                VerticalSpace(),
+                const VerticalSpace(),
                 MyButton(
-                  child: Text('upload Image'),
                   onTap: uploadImage,
+                  child: const Text('upload Image'),
                 )
               ],
             ]),
           ),
         );
       case ProcessingStatus.success:
-        return SuccessScreen();
+        return const SuccessScreen();
       case ProcessingStatus.error:
-        return ErrorScreen();
+        return const ErrorScreen();
       case ProcessingStatus.loading:
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
     }
   }
 
@@ -101,7 +100,7 @@ class _UploadProfilePictureWidgetState
         });
         Get.back();
       }
-    } on Exception catch (e) {
+    } on Exception {
       showErrorDialogue();
       setState(() {
         status = ProcessingStatus.initial;

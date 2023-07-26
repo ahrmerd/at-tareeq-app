@@ -32,7 +32,7 @@ class _LectureDetailsFormState extends State<LectureDetailsForm> {
                 _titleField = val;
               },
               decoration: myInputDecoration(
-                  label: 'Lecture Title', icon: Icon(Icons.title)),
+                  label: 'Lecture Title', icon: const Icon(Icons.title)),
             ),
             const VerticalSpace(20),
             TextField(
@@ -43,7 +43,7 @@ class _LectureDetailsFormState extends State<LectureDetailsForm> {
               maxLines: 5,
               keyboardType: TextInputType.multiline,
               decoration: myInputDecoration(
-                  label: 'Description', icon: Icon(Icons.description)),
+                  label: 'Description', icon: const Icon(Icons.description)),
             ),
             const VerticalSpace(20),
             DropdownButtonFormField<SectionOrInterest>(

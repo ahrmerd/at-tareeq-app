@@ -1,6 +1,4 @@
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
-import 'package:at_tareeq/app/data/models/form_item.dart';
-import 'package:at_tareeq/app/widgets/my_text_input.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/success_screen.dart';
@@ -25,7 +23,7 @@ class LoginView extends GetView<LoginController> {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(Icons.login),
+            icon: const Icon(Icons.login),
             onPressed: () {
               Get.offAllNamed(Routes.REGISTER);
             },
@@ -72,12 +70,12 @@ class LoginForm extends StatelessWidget {
             'Welcome User',
             style: biggestTextStyle,
           ),
-          VerticalSpace(20),
+          const VerticalSpace(20),
           Text(
             'Login to Continue',
             style: bigTextStyle,
           ),
-          VerticalSpace(),
+          const VerticalSpace(),
 
           FormBuilder(
             key: controller.formKey,
@@ -86,7 +84,7 @@ class LoginForm extends StatelessWidget {
                 ...List.generate(controller.formItems.length, (index) {
                   final item = controller.formItems[index];
                   return Container(
-                      margin: EdgeInsets.only(bottom: 15),
+                      margin: const EdgeInsets.only(bottom: 15),
                       child: FormBuilderTextField(
                         controller: item.controller,
                         name: item.field,
@@ -97,7 +95,7 @@ class LoginForm extends StatelessWidget {
                         validator: item.validator,
                       ));
                 }),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     MyButton(
@@ -112,16 +110,16 @@ class LoginForm extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  margin: EdgeInsets.all(20),
+                  margin: const EdgeInsets.all(20),
                   child: MyButton(
                     bgColor: primaryColor,
                     onTap: () {
                       controller.onLoginWithEmailButtonClick();
                     },
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           "Login",
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
@@ -133,15 +131,15 @@ class LoginForm extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Dont Have an Account"),
-                    HorizontalSpace(),
+                    const HorizontalSpace(),
                     MyButton(
                       onTap: controller.onRegisterButtonClick,
                       color: Colors.grey,
-                      child: Text('Register'),
+                      child: const Text('Register'),
                     ),
                   ],
                 ),
-                VerticalSpace(20),
+                const VerticalSpace(20),
                 SocialMediaSignup(
                   onFacebookSignup: () {},
                   onGoogleSignup: () {},

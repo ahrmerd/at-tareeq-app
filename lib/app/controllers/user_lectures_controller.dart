@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/data/models/lecture.dart';
-import 'package:at_tareeq/app/data/models/section_or_interest.dart';
 import 'package:at_tareeq/app/data/models/user.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/repositories/lecture_repository.dart';

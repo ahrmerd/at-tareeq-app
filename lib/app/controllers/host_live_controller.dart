@@ -4,12 +4,9 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/models/livestream.dart';
 import 'package:at_tareeq/app/data/enums/livestream_status.dart';
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
-import 'package:at_tareeq/app/data/services/auth_service.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/values/const.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -48,7 +45,7 @@ class HostLiveController extends GetxController {
 
   Future<void> initAgora() async {
     // retrieve permissions
-    final _permissionStatus = await requestPermissions();
+    final permissionStatus = await requestPermissions();
 
     // //create the engine
     // _engine = createAgoraRtcEngine();
@@ -66,7 +63,7 @@ class HostLiveController extends GetxController {
         ));
     await _engine.disableVideo();
     await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-    if (_permissionStatus) {
+    if (permissionStatus) {
       isReady = true;
     }
   }

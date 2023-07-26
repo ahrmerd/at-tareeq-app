@@ -26,7 +26,7 @@ class VerticalLectureListView extends StatefulWidget {
 }
 
 class _VerticalLectureListViewState extends State<VerticalLectureListView> {
-  Lecture? playingLecture = null;
+  Lecture? playingLecture;
   final player = Dependancies.audioPlayer();
   // bool isPlaying = false;
   PlayingStatus playingStatus = PlayingStatus.stopped;
@@ -80,10 +80,10 @@ class _VerticalLectureListViewState extends State<VerticalLectureListView> {
             leading: Container(
                 height: 60,
                 width: 60,
-                child: Image.network(item.thumb, fit: BoxFit.contain),
                 decoration: BoxDecoration(
                     // color: Colors.black,
-                    borderRadius: BorderRadius.circular(9))),
+                    borderRadius: BorderRadius.circular(9)),
+                child: Image.network(item.thumb, fit: BoxFit.contain)),
             title: Text(
               item.title,
               overflow: TextOverflow.ellipsis,
@@ -125,11 +125,11 @@ class _VerticalLectureListViewState extends State<VerticalLectureListView> {
                   PopupMenuButton(itemBuilder: (_) {
                     return [
                       PopupMenuItem(
-                        child: Text('Add to favorite'),
+                        child: const Text('Add to favorite'),
                         onTap: () => widget.onAddToFavorite(item),
                       ),
                       PopupMenuItem(
-                        child: Text('Add to playlater'),
+                        child: const Text('Add to playlater'),
                         onTap: () => widget.onAddToPlaylater(item),
                       ),
                     ];

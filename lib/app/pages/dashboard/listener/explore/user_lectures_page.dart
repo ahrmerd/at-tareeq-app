@@ -1,4 +1,3 @@
-import 'package:at_tareeq/app/controllers/interest_lectures_controller.dart';
 import 'package:at_tareeq/app/controllers/user_lectures_controller.dart';
 import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
@@ -28,7 +27,7 @@ class UserLecturesPage extends GetView<UserLecturesController> {
           return controller.fetchLectures();
         },
         child: Column(children: [
-          Container(
+          SizedBox(
               height: Get.height * 0.25,
               width: Get.width,
               child: MyNetworkImage(
@@ -42,7 +41,7 @@ class UserLecturesPage extends GetView<UserLecturesController> {
               ),
           Container(
             color: primaryColor,
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -51,10 +50,10 @@ class UserLecturesPage extends GetView<UserLecturesController> {
                   controller.user.name,
                   style: biggerTextStyle.copyWith(color: lightColor),
                 ),
-                VerticalSpace(),
+                const VerticalSpace(),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.location_on_outlined,
                       color: lightColor,
                     ),
@@ -65,12 +64,12 @@ class UserLecturesPage extends GetView<UserLecturesController> {
               ],
             ),
           ),
-          VerticalSpace(),
+          const VerticalSpace(),
           Text(
             'Lectures',
             style: biggerTextStyle,
           ),
-          VerticalSpace(),
+          const VerticalSpace(),
           Expanded(
               child: controller.obx(
                   (state) => VerticalLectureListView(
@@ -79,9 +78,9 @@ class UserLecturesPage extends GetView<UserLecturesController> {
                         label: 'Organization Lecture',
                         lectures: state ?? [],
                       ),
-                  onEmpty: EmptyScreen(),
-                  onLoading: LoadingScreen(),
-                  onError: (err) => ErrorScreen()))
+                  onEmpty: const EmptyScreen(),
+                  onLoading: const LoadingScreen(),
+                  onError: (err) => const ErrorScreen()))
         ]),
       ),
     );

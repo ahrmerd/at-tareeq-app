@@ -38,12 +38,12 @@ class InterestsListTiles extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
-                          child: Image.network(interest.thumb),
                           height: 90,
                           width: 100,
                           margin: const EdgeInsets.only(right: 9),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(9)),
+                          child: Image.network(interest.thumb),
                         ),
                         Text(interest.name),
                         // Text(interest.title)

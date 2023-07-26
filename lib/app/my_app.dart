@@ -1,7 +1,3 @@
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
-import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
-import 'package:at_tareeq/app/data/services/auth_service.dart';
-import 'package:at_tareeq/app/pages/onboarding.dart';
 import 'package:at_tareeq/core/themes/app_theme.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/routes/pages.dart';

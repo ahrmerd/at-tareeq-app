@@ -22,7 +22,7 @@ class AddLivestream extends GetView<AddLiveController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            VerticalSpace(15),
+            const VerticalSpace(15),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -39,28 +39,28 @@ class AddLivestream extends GetView<AddLiveController> {
                 ],
               ),
             ),
-            VerticalSpace(15),
+            const VerticalSpace(15),
             Obx(() {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    Text('Scheduled StartTime:'),
-                    HorizontalSpace(),
+                    const Text('Scheduled StartTime:'),
+                    const HorizontalSpace(),
                     Text(
                       dateTimeFormater(controller.scheduledTime.value),
                       style: bigTextStyle,
                     ),
-                    HorizontalSpace(),
+                    const HorizontalSpace(),
                     MyButton(
-                      child: Text('Select scheduled time to start stream'),
+                      child: const Text('Select scheduled time to start stream'),
                       onTap: () async {
                         final date = (await showDatePicker(
                                 context: context,
                                 initialDate: controller.scheduledTime.value,
                                 firstDate: DateTime.now(),
                                 lastDate:
-                                    DateTime.now().add(Duration(days: 4)))) ??
+                                    DateTime.now().add(const Duration(days: 4)))) ??
                             DateTime.now();
                         final time = (await showTimePicker(
                                 context: context,
@@ -77,7 +77,7 @@ class AddLivestream extends GetView<AddLiveController> {
                 ),
               );
             }),
-            VerticalSpace(15),
+            const VerticalSpace(15),
             Expanded(
               child: controller.obx(
                 (state) {

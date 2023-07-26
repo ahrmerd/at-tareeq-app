@@ -11,20 +11,20 @@ class ListenerLibrary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final libraryItems = <MyListItem>[
-      MyListItem(Icon(Icons.play_circle), 'history', () {
+      MyListItem(const Icon(Icons.play_circle), 'history', () {
         Get.toNamed(Routes.LIBRARYLECTURES,
             arguments: {'type': LibraryType.history});
       }),
-      MyListItem(Icon(Icons.bookmark), 'Play Later', () {
+      MyListItem(const Icon(Icons.bookmark), 'Play Later', () {
         Get.toNamed(Routes.LIBRARYLECTURES,
             arguments: {'type': LibraryType.playLater});
       }),
-      MyListItem(Icon(Icons.playlist_play), 'Playlist', () {}),
-      MyListItem(Icon(Icons.favorite), 'Favoutite', () {
+      MyListItem(const Icon(Icons.playlist_play), 'Playlist', () {}),
+      MyListItem(const Icon(Icons.favorite), 'Favoutite', () {
         Get.toNamed(Routes.LIBRARYLECTURES,
             arguments: {'type': LibraryType.favorite});
       }),
-      MyListItem(Icon(Icons.download), 'Downloads', () {}),
+      MyListItem(const Icon(Icons.download), 'Downloads', () {}),
     ];
 
     return SafeArea(
@@ -36,8 +36,8 @@ class ListenerLibrary extends StatelessWidget {
         ),
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 10),
-        padding: EdgeInsets.all(8),
+        margin: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.all(8),
         child: DefaultTextStyle.merge(
             child: ListView.builder(
                 itemCount: libraryItems.length,
@@ -48,7 +48,7 @@ class ListenerLibrary extends StatelessWidget {
                       onTap: item.onTap,
                       leading: item.icon,
                       title: Text(item.title),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                      trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                   );
                 })

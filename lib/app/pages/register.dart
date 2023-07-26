@@ -1,23 +1,19 @@
 import 'package:at_tareeq/app/controllers/register_controller.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
-import 'package:at_tareeq/app/widgets/my_text_input.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/success_screen.dart';
 import 'package:at_tareeq/app/widgets/social_media_signup.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/decorations.dart';
-import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_phone_field/form_builder_phone_field.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'package:get/get.dart';
 
-import '../data/models/form_item.dart';
 
 class RegisterView extends GetView<RegisterController> {
   const RegisterView({Key? key}) : super(key: key);
@@ -69,18 +65,13 @@ class RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            'Create Account',
-            style: biggestTextStyle,
-          ),
+          const BigText('Create Account'),
           const VerticalSpace(),
-          Text(
-            'Create a new account',
-            style: bigTextStyle,
-          ),
+          const SmallText('Create a new account'),
+          const VerticalSpace(),
           FormBuilder(
             key: controller.formKey,
             child: Obx(() {
@@ -89,11 +80,11 @@ class RegisterForm extends StatelessWidget {
                   ...List.generate(controller.formItems.length, (index) {
                     final item = controller.formItems[index];
                     return Container(
-                        margin: const EdgeInsets.only(top: 25),
+                        margin: const EdgeInsets.only(top: 16),
                         child: item.type == TextInputType.phone
                             ? FormBuilderPhoneField(
                                 name: item.field,
-                                decoration: myInputDecoration(
+                                decoration: myInputDecoration2(
                                     label: item.label, icon: item.icon),
                                 priorityListByIsoCode: const ['NG'],
                                 defaultSelectedCountryIsoCode: 'NG',
@@ -110,7 +101,7 @@ class RegisterForm extends StatelessWidget {
                                 validator: item.validator,
                               ));
                   }),
-                  VerticalSpace(20),
+                  const VerticalSpace(20),
                   if (controller.states.length > 1)
                     FormBuilderDropdown(
                         decoration: myInputDecoration(label: 'Location'),
@@ -120,7 +111,7 @@ class RegisterForm extends StatelessWidget {
                                 value: element['name'],
                                 child: Text(element['name'])))
                             .toList()),
-                  VerticalSpace(20),
+                  const VerticalSpace(24),
                   GestureDetector(
                     onTap: () {
                       // Get.toNamed(Routes.LOGIN);
@@ -128,7 +119,7 @@ class RegisterForm extends StatelessWidget {
                       controller.onRegisterButtonClick();
                     },
                     child: Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(12),
                         alignment: Alignment.center,
                         margin: const EdgeInsets.only(top: 6),
                         decoration: BoxDecoration(
@@ -139,11 +130,15 @@ class RegisterForm extends StatelessWidget {
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         )),
                   ),
-                  VerticalSpace(),
+                  const VerticalSpace(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("Have an Account"),
+                      const SmallText(
+                        "Have an Account",
+                        color: CustomColor.appBlue,
+                        fontSize: 14,
+                      ),
                       const HorizontalSpace(),
                       GestureDetector(
                         onTap: () {
@@ -151,12 +146,12 @@ class RegisterForm extends StatelessWidget {
                         },
                         child: const Text(
                           "Log in",
-                          style: TextStyle(color: Colors.red),
+                          style: TextStyle(color: Colors.red, fontSize: 14),
                         ),
                       ),
                     ],
                   ),
-                  VerticalSpace(25),
+                  const VerticalSpace(25),
                   SocialMediaSignup(
                     onFacebookSignup: () {},
                     onGoogleSignup: () {},

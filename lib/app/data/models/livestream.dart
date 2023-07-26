@@ -47,8 +47,7 @@ class Livestream {
         description: json["description"],
         interestId: dynamicIntParsing(json["interest_id"]),
         userId: dynamicIntParsing(json["user_id"]),
-        status:
-            LivestreamStatus.fromInt(dynamicIntParsing(json["status"]) ?? 1),
+        status: LivestreamStatus.fromInt(dynamicIntParsing(json["status"])),
         channel: json["channel"],
         startTime: DateTime.parse(json["start_time"]),
         createdAt: DateTime.parse(json["created_at"]),

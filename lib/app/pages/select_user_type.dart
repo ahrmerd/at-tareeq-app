@@ -37,7 +37,7 @@ class SelectUserType extends StatelessWidget {
                     style: biggerTextStyle,
                   ),
                 ),
-                VerticalSpace(),
+                const VerticalSpace(),
                 ...List.generate(
                     FormUserType.values.length,
                     ((index) => GestureDetector(
@@ -45,18 +45,18 @@ class SelectUserType extends StatelessWidget {
                             onSelect(FormUserType.values[index]);
                           },
                           child: Container(
-                            margin: EdgeInsets.only(top: 14),
-                            padding: EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(top: 14),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                                 color: primaryColor,
                                 borderRadius: BorderRadius.circular(9)),
                             child: Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.arrow_forward,
                                   color: Colors.white,
                                 ),
-                                HorizontalSpace(),
+                                const HorizontalSpace(),
                                 Text(
                                   FormUserType.values[index].name
                                       .toCapitalize(),

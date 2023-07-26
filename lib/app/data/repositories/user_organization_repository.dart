@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/data/models/user.dart';
-import 'package:at_tareeq/app/data/models/user_type.dart';
 
 import 'repository.dart';
 

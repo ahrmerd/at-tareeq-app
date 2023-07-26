@@ -33,7 +33,7 @@ class AppTheme {
       foregroundColor: primaryColor,
       color: Colors.white,
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: const TabBarTheme(
       indicatorColor: primaryColor, // set the indicator color
     ),
     scaffoldBackgroundColor: lightColor,

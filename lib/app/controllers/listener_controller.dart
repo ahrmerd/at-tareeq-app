@@ -2,7 +2,6 @@ import 'package:at_tareeq/app/data/enums/lectures_filter.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/explore/browse_lectures.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/home/listen_now.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/listener_lecture_list.dart';
-import 'package:at_tareeq/app/widgets/my_bottom_nav.dart';
 import 'package:at_tareeq/app/widgets/my_tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -14,7 +14,7 @@ class HostLecturesList extends StatefulWidget {
 }
 
 class _HostLecturesListState extends State<HostLecturesList> {
-  Lecture? playingLecture = null;
+  Lecture? playingLecture;
   final player = Dependancies.audioPlayer();
   // bool isPlaying = false;
   PlayingStatus playingStatus = PlayingStatus.stopped;
@@ -58,10 +58,10 @@ class _HostLecturesListState extends State<HostLecturesList> {
             leading: Container(
                 height: 60,
                 width: 60,
-                child: Image.network(item.thumb, fit: BoxFit.contain),
                 decoration: BoxDecoration(
                     // color: Colors.black,
-                    borderRadius: BorderRadius.circular(9))),
+                    borderRadius: BorderRadius.circular(9)),
+                child: Image.network(item.thumb, fit: BoxFit.contain)),
             title: Text(item.title),
             subtitle: Text(item.title),
             trailing: SizedBox(
@@ -100,7 +100,7 @@ class _HostLecturesListState extends State<HostLecturesList> {
                   const SizedBox(
                     width: 9,
                   ),
-                  Icon(Icons.more_vert_rounded)
+                  const Icon(Icons.more_vert_rounded)
                 ],
               ),
             ),

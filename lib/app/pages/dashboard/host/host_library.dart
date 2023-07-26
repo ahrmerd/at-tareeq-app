@@ -15,14 +15,14 @@ class HostLibrary extends GetView<HostController> {
       controller.fetchLectures();
     });
     return Scaffold(
-      appBar: AppBar(title: Text('Library')),
+      appBar: AppBar(title: const Text('Library')),
       body: controller.obx(
         (state) => HostLecturesList(
           lectures: state!,
         ),
-        onEmpty: EmptyScreen(),
-        onError: (error) => ErrorScreen(),
-        onLoading: LoadingScreen(),
+        onEmpty: const EmptyScreen(),
+        onError: (error) => const ErrorScreen(),
+        onLoading: const LoadingScreen(),
       ),
     );
   }

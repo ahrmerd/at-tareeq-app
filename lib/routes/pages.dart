@@ -63,7 +63,7 @@ class Pages {
     ),
     GetPage(
       name: Routes.SELECTUSER,
-      page: () => SelectUserType(),
+      page: () => const SelectUserType(),
       // binding: RegisterBinding(),
     ),
     GetPage(

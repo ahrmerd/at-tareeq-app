@@ -1,4 +1,3 @@
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:dio/dio.dart';
 

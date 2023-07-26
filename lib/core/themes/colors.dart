@@ -82,7 +82,12 @@ const appBarColor = Color(0xFFB9A898);
 // const primaryColor = Color(0xFF4E0076);
 // const primaryDarkColor = Color.fromARGB(255, 30, 0, 44);
 const primaryLightColor = Color.fromARGB(255, 69, 44, 144);
-const primaryColor = Color(0xFF2b1b5a);
+const primaryColor = Color(0xff2c195c);
 const primaryDarkColor = Color.fromARGB(255, 30, 19, 64);
 const defaultActionColor = Color(0xFF4E0076);
-const defaultActionColor2 = Color(0xFFA800A8);
+const defaultActionColor2 = Color(0xff9237bd);
+
+class CustomColor {
+  static const Color appBlue = primaryColor;
+  static const Color appPurple = defaultActionColor2;
+}

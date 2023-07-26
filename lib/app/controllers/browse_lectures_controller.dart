@@ -1,6 +1,4 @@
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
-import 'package:at_tareeq/app/data/enums/user_type.dart';
-import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/models/section_or_interest.dart';
 import 'package:at_tareeq/app/data/models/user.dart';
 import 'package:at_tareeq/app/data/models/user_type.dart';

@@ -52,7 +52,8 @@ dependencies:
   avatar_glow: ^2.0.2
   flutter_native_splash: ^2.2.19
   flutter_launcher_icons: ^0.13.0
-  agora_rtc_engine: ^6.1.0
+  agora_rtc_engine: ^6.2.0
+  # fluttertoast: any
   # laravel_echo: ^0.2.9
   # pusher_client: ^2.0.0
   # laravel_echo_null: ^0.0.3
@@ -99,6 +100,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: Signatra
+      fonts:
+        - asset: fonts/Signatra.ttf
+    - family: Brand Bold
+      fonts:
+        - asset: fonts/bolt-semibold.ttf
+    - family: Brand-Regular
+      fonts:
+        - asset: fonts/bolt-regular.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

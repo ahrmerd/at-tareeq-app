@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:at_tareeq/app/controllers/add_lecture_controller.dart';
-import 'package:at_tareeq/app/data/models/section_or_interest.dart';
 import 'package:at_tareeq/app/widgets/lecture_detail_form.dart';
 import 'package:at_tareeq/app/widgets/playbutton.dart';
 import 'package:at_tareeq/app/widgets/screens/empty_screen.dart';

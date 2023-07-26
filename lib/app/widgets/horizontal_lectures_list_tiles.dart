@@ -3,7 +3,6 @@ import 'package:at_tareeq/app/pages/dashboard/listener/lecture_player.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
 class HorizontalLectureListTiles extends StatelessWidget {
@@ -28,7 +27,7 @@ class HorizontalLectureListTiles extends StatelessWidget {
                 style: bigTextStyle,
                 // style: theme.headline1!.copyWith(fontSize: 13),
               )),
-          VerticalSpace(),
+          const VerticalSpace(),
           SizedBox(
             height: 150,
             child: ListView.builder(
@@ -49,13 +48,13 @@ class HorizontalLectureListTiles extends StatelessWidget {
                           Container(
                             height: 90,
                             width: 100,
-                            child: Image.network(lecture.thumb),
                             margin: const EdgeInsets.only(right: 9),
                             decoration: BoxDecoration(
                                 // color: Colors.black,
                                 borderRadius: BorderRadius.circular(9)),
+                            child: Image.network(lecture.thumb),
                           ),
-                          VerticalSpace(),
+                          const VerticalSpace(),
                           Text(
                             lecture.title,
                             overflow: TextOverflow.ellipsis,

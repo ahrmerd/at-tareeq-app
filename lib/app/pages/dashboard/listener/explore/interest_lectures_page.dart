@@ -27,7 +27,7 @@ class InterestLecturesPage extends GetView<InterestLecturesController> {
           return controller.fetchLectures();
         },
         child: Column(children: [
-          Container(
+          SizedBox(
             height: Get.height * 0.25,
             width: Get.width,
             child: MyNetworkImage(
@@ -37,7 +37,7 @@ class InterestLecturesPage extends GetView<InterestLecturesController> {
           ),
           Container(
             color: primaryColor,
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -46,7 +46,7 @@ class InterestLecturesPage extends GetView<InterestLecturesController> {
                   controller.interest.name,
                   style: biggerTextStyle.copyWith(color: lightColor),
                 ),
-                VerticalSpace(),
+                const VerticalSpace(),
                 Row(
                   children: [
                     Text(controller.interest.description ?? '',
@@ -56,12 +56,12 @@ class InterestLecturesPage extends GetView<InterestLecturesController> {
               ],
             ),
           ),
-          VerticalSpace(),
+          const VerticalSpace(),
           Text(
             'Lectures',
             style: biggerTextStyle,
           ),
-          VerticalSpace(),
+          const VerticalSpace(),
           Expanded(
               child: controller.obx(
                   (state) => VerticalLectureListView(
@@ -70,9 +70,9 @@ class InterestLecturesPage extends GetView<InterestLecturesController> {
                         label: 'Interest Lecture',
                         lectures: state ?? [],
                       ),
-                  onEmpty: EmptyScreen(),
-                  onLoading: LoadingScreen(),
-                  onError: (err) => ErrorScreen()))
+                  onEmpty: const EmptyScreen(),
+                  onLoading: const LoadingScreen(),
+                  onError: (err) => const ErrorScreen()))
         ]),
       ),
     );

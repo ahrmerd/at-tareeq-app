@@ -102,3 +102,61 @@ class TitleValue extends StatelessWidget {
     );
   }
 }
+
+class BigText extends StatelessWidget {
+  const BigText(
+    this.text, {
+    Key? key,
+    this.fontSize = 24,
+    this.color = CustomColor.appBlue,
+    this.textAlign = TextAlign.start,
+  }) : super(key: key);
+
+  final String text;
+  final double fontSize;
+  final Color? color;
+  final TextAlign textAlign;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontFamily: 'Brand Bold',
+        fontSize: fontSize,
+        letterSpacing: 1,
+        color: color,
+      ),
+      textAlign: textAlign,
+    );
+  }
+}
+
+class SmallText extends StatelessWidget {
+  const SmallText(
+    this.text, {
+    Key? key,
+    this.fontSize = 16,
+    this.color = Colors.black,
+    this.textAlign = TextAlign.start,
+  }) : super(key: key);
+
+  final String text;
+  final double fontSize;
+  final Color? color;
+  final TextAlign textAlign;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontFamily: 'Brand-Regular',
+        fontSize: fontSize,
+        letterSpacing: 1,
+        color: color,
+      ),
+      textAlign: textAlign,
+    );
+  }
+}

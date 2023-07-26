@@ -42,7 +42,7 @@ class SocialMediaSignup extends StatelessWidget {
             ],
           ),
         ),
-        VerticalSpace(20),
+        const VerticalSpace(20),
         if (onFacebookSignup != null || onGoogleSignup != null)
           const Text("Sign up with"),
         Row(
@@ -51,16 +51,16 @@ class SocialMediaSignup extends StatelessWidget {
             if (onFacebookSignup != null)
               GestureDetector(
                 onTap: onFacebookSignup,
-                child: Icon(
+                child: const Icon(
                   Icons.facebook,
                   size: 50,
                 ),
               ),
-            HorizontalSpace(),
+            const HorizontalSpace(),
             if (onGoogleSignup != null)
               GestureDetector(
                 onTap: onGoogleSignup,
-                child: Icon(
+                child: const Icon(
                   MdiIcons.google,
                   size: 50,
                 ),

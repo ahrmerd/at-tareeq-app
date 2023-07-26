@@ -35,22 +35,22 @@ class HostLivePage extends GetView<HostLiveController> {
                   children: [
                     if (controller.livestreamStatus.value.isStarted() &&
                         !controller.isLive.value)
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Text(
                           'This Livestream has already started broadcasting. you may continue broadcasting',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
                     if (controller.livestreamStatus.value.isEnded())
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Text(
                           'This Livestream has finished broadcasting. you can\'t continue broadcasting',
                           style: TextStyle(color: Colors.red),
                         ),
                       ),
-                    VerticalSpace(),
+                    const VerticalSpace(),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,

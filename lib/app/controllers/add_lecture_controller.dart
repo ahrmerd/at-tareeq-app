@@ -11,7 +11,6 @@ import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:audioplayers/audioplayers.dart';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart' as Dio;
-import 'package:file_picker/file_picker.dart';
 // import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';

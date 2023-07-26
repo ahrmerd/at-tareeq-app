@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/controllers/lives_controller.dart';
-import 'package:at_tareeq/app/controllers/my_lives_controller.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ class LivesPage extends GetView<LivesController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Livestreams'),
+        title: const Text('Livestreams'),
       ),
       body: controller.obx((state) {
         return ListView.builder(

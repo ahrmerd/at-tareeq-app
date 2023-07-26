@@ -15,7 +15,7 @@ class HostDashboard extends GetView<HostController> {
         return BottomNavigationBar(
             currentIndex: controller.bottomNavTabIndex.value,
             onTap: controller.changeTabIndex,
-            items: [
+            items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.video_library), label: 'Library'),
@@ -25,7 +25,7 @@ class HostDashboard extends GetView<HostController> {
       }),
       body: Obx(() => IndexedStack(
             index: controller.bottomNavTabIndex.value,
-            children: [
+            children: const [
               HostHome(),
               HostLibrary(),
               HostProfile(),
