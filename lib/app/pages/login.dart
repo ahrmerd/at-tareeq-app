@@ -66,14 +66,14 @@ class LoginForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            'Welcome User',
-            style: biggestTextStyle,
-          ),
+          BigText('Welcome User,'),
+          // Text(
+          //   'Welcome User',
+          //   style: biggestTextStyle,
+          // ),
           const VerticalSpace(20),
-          Text(
+          SmallText(
             'Login to Continue',
-            style: bigTextStyle,
           ),
           const VerticalSpace(),
 
@@ -95,13 +95,20 @@ class LoginForm extends StatelessWidget {
                         validator: item.validator,
                       ));
                 }),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    MyButton(
+                    CustomTextButton(
+                      text: 'Forgot password?',
+                      fontSize: 14,
                       color: Colors.grey,
-                      child: Text('Forgot Password'),
+                      onPressed: () {},
                     ),
+
+                    // MyButton(
+                    //   color: Colors.grey,
+                    //   child: Text('Forgot Password'),
+                    // ),
 
                     // GestureDetector(
                     //   onTap: () {},

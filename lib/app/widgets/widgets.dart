@@ -110,17 +110,22 @@ class BigText extends StatelessWidget {
     this.fontSize = 24,
     this.color = CustomColor.appBlue,
     this.textAlign = TextAlign.start,
+    this.maxLines,
+    this.overflow,
   }) : super(key: key);
-
+  final int? maxLines;
   final String text;
   final double fontSize;
   final Color? color;
+  final TextOverflow? overflow;
   final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
+      maxLines: maxLines,
+      overflow: overflow,
       style: TextStyle(
         fontFamily: 'Brand Bold',
         fontSize: fontSize,
@@ -139,17 +144,24 @@ class SmallText extends StatelessWidget {
     this.fontSize = 16,
     this.color = Colors.black,
     this.textAlign = TextAlign.start,
+    this.maxLines,
+    this.overflow,
   }) : super(key: key);
 
   final String text;
   final double fontSize;
   final Color? color;
   final TextAlign textAlign;
+  final int? maxLines;
+
+  final TextOverflow? overflow;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: overflow,
+      maxLines: maxLines,
       style: TextStyle(
         fontFamily: 'Brand-Regular',
         fontSize: fontSize,
@@ -158,5 +170,62 @@ class SmallText extends StatelessWidget {
       ),
       textAlign: textAlign,
     );
+  }
+}
+
+class CustomIconButton extends StatelessWidget {
+  const CustomIconButton({
+    Key? key,
+    required this.text,
+    this.icon = Icons.arrow_forward,
+    required this.onPressed,
+    this.alignment = Alignment.centerLeft,
+  }) : super(key: key);
+
+  final String text;
+  final IconData icon;
+  final VoidCallback onPressed;
+  final Alignment alignment;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(
+            minimumSize: const Size(double.infinity, 42),
+            textStyle: const TextStyle(fontSize: 18),
+            backgroundColor: CustomColor.appBlue,
+            foregroundColor: Colors.white,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+        onPressed: onPressed,
+        icon: Icon(icon),
+        label: Align(child: Text(text), alignment: alignment));
+  }
+}
+
+class CustomTextButton extends StatelessWidget {
+  const CustomTextButton({
+    Key? key,
+    required this.text,
+    required this.onPressed,
+    this.color = Colors.black,
+    this.fontSize = 16,
+  }) : super(key: key);
+
+  final String text;
+  final VoidCallback onPressed;
+  final Color? color;
+  final double fontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          textStyle: TextStyle(fontSize: fontSize),
+          foregroundColor: color,
+        ),
+        onPressed: onPressed,
+        child: Text(text));
   }
 }

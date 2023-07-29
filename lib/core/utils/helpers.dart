@@ -16,11 +16,19 @@ String dateTimeFormater(DateTime date) {
   return DateFormat("h:mm a, d, MMM, yyyy").format(date);
 }
 
-T tryMapCast<T>({dynamic map, dynamic key, required T fallback}) {
+String formatTime(DateTime date) {
+  return DateFormat('h:mm a').format(date);
+}
+
+String formatDate(DateTime date) {
+  return DateFormat('d, MMM, yyyy').format(date);
+}
+
+R tryMapCast<R>({required Map map, dynamic key, required R fallback}) {
   try {
-    final map2 = tryCast(map, fallback: {});
+    final map2 = tryCast<Map>(map, fallback: {});
     if (map2.containsKey(key)) {
-      return map2[key] as T;
+      return map2[key] as R;
     }
     return fallback;
   } on TypeError {
@@ -80,4 +88,37 @@ int dynamicIntParsing(dynamic val) {
   } else {
     return 0;
   }
+}
+
+String extractTextBeforeFullStop(Object input) {
+  String stringVal = input.toString();
+  int index = stringVal.indexOf('.');
+  if (index == -1) {
+    return stringVal;
+  } else {
+    return stringVal.substring(0, index + 1);
+  }
+}
+
+String formatLength(int seconds) {
+  if (seconds < 0) {
+    throw ArgumentError("Time cannot be negative.");
+  }
+
+  int hours = seconds ~/ 3600;
+  int minutes = (seconds % 3600) ~/ 60;
+  int remainingSeconds = seconds % 60;
+
+  String result = '';
+  if (hours > 0) {
+    result += '$hours hr ';
+  }
+  if (minutes > 0) {
+    result += '$minutes min ';
+  }
+  if (remainingSeconds > 0) {
+    result += '$remainingSeconds secs';
+  }
+
+  return result.trim();
 }

@@ -74,7 +74,7 @@ class _VerticalLectureListViewState extends State<VerticalLectureListView> {
           final item = widget.lectures[i];
           return ListTile(
             onTap: () {
-              Get.to(() => LecturePlayerScreen(item.title, item.url));
+              Get.to(() => LecturePlayerScreen(item));
               // playAudio(item);
             },
             leading: Container(

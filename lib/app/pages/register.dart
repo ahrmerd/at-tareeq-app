@@ -14,7 +14,6 @@ import 'package:form_builder_phone_field/form_builder_phone_field.dart';
 
 import 'package:get/get.dart';
 
-
 class RegisterView extends GetView<RegisterController> {
   const RegisterView({Key? key}) : super(key: key);
 
@@ -43,7 +42,8 @@ class RegisterView extends GetView<RegisterController> {
               case ProcessingStatus.success:
                 return const SuccessScreen();
               case ProcessingStatus.error:
-                return ErrorScreen(onReturn: controller.restart);
+                return RegisterForm(controller: controller);
+              // return ErrorScreen(onReturn: controller.restart);
               case ProcessingStatus.loading:
                 return const LoadingScreen();
             }
@@ -84,6 +84,7 @@ class RegisterForm extends StatelessWidget {
                         child: item.type == TextInputType.phone
                             ? FormBuilderPhoneField(
                                 name: item.field,
+                                // controller: item.controller,
                                 decoration: myInputDecoration2(
                                     label: item.label, icon: item.icon),
                                 priorityListByIsoCode: const ['NG'],

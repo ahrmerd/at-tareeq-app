@@ -1,5 +1,6 @@
 import 'package:at_tareeq/app/data/providers/api/interceptors/unauthorized_interceptor.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
+import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:at_tareeq/core/values/const.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +43,11 @@ class ApiClient {
       });
       return errorStr;
     }
-
-    return 'unknown error';
+    if (err.type == DioErrorType.unknown) {
+      return extractTextBeforeFullStop(err.error ?? "unknown error");
+      // err.error.toString().split('.').first;
+    }
+    return err.message ?? "unknown error";
   }
 
   void refreshToken() {
@@ -65,13 +69,16 @@ class ApiClient {
 
   static void showErrorDialogue(DioError e) {
     final errorMessage = processError(e);
-    get_x.Get.defaultDialog(title: "Error", middleText: errorMessage, actions: [
-      TextButton(
-        onPressed: () {
-          get_x.Get.back();
-        },
-        child: const Text("Close"),
-      ),
-    ]);
+    get_x.Get.defaultDialog(
+        title: "Network Error",
+        middleText: errorMessage,
+        actions: [
+          TextButton(
+            onPressed: () {
+              get_x.Get.back();
+            },
+            child: const Text("Close"),
+          ),
+        ]);
   }
 }

@@ -37,8 +37,7 @@ class HorizontalLectureListTiles extends StatelessWidget {
                   final lecture = lectures[i];
                   return GestureDetector(
                     onTap: () {
-                      Get.to(() =>
-                          LecturePlayerScreen(lecture.title, lecture.url));
+                      Get.to(() => LecturePlayerScreen(lecture));
                     },
                     child: SizedBox(
                       width: 150,

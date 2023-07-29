@@ -25,11 +25,13 @@ import 'package:at_tareeq/app/pages/dashboard/listener/listener_dashboard.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/lives.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/livestream_player.dart';
 import 'package:at_tareeq/app/pages/home.dart';
-import 'package:at_tareeq/app/pages/onboarding.dart';
+// import 'package:at_tareeq/app/pages/onboarding.dart';
 import 'package:at_tareeq/app/pages/login.dart';
 import 'package:at_tareeq/app/pages/register.dart';
 import 'package:at_tareeq/app/pages/select_user_type.dart';
 import 'package:get/get.dart';
+
+import '../app/pages/onboard/onboarding.dart';
 
 part 'routes.dart';
 

@@ -44,33 +44,7 @@ class HostHome extends GetView<HostController> {
                 children: [
                   ...List.generate(controller.hostActions.length, (index) {
                     final item = controller.hostActions[index];
-                    return GestureDetector(
-                      onTap: item.onTap,
-                      child: Container(
-                        // height: 90,
-                        // width: 50,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(
-                                  color: Colors.black,
-                                  blurRadius: 20,
-                                  spreadRadius: .2)
-                            ],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            item.icon,
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Text(item.title)
-                          ],
-                        ),
-                      ),
-                    );
+                    return HostActionWidget(item: item);
                   }),
                   // Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: []),
                   // Row(children: []),
@@ -114,6 +88,44 @@ class HostHome extends GetView<HostController> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class HostActionWidget extends StatelessWidget {
+  const HostActionWidget({
+    super.key,
+    required this.item,
+  });
+
+  final HostAction item;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: item.onTap,
+      child: Container(
+        // height: 90,
+        // width: 50,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(color: Colors.black, blurRadius: 20, spreadRadius: .2)
+            ],
+            borderRadius: BorderRadius.circular(20)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            item.icon,
+            VerticalSpace(),
+            SmallText(
+              item.title,
+              fontSize: 13,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

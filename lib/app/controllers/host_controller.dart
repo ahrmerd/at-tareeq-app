@@ -3,8 +3,10 @@ import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/repositories/lecture_repository.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
+import 'package:at_tareeq/core/utils/logger.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:dio/dio.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -14,11 +16,14 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
   // late AnimationController animationController;
   final animationDuration = 200.milliseconds;
   final isExpanded = false.obs;
+  ExpandableController expandableController = ExpandableController(
+    initialExpanded: true,
+  );
 
   final List<HostAction> hostActions = [
     HostAction('Record Lecture',
         icon: const Icon(
-          Icons.mic,
+          Icons.mic_none_rounded,
           size: actionIconSize,
           color: Colors.green,
         ), onTap: () {
@@ -27,7 +32,7 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
     }),
     HostAction('Upload Lecture',
         icon: const Icon(
-          Icons.upload,
+          Icons.upload_rounded,
           size: actionIconSize,
           color: Colors.green,
         ), onTap: () {
@@ -36,7 +41,7 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
     }),
     HostAction('Live Audio',
         icon: const Icon(
-          MdiIcons.podcast,
+          Icons.record_voice_over_outlined,
           size: actionIconSize,
           color: Colors.red,
         ), onTap: () {
@@ -76,9 +81,9 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
     } on DioError catch (e) {
       change(null, status: RxStatus.error('Failed to Load Lectures'));
       ApiClient.showErrorDialogue(e);
-      print(e);
+      Logger.log(e.toString());
     } catch (err) {
-      print(err);
+      Logger.log(err.toString());
       showErrorDialogue();
       change(null, status: RxStatus.error('Failed to Load Lecturers'));
     }

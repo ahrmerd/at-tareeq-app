@@ -13,7 +13,7 @@ class SocialMediaSignup extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 20,
+          height: 40,
           width: double.infinity,
           child: Stack(
             alignment: Alignment.center,
@@ -30,8 +30,8 @@ class SocialMediaSignup extends StatelessWidget {
               )),
               if (onFacebookSignup != null || onGoogleSignup != null)
                 Container(
-                  width: 30,
-                  height: 30,
+                  width: 40,
+                  height: 40,
                   alignment: Alignment.center,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,

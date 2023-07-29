@@ -9,6 +9,7 @@ import 'package:at_tareeq/app/data/services/auth_service.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
+import 'package:at_tareeq/core/utils/logger.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 
 class RegisterController extends GetxController {
   final AuthService _authService = Dependancies.authService();
   final formKey = GlobalKey<FormBuilderState>();
   final _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _nameController = TextEditingController();
+  // final _phoneController = TextEditingController();
 
   bool isHost = tryMapCast(
           key: 'userType',
@@ -37,6 +42,7 @@ class RegisterController extends GetxController {
           label: 'full name',
           icon: const Icon(Icons.person_outline),
           type: TextInputType.name,
+          controller: _nameController,
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.required(),
             FormBuilderValidators.minLength(4),
@@ -44,6 +50,7 @@ class RegisterController extends GetxController {
       FormItem('email',
           icon: const Icon(Icons.email_outlined),
           type: TextInputType.emailAddress,
+          controller: _emailController,
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.required(),
             FormBuilderValidators.email(),
@@ -58,6 +65,7 @@ class RegisterController extends GetxController {
       FormItem('phone',
           icon: const Icon(Icons.phone_outlined),
           type: TextInputType.phone,
+          // controller: _phoneController,
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.required(),
           ])),
@@ -77,8 +85,8 @@ class RegisterController extends GetxController {
             FormBuilderValidators.required(),
             FormBuilderValidators.minLength(4),
             (val) {
-              print(val);
-              print(_passwordController.text);
+              // print(val);
+              // print(_passwordController.text);
               if (val != _passwordController.text) {
                 return 'The Password and Password Confirmation must match';
               }
@@ -97,13 +105,17 @@ class RegisterController extends GetxController {
   void onInit() {
     formItems = getFormItems();
     loadStates();
+    getApplicationDocumentsDirectory().then((value) => print(value));
+
     super.onInit();
   }
 
   @override
   onClose() {
-    // emailController.dispose();
-    // passwordController.dispose();
+    _emailController.dispose();
+    _nameController.dispose();
+    _passwordController.dispose();
+    // _phoneController.dispose();
     super.onClose();
   }
 
@@ -123,12 +135,14 @@ class RegisterController extends GetxController {
       await register();
       _status.value = ProcessingStatus.success;
     } on DioError catch (e) {
+      // print(e);
       _status.value = ProcessingStatus.error;
       ApiClient.showErrorDialogue(e);
+      Logger.log(e.toString());
     } catch (e) {
-      print(e);
+      Logger.log(e.toString());
       _status.value = ProcessingStatus.error;
-      showErrorDialogue();
+      showErrorDialogue(e.toString());
     }
   }
 

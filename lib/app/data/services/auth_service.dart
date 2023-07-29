@@ -61,7 +61,8 @@ class AuthService extends GetxService {
   }
 
   Future<void> logout() async {
-    Get.defaultDialog(title: 'Loading', content: const CircularProgressIndicator());
+    Get.defaultDialog(
+        title: 'Loading', content: const CircularProgressIndicator());
     await _apiClient.req.post('logout');
     await SharedPreferencesHelper.clearUserData();
     _signedIn.value = false;
@@ -112,16 +113,17 @@ class AuthService extends GetxService {
 
   Future<dio.Response?> registerFromData(
       {required Map<String, dynamic> data}) async {
-    try {
-      final res = await _apiClient.req.post('register', data: data);
-      print(res);
+    // try {
+    final res = await _apiClient.req.post('register', data: data);
+    print(res);
 
-      await loginLocally(res.data);
-      return res;
-    } catch (e) {
-      print(e);
-    }
-    return null;
+    await loginLocally(res.data);
+    return res;
+    // } catch (e) {
+
+    // print(e);
+    // }
+    // return null;
   }
 
   Future loginLocally(dynamic data) async {

@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         statusBarColor: primaryColor,
       ),
     );
+
     return GetMaterialApp(
       title: 'At-Tareek',
       transitionDuration: 300.milliseconds,
