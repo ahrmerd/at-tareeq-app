@@ -26,7 +26,7 @@ class LivesPage extends GetView<LivesController> {
                         arguments: {'livestream': livestream});
                   },
                   leading: Text(livestream.status.getString()),
-                  trailing: Text(dateTimeFormater(livestream.startTime)),
+                  trailing: Text(formatDateTime(livestream.startTime)),
                   title: Text(livestream.title),
                   subtitle: Text(livestream.description),
                 ),

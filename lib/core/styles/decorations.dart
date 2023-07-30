@@ -7,6 +7,7 @@ InputDecoration myInputDecoration(
   return InputDecoration(
     prefixIcon: icon,
     prefixIconColor: primaryColor,
+
     hintText: label.toTitleCase(),
     label: Text(
       label.toTitleCase(),

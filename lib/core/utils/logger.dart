@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 
 class Logger {
   static Future<void> log(String message) async {
-    final logMessage = '[${dateTimeFormater(DateTime.now())}: $message] \r\n ';
+    final logMessage = '[${formatDateTime(DateTime.now())}: $message] \r\n ';
     File(await getLogPath()).writeAsString(logMessage, mode: FileMode.append);
   }
 

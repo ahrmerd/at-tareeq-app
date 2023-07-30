@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 class LivesController extends GetxController with StateMixin<List<Livestream>> {
-  int count = 6;
+  // int count = 6;
   @override
   Future<void> onInit() async {
     fetchLivestreams();
@@ -18,8 +18,8 @@ class LivesController extends GetxController with StateMixin<List<Livestream>> {
   Future fetchLivestreams() async {
     try {
       change(null, status: RxStatus.loading());
-      List<Livestream> models = await LivestreamRepository()
-          .fetchModelsFromCustomPath('livestreams/user');
+      List<Livestream> models =
+          await LivestreamRepository().fetchModels(query: {"include": "user"});
       if (models.isEmpty) {
         change(models, status: RxStatus.empty());
       } else {

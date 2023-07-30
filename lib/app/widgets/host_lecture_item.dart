@@ -14,15 +14,18 @@ class HostLectureItem extends StatelessWidget {
 
   final Lecture lecture;
 
-  final VoidCallback onTap;
-  final VoidCallback onTapMenu;
+  final Function(Lecture lecture) onTap;
+  final Function(Lecture lecture) onTapMenu;
+  // final VoidCallback onTapMenu;
 
   // final defaultImageAsset = 'assets/pic_two.png';
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        onTap(lecture);
+      },
       child: Card(
         clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
@@ -97,7 +100,9 @@ class HostLectureItem extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                      onPressed: onTapMenu,
+                      onPressed: () {
+                        onTapMenu(lecture);
+                      },
                       icon: const Icon(Icons.more_vert_rounded)),
                 ],
               ),

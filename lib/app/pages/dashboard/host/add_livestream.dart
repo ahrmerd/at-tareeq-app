@@ -48,19 +48,20 @@ class AddLivestream extends GetView<AddLiveController> {
                     const Text('Scheduled StartTime:'),
                     const HorizontalSpace(),
                     Text(
-                      dateTimeFormater(controller.scheduledTime.value),
+                      formatDateTime(controller.scheduledTime.value),
                       style: bigTextStyle,
                     ),
                     const HorizontalSpace(),
                     MyButton(
-                      child: const Text('Select scheduled time to start stream'),
+                      child:
+                          const Text('Select scheduled time to start stream'),
                       onTap: () async {
                         final date = (await showDatePicker(
                                 context: context,
                                 initialDate: controller.scheduledTime.value,
                                 firstDate: DateTime.now(),
-                                lastDate:
-                                    DateTime.now().add(const Duration(days: 4)))) ??
+                                lastDate: DateTime.now()
+                                    .add(const Duration(days: 4)))) ??
                             DateTime.now();
                         final time = (await showTimePicker(
                                 context: context,

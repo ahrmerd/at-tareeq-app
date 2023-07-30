@@ -1,13 +1,8 @@
 import 'package:at_tareeq/app/controllers/livestream_player_controller.dart';
-import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
-import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
-import 'package:at_tareeq/core/styles/decorations.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
-import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:get/get.dart';
 
 class LivestreamPlayer extends GetView<LivestreamPlayerController> {
@@ -16,213 +11,111 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(color: CustomColor.appBlue),
-      ),
-      body: Container(
-        margin: EdgeInsets.only(bottom: 110),
-        padding: const EdgeInsets.all(16.0),
+      appBar: AppBar(),
+      backgroundColor: primaryColor,
+      body: Center(
         child: Column(
-          children: [
-            Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(32),
-                  child: MyNetworkImage(
-                    path: controller.livestream.value.user?.thumb ?? "",
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            GestureDetector(
+              onTap: () {
+                controller.togglePlayer();
+              },
+              child: Container(
+                height: 200,
+                width: 200,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: primaryLightColor,
                 ),
-                const SizedBox(
-                  height: 16,
+                child: const Icon(
+                  Icons.music_note,
+                  size: 100,
+                  color: primaryDarkColor,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          BigText(
-                            controller.livestream.value.title,
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          SmallText(
-                            controller.livestream.value.user?.name ?? "",
-                            fontSize: 15,
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.more_vert_rounded),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
-            VerticalSpace(),
-            Expanded(child: Obx(() {
-              return ListView.builder(
-                  controller: controller.messageScrollController,
-                  itemCount: controller.messages.length,
-                  itemBuilder: (_, i) {
-                    final message = controller.messages[i];
-                    final bool isSentByMe =
-                        SharedPreferencesHelper.getUserId() == message.user.id;
-                    return ChatBubble(
-                      clipper: ChatBubbleClipper3(
-                          type: isSentByMe
-                              ? BubbleType.sendBubble
-                              : BubbleType.receiverBubble),
-                      alignment:
-                          isSentByMe ? Alignment.topRight : Alignment.topLeft,
-                      margin: EdgeInsets.only(top: 20),
-                      backGroundColor: primaryColor,
-                      child: Container(
-                        // constraints: BoxConstraints(
-                        // maxWidth: MediaQuery.of(context).size.width * 0.7,
-                        // ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              message.user.name,
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            // separa
-                            Text(
-                              message.message,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                            message.isSending
-                                ? Icon(
-                                    Icons.cached,
-                                    size: 10,
-                                    color: Colors.grey,
-                                  )
-                                : Text(
-                                    formatDateTime(message.createdAt),
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                          ],
-                        ),
-                      ),
-                    );
-                  });
-            })),
-          ],
-        ),
-      ),
-      bottomSheet: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  // constraints: BoxConstraints.loose(Size(Get.width - 70, 200)),
-                  // width: Get.width - 170,
-                  child: TextField(
-                    controller: controller.messageFieldControlller,
-                    onSubmitted: (val) {
-                      controller.sendMessage(val);
-                    },
-                    decoration: myInputDecoration2(label: "Message"),
+            const SizedBox(height: 20),
+            Obx(() => Text(
+                  controller.livestream.value.title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
                   ),
-                ),
-                HorizontalSpace(),
-                MyButton(
-                  child: Icon(Icons.send),
-                  onTap: () {
-                    controller
-                        .sendMessage(controller.messageFieldControlller.text);
-                  },
-                )
-              ],
-            ),
-          ),
-          /*         Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AvatarGlow(
-                  glowColor: Colors.redAccent,
-                  endRadius: controller.isLive.value ? 30 : 20,
-                  child: CircleAvatar(
-                    backgroundColor:
-                        controller.isLive.value ? Colors.red : Colors.grey,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.mic_none_rounded,
-                        color: controller.isLive.value
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                ),
-                Row(
+                )),
+            const SizedBox(height: 20),
+            Obx(() => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      child: IconButton(
-                        isSelected: controller.isMuted.value,
-                        selectedIcon: Icon(
-                          Icons.volume_off_outlined,
-                          color: Colors.black,
-                        ),
-                        icon: Icon(
-                          Icons.volume_up_outlined,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {},
+                    Text(
+                      controller.isPlaying.value ? "LIVE" : "",
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    HorizontalSpace(),
-                    MyButton(
-                      // onPressed: () {},
-                      child: Text('End Lecture'),
-                    ),
-                    HorizontalSpace(),
-                    CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.share_outlined,
-                          color: Colors.black,
+                    if (controller.isPlaying.value)
+                      AvatarGlow(
+                        glowColor: Colors.redAccent,
+                        endRadius: 20,
+                        child: Container(
+                          // height: 30,
+                          decoration:
+                              const BoxDecoration(shape: BoxShape.circle),
+                          child: const Icon(
+                            Icons.fiber_manual_record_rounded,
+                            color: Colors.red,
+                          ),
                         ),
-                        onPressed: () {},
+                      )
+                  ],
+                )),
+            const SizedBox(height: 20),
+            Obx(() => Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    MyButton(
+                      onTap: () {
+                        controller.togglePlayer();
+                      },
+                      danger: false,
+                      color: lightColor,
+                      bgColor: primaryColor,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                      child: Icon(
+                        controller.isPlaying.value
+                            ? Icons.stop
+                            : Icons.play_arrow,
+                        color: lightColor,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    MyButton(
+                      onTap: () {
+                        controller.toggleMute();
+                      },
+                      danger: false,
+                      color: lightColor,
+                      bgColor: primaryColor,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                      child: Icon(
+                        controller.isMuted.value
+                            ? Icons.volume_up_outlined
+                            : Icons.volume_off,
+                        color: lightColor,
                       ),
                     ),
                   ],
-                ),
-              ],
-            ),
-          ),
- */
-        ],
+                )),
+          ],
+        ),
       ),
     );
   }

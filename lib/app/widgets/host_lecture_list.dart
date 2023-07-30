@@ -1,9 +1,12 @@
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/dependancies.dart';
+import 'package:at_tareeq/app/pages/dashboard/listener/lecture_player.dart';
+import 'package:at_tareeq/app/widgets/host_lecture_item.dart';
 import 'package:at_tareeq/app/widgets/playbutton.dart';
-import 'package:at_tareeq/core/themes/colors.dart';
+// import 'package:at_tareeq/core/themes/colors.dart';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class HostLecturesList extends StatefulWidget {
   final List<Lecture> lectures;
@@ -54,7 +57,13 @@ class _HostLecturesListState extends State<HostLecturesList> {
         itemCount: widget.lectures.length,
         itemBuilder: (_, i) {
           final item = widget.lectures[i];
-          return ListTile(
+          return HostLectureItem(
+              onTap: (lecture) {
+                Get.to(() => LecturePlayerScreen(lecture));
+              },
+              onTapMenu: (lecture) {},
+              lecture: item);
+          /*    ListTile(
             leading: Container(
                 height: 60,
                 width: 60,
@@ -105,6 +114,7 @@ class _HostLecturesListState extends State<HostLecturesList> {
               ),
             ),
           );
+    */
         });
   }
 }

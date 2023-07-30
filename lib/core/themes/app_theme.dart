@@ -33,6 +33,7 @@ class AppTheme {
       foregroundColor: primaryColor,
       color: Colors.white,
     ),
+    useMaterial3: true,
     tabBarTheme: const TabBarTheme(
       indicatorColor: primaryColor, // set the indicator color
     ),
@@ -47,6 +48,7 @@ class AppTheme {
     appBarTheme: commonTheme.appBarTheme.copyWith(
       color: Colors.black,
     ),
+    useMaterial3: true,
     iconTheme: commonTheme.iconTheme,
     bottomNavigationBarTheme: commonTheme.bottomNavigationBarTheme.copyWith(),
   );

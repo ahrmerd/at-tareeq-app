@@ -4,7 +4,7 @@ import 'repository.dart';
 
 class LivestreamRepository extends Repository<Livestream> {
   @override
-  String resource = 'livesstreams';
+  String resource = 'livestreams';
 
   @override
   Livestream transformModel(data) {

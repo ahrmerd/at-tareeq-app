@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 
 User userFromJson(String str) => User.fromJson(json.decode(str));
@@ -75,4 +76,26 @@ class User {
         "organization": organization,
         "thumb": thumb,
       };
+
+  static User createDummy() {
+    return User(
+        id: 0,
+        name: "name",
+        email: "email",
+        type: 1,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        thumb: "thumb");
+  }
+
+  static User createCurrUserDummy() {
+    return User(
+        id: SharedPreferencesHelper.getUserId(),
+        name: SharedPreferencesHelper.getName(),
+        email: SharedPreferencesHelper.getEmail(),
+        type: SharedPreferencesHelper.getuserType(),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        thumb: "thumb");
+  }
 }

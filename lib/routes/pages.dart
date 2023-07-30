@@ -22,7 +22,7 @@ import 'package:at_tareeq/app/pages/dashboard/listener/explore/interest_lectures
 import 'package:at_tareeq/app/pages/dashboard/listener/explore/user_lectures_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/library/library_lectures_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/listener_dashboard.dart';
-import 'package:at_tareeq/app/pages/dashboard/listener/lives.dart';
+import 'package:at_tareeq/app/pages/dashboard/listener/lives_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/livestream_player.dart';
 import 'package:at_tareeq/app/pages/home.dart';
 // import 'package:at_tareeq/app/pages/onboarding.dart';

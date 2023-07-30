@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:at_tareeq/app/data/enums/livestream_status.dart';
 import 'package:at_tareeq/app/data/models/user.dart';
+import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 
 List<Livestream> livestreamListFromJson(List<dynamic> json) =>
@@ -72,4 +73,32 @@ class Livestream {
         "token": token,
         "user": user?.toJson(),
       };
+
+  static Livestream createDummy() {
+    return Livestream(
+        id: 0,
+        title: "title",
+        description: "description",
+        interestId: 0,
+        userId: 0,
+        status: LivestreamStatus.notStarted,
+        channel: "channel",
+        startTime: DateTime.now(),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now());
+  }
+
+  static Livestream createDummyForUser() {
+    return Livestream(
+        id: 0,
+        title: "title",
+        description: "description",
+        interestId: 0,
+        userId: SharedPreferencesHelper.getUserId(),
+        status: LivestreamStatus.notStarted,
+        channel: "channel",
+        startTime: DateTime.now(),
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now());
+  }
 }

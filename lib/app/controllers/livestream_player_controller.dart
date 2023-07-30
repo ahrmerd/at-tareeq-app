@@ -2,9 +2,13 @@ import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
+import 'package:at_tareeq/app/data/models/live_messages.dart';
 import 'package:at_tareeq/app/data/models/livestream.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
+import 'package:at_tareeq/app/data/repositories/live_message_repository.dart';
+import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/values/const.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -16,6 +20,11 @@ class LivestreamPlayerController extends GetxController {
   bool isReady = false;
 
   RxBool isMuted = true.obs;
+
+  TextEditingController messageFieldControlller = TextEditingController();
+  RxBool isSending = false.obs;
+  ScrollController messageScrollController = ScrollController();
+  RxList<LiveMessage> messages = <LiveMessage>[].obs;
 
   @override
   void onInit() async {
@@ -118,5 +127,29 @@ class LivestreamPlayerController extends GetxController {
     } else {
       return true;
     }
+  }
+
+  Future<void> fetchMessages() async {
+    final res = (await LiveMessageRepository().fetchModelsFromCustomPath(
+        "livestreams/${livestream.value.id}/messages"));
+    print(res);
+    messages.clear();
+    messages.addAll(res);
+  }
+
+  Future<void> sendMessage(String strMsg) async {
+    isSending.value = true;
+    messages.add(LiveMessage.createSendingMessage(strMsg, livestream.value));
+    messageScrollController.animateTo(
+        messageScrollController.position.maxScrollExtent + 100,
+        duration: .5.seconds,
+        curve: Curves.easeIn);
+    final res = await Dependancies.http().post('livemessages',
+        data: {"message": strMsg, "livestream_id": livestream.value.id});
+    // print(res);
+    messageFieldControlller.clear();
+    isSending.value = false;
+
+    fetchMessages();
   }
 }

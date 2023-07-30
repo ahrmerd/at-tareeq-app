@@ -12,7 +12,7 @@ T tryCast<T>(dynamic x, {required T fallback}) {
   }
 }
 
-String dateTimeFormater(DateTime date) {
+String formatDateTime(DateTime date) {
   return DateFormat("h:mm a, d, MMM, yyyy").format(date);
 }
 

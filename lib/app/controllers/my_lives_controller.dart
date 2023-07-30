@@ -22,7 +22,8 @@ class MyLivesController extends GetxController
     try {
       change(null, status: RxStatus.loading());
       List<Livestream> models = await LivestreamRepository()
-          .fetchModelsFromCustomPath('livestreams/user');
+          .fetchModelsFromCustomPath('livestreams/user',
+              query: {"include": "user"});
 
       // models = livestreamListFromJson(
       //     (await (ApiClient.getInstance().req.get('livestreams/user')))
