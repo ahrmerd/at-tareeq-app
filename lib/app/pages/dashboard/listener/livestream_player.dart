@@ -1,6 +1,9 @@
 import 'package:at_tareeq/app/controllers/livestream_player_controller.dart';
+import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
+import 'package:at_tareeq/app/widgets/color_loader.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
+import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/decorations.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
@@ -39,6 +42,35 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                 const SizedBox(
                   height: 16,
                 ),
+                Obx(() {
+                  switch (controller.liveProcessingStatus.value) {
+                    case ProcessingStatus.initial:
+                      return SizedBox(
+                        height: 200,
+                        child: Column(
+                          children: [
+                            ColorLoader(),
+                          ],
+                        ),
+                      );
+                    case ProcessingStatus.success:
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(32),
+                        child: MyNetworkImage(
+                          path: controller.livestream.value.user?.thumb ?? "",
+                          height: 200,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    case ProcessingStatus.error:
+                      return ErrorScreen(
+                        messsage: "Unable to initalize livestream",
+                      );
+                    case ProcessingStatus.loading:
+                      return ColorLoader();
+                  }
+                }),
+                const VerticalSpace(16),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(

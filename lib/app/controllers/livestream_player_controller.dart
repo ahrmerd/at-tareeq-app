@@ -16,7 +16,8 @@ class LivestreamPlayerController extends GetxController {
   RxBool isPlaying = false.obs;
   Rx<Livestream> livestream = (Get.arguments['livestream'] as Livestream).obs;
   final RtcEngine _engine = createAgoraRtcEngine();
-  ProcessingStatus processingStatus = ProcessingStatus.initial;
+  Rx<ProcessingStatus> liveProcessingStatus = ProcessingStatus.initial.obs;
+  Rx<ProcessingStatus> messgaeprocessingStatus = ProcessingStatus.initial.obs;
   bool isReady = false;
 
   RxBool isMuted = true.obs;
