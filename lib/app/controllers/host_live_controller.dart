@@ -18,8 +18,15 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:ably_flutter/ably_flutter.dart' as ably;
 
+class Events {
+  static String startLivestream = "App\\Events\\StartLiveEvent";
+  static String stopLivestream = "App\\Events\\StopLiveEvent";
+  static String livemessage = "App\\Events\\LiveMessageSentEvent";
+}
+
 class HostLiveController extends GetxController {
-  Rx<ProcessingStatus> processingStatus = ProcessingStatus.initial.obs;
+  Rx<ProcessingStatus> liveProcessingStatus = ProcessingStatus.initial.obs;
+  Rx<ProcessingStatus> messagesProcessingStatus = ProcessingStatus.initial.obs;
   Livestream livestream = Get.arguments['livestream'];
   Rx<LivestreamStatus> livestreamStatus =
       (Get.arguments['livestream'] as Livestream).status.obs;
@@ -45,23 +52,39 @@ class HostLiveController extends GetxController {
     realtime.connection
         .on()
         .listen((ably.ConnectionStateChange stateChange) async {
+      // if(stateChange.event);
       // Handle connection state change events
     });
-    final channel = realtime.channels.get('public:test');
+    final channel = realtime.channels.get(livestream.channel);
     await channel.attach();
     channel.subscribe().listen((event) {
-      print(event.data);
+      if (event.name == Events.startLivestream) {
+        livestreamStatus.value = LivestreamStatus.started;
+      } else if (event.name == Events.stopLivestream) {
+        livestreamStatus.value = LivestreamStatus.finished;
+      } else if (event.name == Events.livemessage) {
+        fetchMessages();
+        addToMessages(event.data);
+      } else {
+        print(event.data.runtimeType);
+        print(event.name);
+        print(event.data);
+      }
     });
   }
 
   @override
   void onInit() async {
-    initAbly();
-    // print(Get.arguments);
-    // initEcho();
-    await initAgora();
-    fetchMessages();
-    super.onInit(); // }
+    try {
+      initAbly();
+      // print(Get.arguments);
+      // initEcho();
+      await initAgora();
+      fetchMessages();
+      super.onInit(); // }
+    } catch (e) {
+      showErrorDialogue(e.toString());
+    }
   }
 
   @override
@@ -94,16 +117,16 @@ class HostLiveController extends GetxController {
             ));
         await _engine.disableVideo();
         await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-        processingStatus.value = ProcessingStatus.success;
+        liveProcessingStatus.value = ProcessingStatus.success;
         isReady = true;
       } else {
-        processingStatus.value = ProcessingStatus.error;
+        liveProcessingStatus.value = ProcessingStatus.error;
         showErrorDialogue();
         isReady = false;
       }
     } catch (e) {
       isReady = false;
-      processingStatus.value = ProcessingStatus.error;
+      liveProcessingStatus.value = ProcessingStatus.error;
     }
 
     // //create the engine
@@ -211,7 +234,7 @@ class HostLiveController extends GetxController {
     showErrorDialogue(message);
   }
 
-  void submitForm() {}
+  // void submitForm() {}
 
   Future<void> sendMessage(String strMsg) async {
     isSending.value = true;
@@ -226,7 +249,7 @@ class HostLiveController extends GetxController {
     messageFieldControlller.clear();
     isSending.value = false;
 
-    fetchMessages();
+    // fetchMessages();
   }
 
   Future<void> fetchMessages() async {
@@ -236,4 +259,6 @@ class HostLiveController extends GetxController {
     messages.clear();
     messages.addAll(res);
   }
+
+  void addToMessages(Object? data) {}
 }

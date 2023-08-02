@@ -122,6 +122,7 @@ class HostActionWidget extends StatelessWidget {
             SmallText(
               item.title,
               fontSize: 13,
+              textAlign: TextAlign.center,
             )
           ],
         ),
