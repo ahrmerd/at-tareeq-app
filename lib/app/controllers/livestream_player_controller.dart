@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:at_tareeq/app/data/enums/livestream_status.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/models/live_messages.dart';
 import 'package:at_tareeq/app/data/models/livestream.dart';
@@ -11,6 +12,9 @@ import 'package:at_tareeq/core/values/const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:ably_flutter/ably_flutter.dart' as ably;
+
+import 'host_live_controller.dart';
 
 class LivestreamPlayerController extends GetxController {
   RxBool isPlaying = false.obs;
@@ -26,13 +30,42 @@ class LivestreamPlayerController extends GetxController {
   RxBool isSending = false.obs;
   ScrollController messageScrollController = ScrollController();
   RxList<LiveMessage> messages = <LiveMessage>[].obs;
+  final clientOptions = ably.ClientOptions(key: ablyKey);
+  late final ably.Realtime realtime;
 
   @override
   void onInit() async {
+    await initAbly();
     // print(Get.arguments);
     // initEcho();
     await initAgora();
     super.onInit(); // }
+  }
+
+  initAbly() async {
+    realtime = ably.Realtime(options: clientOptions);
+    realtime.connection
+        .on()
+        .listen((ably.ConnectionStateChange stateChange) async {
+      // if(stateChange.event);
+      // Handle connection state change events
+    });
+    final channel = realtime.channels.get(livestream.value.channel);
+    await channel.attach();
+    channel.subscribe().listen((event) {
+      if (event.name == Events.startLivestream) {
+        livestream.value.status = LivestreamStatus.started;
+      } else if (event.name == Events.stopLivestream) {
+        livestream.value.status = LivestreamStatus.finished;
+      } else if (event.name == Events.livemessage) {
+        fetchMessages();
+        addToMessages(event.data);
+      } else {
+        print(event.data.runtimeType);
+        print(event.name);
+        print(event.data);
+      }
+    });
   }
 
   @override
@@ -153,4 +186,6 @@ class LivestreamPlayerController extends GetxController {
 
     fetchMessages();
   }
+
+  void addToMessages(Object? data) {}
 }
