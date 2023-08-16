@@ -13,7 +13,7 @@ class ApiClient {
 
   void init() {
     req = Dio(_options);
-    // req.interceptors.add(UnAuthorizedInterceptor());
+    req.interceptors.add(UnAuthorizedInterceptor());
   }
 
   // factory ApiClient() => _client;
