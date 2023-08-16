@@ -52,10 +52,13 @@ class Onboarding extends StatelessWidget {
                   if (!_controller.isLastPage)
                     Positioned(
                       right: 10,
-                      child: MyButton(
+                      child: GestureDetector(
                         onTap: _controller.navigateToNext,
-                        child: const Row(
-                          children: [Text('Skip')],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: const Row(
+                            children: [Text('Skip')],
+                          ),
                         ),
                       ),
                     ),

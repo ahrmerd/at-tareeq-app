@@ -6,6 +6,7 @@ import 'package:at_tareeq/app/data/models/livestream.dart';
 import 'package:at_tareeq/app/data/enums/livestream_status.dart';
 import 'package:at_tareeq/app/data/models/live_messages.dart';
 import 'package:at_tareeq/app/data/models/user.dart';
+import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/data/repositories/live_message_repository.dart';
 import 'package:at_tareeq/app/data/repositories/livestream_repository.dart';
@@ -13,6 +14,7 @@ import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/logger.dart';
 import 'package:at_tareeq/core/values/const.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -170,7 +172,7 @@ class HostLiveController extends GetxController {
 //   }
 
   Future<void> startBroadcast() async {
-    if (isReady) {
+    if (isReady && !isLive.value) {
       try {
         await Dependancies.http()
             .get('livestreams/${livestream.id}/start-broadcast');
@@ -253,11 +255,21 @@ class HostLiveController extends GetxController {
   }
 
   Future<void> fetchMessages() async {
-    final res = (await LiveMessageRepository()
-        .fetchModelsFromCustomPath("livestreams/${livestream.id}/messages"));
-    print(res);
-    messages.clear();
-    messages.addAll(res);
+    try {
+      final res = (await LiveMessageRepository()
+          .fetchModelsFromCustomPath("livestreams/${livestream.id}/messages"));
+      print(res);
+      messages.clear();
+      messages.addAll(res);
+    } on DioError catch (e) {
+      messagesProcessingStatus.value = ProcessingStatus.error;
+      print(e);
+      ApiClient.showErrorDialogue(e);
+    } catch (err) {
+      print(err);
+      messagesProcessingStatus.value = ProcessingStatus.error;
+      showErrorDialogue(err.toString());
+    }
   }
 
   void addToMessages(Object? data) {}
