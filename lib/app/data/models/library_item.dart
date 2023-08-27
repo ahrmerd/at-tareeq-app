@@ -1,7 +1,11 @@
 import 'package:at_tareeq/app/data/models/lecture.dart';
+import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 
-class Library {
+List<LibraryItem> libraryItemListFromJson(List<dynamic> json) =>
+    json.map((data) => LibraryItem.fromJson(data)).toList();
+
+class LibraryItem {
   int id;
   int userId;
   int lectureId;
@@ -9,7 +13,7 @@ class Library {
   DateTime updatedAt;
   Lecture lecture;
 
-  Library({
+  LibraryItem({
     required this.id,
     required this.userId,
     required this.lectureId,
@@ -18,7 +22,8 @@ class Library {
     required this.lecture,
   });
 
-  factory Library.fromJson(Map<String, dynamic> json) => Library(
+
+  factory LibraryItem.fromJson(Map<String, dynamic> json) => LibraryItem(
         id: json["id"],
         userId: json["user_id"],
         lectureId: dynamicIntParsing(json["lecture_id"]),
@@ -35,4 +40,14 @@ class Library {
         "updated_at": updatedAt.toIso8601String(),
         "lecture": lecture.toJson(),
       };
+
+
+      static LibraryItem fromLecture(int id, Lecture lecture) {
+    return LibraryItem(
+        id: id,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        lecture: lecture, lectureId: lecture.id, userId: SharedPreferencesHelper.getUserId()
+        );
+  }
 }

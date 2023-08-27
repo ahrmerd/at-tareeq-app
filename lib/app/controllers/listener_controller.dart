@@ -40,15 +40,15 @@ class ListenerController extends GetxController
   // ];
 
   final List<MyTab> homeTabs = const [
-    MyTab(tab: Tab(child: Text('Listen Now')), tabView: ListenNow()),
+    MyTab(tab: Tab(text:'Listen Now'), tabView: ListenNow()),
     MyTab(
-        tab: Tab(child: Text('Routine Lecture')),
+        tab: Tab(text: ('Routine Lecture')),
         tabView: ListenerLectureList(
           // key: GlobalObjectKey('Routine Lecture'),
           filter: LecturesFilter.routine,
         )),
     MyTab(
-        tab: Tab(child: Text('Special Lecture')),
+        tab: Tab(text: ('Special Lecture')),
         tabView: ListenerLectureList(
           // key: GlobalObjectKey('Special Lecture'),
           filter: LecturesFilter.special,
@@ -58,21 +58,18 @@ class ListenerController extends GetxController
 
   final List<MyTab> exploreTabs = const [
     MyTab(
-      tab: Tab(
-        child: Text('Browse Lectures'),
+      tab: Tab(text: ('Browse Lectures'),
       ),
       tabView: BrowseLectures(),
     ),
     MyTab(
-        tab: Tab(
-          child: Text('New Lectures'),
+        tab: Tab(text: ('New Lectures'),
         ),
         tabView: ListenerLectureList(
           filter: LecturesFilter.latest,
         )),
     MyTab(
-        tab: Tab(
-          child: Text('Most Downloaded Lecture'),
+        tab: Tab(text: ('Most Downloaded Lecture'),
         ),
         tabView: ListenerLectureList(
           filter: LecturesFilter.popular,
@@ -82,7 +79,6 @@ class ListenerController extends GetxController
   @override
   void onInit() {
     tabController = TabController(length: homeTabs.length, vsync: this);
-    // TODO: implement onInit
     // tabController.
     super.onInit();
   }

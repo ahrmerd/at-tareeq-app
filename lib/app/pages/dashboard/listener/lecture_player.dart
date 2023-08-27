@@ -2,15 +2,13 @@
 
 import 'dart:async';
 import 'package:at_tareeq/app/data/models/lecture.dart';
+import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
-import 'package:at_tareeq/app/widgets/lecture_thumb_widget.dart';
+import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
-import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:expandable/expandable.dart';
-import 'package:get/get.dart';
-import 'dart:math';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
@@ -79,7 +77,7 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
           color: CustomColor.appBlue,
         ),
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Stack(
@@ -91,10 +89,11 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50),
-                    child: LectureThumbWidget(
-                      url: widget.lecture.thumb,
+                    child: MyNetworkImage(
+                      useAppRequest: false,
+                      path: widget.lecture.thumb,
                       height: 350,
-                      boxFit: BoxFit.cover,
+                      fit: BoxFit.cover,
                     ),
                   ),
                   VerticalSpace(32),
@@ -461,6 +460,7 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
 
   Future playAudio() async {
     await audioPlayer.resume();
+    LibraryRepository.addToHistory(widget.lecture);
     setState(() {
       isPlaying = true;
     });

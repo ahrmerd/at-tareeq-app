@@ -1,9 +1,8 @@
 import 'package:at_tareeq/core/themes/app_theme.dart';
-import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/routes/pages.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:get/get.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,22 +10,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.light.copyWith(
-        systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.light,
-        statusBarColor: primaryColor,
-      ),
-    );
 
-    return GetMaterialApp(
-      title: 'At-Tareek',
-      transitionDuration: 300.milliseconds,
-      defaultTransition: Transition.rightToLeft,
-      theme: AppTheme.lightTheme,
-      initialRoute: Pages.initial,
-      getPages: Pages.routes,
+    
+    
+
+    return Portal(
+      child: GetMaterialApp(
+        title: 'At-Tareek',
+        transitionDuration: 300.milliseconds,
+        defaultTransition: Transition.rightToLeft,
+        theme: AppTheme.lightTheme,
+        initialRoute: Pages.initial,
+        getPages: Pages.routes,
+      ),
     );
   }
 }

@@ -57,6 +57,7 @@ abstract class Repository<T> {
       String? mapKey}) async {
     var data =
         (await (apiClient.get(path, queryParameters: query))).data['data'];
+    print(data);
     if (mapKey != null) {
       data = data[mapKey];
     }

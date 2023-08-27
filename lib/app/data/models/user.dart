@@ -28,7 +28,7 @@ class User {
     this.location,
     // this.googleId,
     this.organization,
-    required this.thumb,
+    this.thumb,
   });
 
   int id;
@@ -43,7 +43,11 @@ class User {
   String? location;
   // dynamic googleId;
   String? organization;
-  String thumb;
+  String? thumb;
+
+  String getOrganization(){
+    return organization??name; 
+  }
 
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],

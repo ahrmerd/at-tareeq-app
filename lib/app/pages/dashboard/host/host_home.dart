@@ -118,7 +118,7 @@ class HostActionWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             item.icon,
-            VerticalSpace(),
+            const VerticalSpace(),
             SmallText(
               item.title,
               fontSize: 13,

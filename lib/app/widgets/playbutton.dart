@@ -12,6 +12,10 @@ class PlayButton extends StatelessWidget {
       this.onPause,
       this.onPlay,
       this.onStop});
+  
+final decorationColor = CustomColor.appPurple;
+final boxShape = BoxShape.circle;
+final iconColor = Colors.white;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +26,8 @@ class PlayButton extends StatelessWidget {
           child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(5),
-              decoration: const BoxDecoration(
-                  color: primaryLightColor, shape: BoxShape.circle),
+              decoration: BoxDecoration(
+                  color: decorationColor, shape: boxShape),
               child: const CircularProgressIndicator()),
         );
       case PlayingStatus.playing:
@@ -34,11 +38,11 @@ class PlayButton extends StatelessWidget {
               child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(5),
-                  decoration: const BoxDecoration(
-                      color: primaryLightColor, shape: BoxShape.circle),
-                  child: const Icon(
+                  decoration: BoxDecoration(
+                      color: decorationColor, shape: boxShape),
+                  child: Icon(
                     Icons.pause_rounded,
-                    color: Colors.white,
+                    color: iconColor,
                   )),
             ),
             GestureDetector(
@@ -46,11 +50,11 @@ class PlayButton extends StatelessWidget {
               child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(5),
-                  decoration: const BoxDecoration(
-                      color: primaryLightColor, shape: BoxShape.circle),
-                  child: const Icon(
+                  decoration: BoxDecoration(
+                      color: decorationColor, shape: boxShape),
+                  child: Icon(
                     Icons.stop,
-                    color: Colors.white,
+                    color: iconColor,
                   )),
             )
           ],
@@ -64,11 +68,11 @@ class PlayButton extends StatelessWidget {
               child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(5),
-                  decoration: const BoxDecoration(
-                      color: primaryLightColor, shape: BoxShape.circle),
-                  child: const Icon(
+                  decoration: BoxDecoration(
+                      color: decorationColor, shape: boxShape),
+                  child: Icon(
                     Icons.play_arrow,
-                    color: Colors.white,
+                    color: iconColor,
                   )),
             ),
             GestureDetector(
@@ -76,11 +80,11 @@ class PlayButton extends StatelessWidget {
               child: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(5),
-                  decoration: const BoxDecoration(
-                      color: primaryLightColor, shape: BoxShape.circle),
-                  child: const Icon(
+                  decoration: BoxDecoration(
+                      color: decorationColor, shape: boxShape),
+                  child: Icon(
                     Icons.stop,
-                    color: Colors.white,
+                    color: iconColor,
                   )),
             )
           ],
@@ -91,11 +95,11 @@ class PlayButton extends StatelessWidget {
           child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.all(5),
-              decoration: const BoxDecoration(
-                  color: primaryLightColor, shape: BoxShape.circle),
-              child: const Icon(
+              decoration: BoxDecoration(
+                  color: decorationColor, shape: boxShape),
+              child: Icon(
                 Icons.play_arrow,
-                color: Colors.white,
+                color: iconColor,
               )),
         );
     }

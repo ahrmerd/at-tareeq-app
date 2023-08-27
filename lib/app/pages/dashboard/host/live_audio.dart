@@ -21,7 +21,7 @@ class _LiveAudioState extends State<LiveAudio> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: CustomColor.appBlue),
+        iconTheme: const IconThemeData(color: CustomColor.appBlue),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -46,7 +46,7 @@ class _LiveAudioState extends State<LiveAudio> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           BigText(
@@ -54,7 +54,7 @@ class _LiveAudioState extends State<LiveAudio> {
                             fontSize: 16,
                             color: Colors.black,
                           ),
-                          const SizedBox(
+                          SizedBox(
                             height: 6,
                           ),
                           SmallText(
@@ -64,7 +64,7 @@ class _LiveAudioState extends State<LiveAudio> {
                         ],
                       ),
                       IconButton(
-                        icon: Icon(Icons.more_vert_rounded),
+                        icon: const Icon(Icons.more_vert_rounded),
                         onPressed: () {},
                       ),
                     ],

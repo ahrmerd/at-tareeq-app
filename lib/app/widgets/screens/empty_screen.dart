@@ -1,5 +1,6 @@
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/text_styles.dart';
+import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class EmptyScreen extends StatelessWidget {
@@ -15,13 +16,16 @@ class EmptyScreen extends StatelessWidget {
         children: [
           const Icon(
             Icons.warning_amber,
-            color: Colors.orange,
+            color: CustomColor.appPurple,
             size: 70,
           ),
           const HorizontalSpace(25),
-          Text(
-            message ?? 'There are no resource available',
-            style: biggerTextStyle.copyWith(color: Colors.orange),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              message ?? 'You are not lost.We have nothing to show you',
+              style: biggerTextStyle.copyWith(color: CustomColor.appPurple),
+            ),
           ),
           if (onReturn != null) const HorizontalSpace(),
           if (onReturn != null)

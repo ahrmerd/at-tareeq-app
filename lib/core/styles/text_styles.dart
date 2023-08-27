@@ -27,10 +27,11 @@ const TextStyle mediumTextStyle = TextStyle(
 );
 
 TextStyle biggestTextStyle = const TextStyle(
-  fontSize: 30,
-  fontWeight: FontWeight.bold,
-  color: primaryColor,
-);
+        fontFamily: 'Brand Bold',
+        fontSize: 24,
+        letterSpacing: 1,
+        color: primaryColor,
+      );
 
 TextStyle dangerTextStyle = const TextStyle(
   fontWeight: FontWeight.bold,
@@ -38,13 +39,13 @@ TextStyle dangerTextStyle = const TextStyle(
 );
 
 TextStyle biggerTextStyle = const TextStyle(
-  fontSize: 20,
+  fontSize: 19,
   fontWeight: FontWeight.bold,
-  color: primaryDarkColor,
+  color: primaryColor,
 );
 TextStyle bigTextStyle = const TextStyle(
   fontSize: 17,
-  color: primaryDarkColor,
+  color: primaryColor,
 );
 TextStyle normalTextStyle = const TextStyle(
   fontSize: 15,

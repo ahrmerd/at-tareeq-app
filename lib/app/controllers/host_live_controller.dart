@@ -5,11 +5,9 @@ import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/models/livestream.dart';
 import 'package:at_tareeq/app/data/enums/livestream_status.dart';
 import 'package:at_tareeq/app/data/models/live_messages.dart';
-import 'package:at_tareeq/app/data/models/user.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/data/repositories/live_message_repository.dart';
-import 'package:at_tareeq/app/data/repositories/livestream_repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/logger.dart';
@@ -60,6 +58,7 @@ class HostLiveController extends GetxController {
     final channel = realtime.channels.get(livestream.channel);
     await channel.attach();
     channel.subscribe().listen((event) {
+      print(event.name);
       if (event.name == Events.startLivestream) {
         livestreamStatus.value = LivestreamStatus.started;
       } else if (event.name == Events.stopLivestream) {
@@ -261,6 +260,8 @@ class HostLiveController extends GetxController {
       print(res);
       messages.clear();
       messages.addAll(res);
+      messagesProcessingStatus.value = ProcessingStatus.success;
+
     } on DioError catch (e) {
       messagesProcessingStatus.value = ProcessingStatus.error;
       print(e);

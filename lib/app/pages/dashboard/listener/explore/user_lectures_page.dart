@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/controllers/user_lectures_controller.dart';
-import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/screens/empty_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
@@ -33,7 +32,7 @@ class UserLecturesPage extends GetView<UserLecturesController> {
               child: MyNetworkImage(
                   fit: BoxFit.contain,
                   path: controller.user.thumb,
-                  useAppRequest: false)
+                  useAppRequest: true)
               // Image.asset(
               //   controller.user.thumb,
               //   fit: BoxFit.fill,
@@ -47,8 +46,17 @@ class UserLecturesPage extends GetView<UserLecturesController> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  controller.user.name,
+                  controller.user.getOrganization(),
                   style: biggerTextStyle.copyWith(color: lightColor),
+                ),
+                Row(
+                  children: [
+                    Text('Uploaders Name: ',
+                        style: normalTextStyle.copyWith(color: lightColor, fontWeight: FontWeight.bold)),
+                    Text(controller.user.name,
+                        style: normalTextStyle.copyWith(color: lightColor))
+                    // TitleValue(title: 'Description', value: controller.interest.description??'');
+                  ],
                 ),
                 const VerticalSpace(),
                 Row(
@@ -64,23 +72,17 @@ class UserLecturesPage extends GetView<UserLecturesController> {
               ],
             ),
           ),
-          const VerticalSpace(),
-          Text(
-            'Lectures',
-            style: biggerTextStyle,
-          ),
-          const VerticalSpace(),
-          Expanded(
-              child: controller.obx(
-                  (state) => VerticalLectureListView(
-                        onAddToFavorite: (lecture) => addToFavorite(lecture),
-                        onAddToPlaylater: (lecture) => addToPlaylater(lecture),
-                        label: 'Organization Lecture',
-                        lectures: state ?? [],
-                      ),
-                  onEmpty: const EmptyScreen(),
-                  onLoading: const LoadingScreen(),
-                  onError: (err) => const ErrorScreen()))
+          // const VerticalSpace(),
+          controller.obx(
+              (state) => VerticalLectureListView(
+                    // onAddToFavorite: (lecture) => addToFavorite(lecture),
+                    // onAddToPlaylater: (lecture) => addToPlaylater(lecture),
+                    label: 'Organization Lecture',
+                    lectures: state ?? [],
+                  ),
+              onEmpty: const EmptyScreen(),
+              onLoading: const LoadingScreen(),
+              onError: (err) => const ErrorScreen())
         ]),
       ),
     );

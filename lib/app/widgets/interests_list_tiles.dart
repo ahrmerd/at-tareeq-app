@@ -1,4 +1,7 @@
 import 'package:at_tareeq/app/data/models/section_or_interest.dart';
+import 'package:at_tareeq/app/widgets/my_network_image.dart';
+import 'package:at_tareeq/app/widgets/widgets.dart';
+import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class InterestsListTiles extends StatelessWidget {
@@ -24,30 +27,41 @@ class InterestsListTiles extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Text(
                 label,
+                style: biggerTextStyle,
+
                 // style: theme.headline1!.copyWith(fontSize: 13),
               )),
           SizedBox(
-            height: 150,
+            height: 180,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: interests.length,
                 itemBuilder: (_, i) {
                   final interest = interests[i];
-                  return GestureDetector(
-                    onTap: () => onTap(interest),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 90,
-                          width: 100,
-                          margin: const EdgeInsets.only(right: 9),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(9)),
-                          child: Image.network(interest.thumb),
-                        ),
-                        Text(interest.name),
-                        // Text(interest.title)
-                      ],
+                  return Container(
+                        margin: EdgeInsets.only(right: 10),
+
+                    child: GestureDetector(
+                      onTap: () => onTap(interest),
+                      child: Column(
+                        children: [
+                  ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: MyNetworkImage(
+                              path: interest.thumb,
+                              fit: BoxFit.fill,
+                              width: 120,
+                              height: 140,
+                            ),
+                          ),
+                          VerticalSpace(2),
+                          SmallText(
+                           interest.name,
+                            fontSize: 14,
+                          ),
+                          // Text(interest.title)
+                        ],
+                      ),
                     ),
                   );
                 }),

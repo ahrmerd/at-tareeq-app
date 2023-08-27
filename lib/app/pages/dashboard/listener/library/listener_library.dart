@@ -1,5 +1,7 @@
 import 'package:at_tareeq/app/data/enums/library_type.dart';
 import 'package:at_tareeq/app/data/models/my_list_item.dart';
+import 'package:at_tareeq/app/widgets/my_iist_tile.dart';
+import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
@@ -11,58 +13,66 @@ class ListenerLibrary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final libraryItems = <MyListItem>[
-      MyListItem(const Icon(Icons.play_circle), 'history', () {
+      MyListItem(const Icon(Icons.play_circle_fill_rounded), 'history', () {
         Get.toNamed(Routes.LIBRARYLECTURES,
             arguments: {'type': LibraryType.history});
       }),
-      MyListItem(const Icon(Icons.bookmark), 'Play Later', () {
+      MyListItem(const Icon(Icons.bookmark_rounded), 'Play Later', () {
         Get.toNamed(Routes.LIBRARYLECTURES,
             arguments: {'type': LibraryType.playLater});
       }),
-      MyListItem(const Icon(Icons.playlist_play), 'Playlist', () {}),
-      MyListItem(const Icon(Icons.favorite), 'Favoutite', () {
-        Get.toNamed(Routes.LIBRARYLECTURES,
+      MyListItem(const Icon(Icons.playlist_play_rounded), 'Playlist', () {}),
+      MyListItem(const Icon(Icons.favorite_rounded), 'Favourite', () {
+        Get.toNamed(Routes  .LIBRARYLECTURES,
             arguments: {'type': LibraryType.favorite});
       }),
-      MyListItem(const Icon(Icons.download), 'Downloads', () {}),
+      MyListItem(const Icon(Icons.save_alt_rounded), 'Downloads', () {
+        Get.toNamed(Routes.DOWNLOADS);
+      }),
     ];
 
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: BigText(
           'Library',
-          style: biggerTextStyle,
         ),
       ),
       body: Container(
-        margin: const EdgeInsets.only(top: 10),
-        padding: const EdgeInsets.all(8),
-        child: DefaultTextStyle.merge(
+        margin: EdgeInsets.only(top: 40),
+        // style: biggestTextStyle,
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
             child: ListView.builder(
                 itemCount: libraryItems.length,
                 itemBuilder: (_, i) {
                   final item = libraryItems[i];
-                  return Card(
-                    child: ListTile(
-                      onTap: item.onTap,
-                      leading: item.icon,
-                      title: Text(item.title),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                    ),
+                  return Column(
+                    children: [
+                      MyListTile(icon: item.icon, onTap: item.onTap, text: item.title,),
+                                    Divider(height: 6,),
+                    ],
                   );
-                })
-            //     child: ListView(children: const [
-            //   Card(
-            //     child: ListTile(
-            //       leading: Icon(Icons.play_circle_filled),
-            //       title: Text('History'),
-            //       trailing: Icon(Icons.arrow_forward_ios),
-            //     ),
-            //   )
-            // ])
-            ),
-      ),
+                  // return Card(
+                  //   child: ListTile(
+                  //     onTap: item.onTap,
+                  //     leading: item.icon,
+                  //     title: Text(item.title),
+                  //     trailing: const Icon(Icons.arrow_forward_ios),
+                  //   ),
+                  // );
+                }),
+          )
+          //     child: ListView(children: const [
+          //   Card(
+          //     child: ListTile(
+          //       leading: Icon(Icons.play_circle_filled),
+          //       title: Text('History'),
+          //       trailing: Icon(Icons.arrow_forward_ios),
+          //     ),
+          //   )
+          // ])
+          ),
     ));
     // return Scaffold(
     //   body: SafeArea(

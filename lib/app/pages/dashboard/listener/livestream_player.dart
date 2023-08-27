@@ -8,7 +8,6 @@ import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/decorations.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:get/get.dart';
@@ -22,10 +21,10 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: CustomColor.appBlue),
+        iconTheme: const IconThemeData(color: CustomColor.appBlue),
       ),
       body: Container(
-        margin: EdgeInsets.only(bottom: 110),
+        margin: const EdgeInsets.only(bottom: 110),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -45,7 +44,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                 Obx(() {
                   switch (controller.liveProcessingStatus.value) {
                     case ProcessingStatus.initial:
-                      return SizedBox(
+                      return const SizedBox(
                         height: 200,
                         child: Column(
                           children: [
@@ -63,11 +62,11 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                         ),
                       );
                     case ProcessingStatus.error:
-                      return ErrorScreen(
+                      return const ErrorScreen(
                         messsage: "Unable to initalize livestream",
                       );
                     case ProcessingStatus.loading:
-                      return ColorLoader();
+                      return const ColorLoader();
                   }
                 }),
                 const VerticalSpace(16),
@@ -94,7 +93,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                         ],
                       ),
                       IconButton(
-                        icon: Icon(Icons.more_vert_rounded),
+                        icon: const Icon(Icons.more_vert_rounded),
                         onPressed: () {},
                       ),
                     ],
@@ -102,7 +101,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                 ),
               ],
             ),
-            VerticalSpace(),
+            const VerticalSpace(),
             Expanded(child: Obx(() {
               return ListView.builder(
                   controller: controller.messageScrollController,
@@ -118,7 +117,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                               : BubbleType.receiverBubble),
                       alignment:
                           isSentByMe ? Alignment.topRight : Alignment.topLeft,
-                      margin: EdgeInsets.only(top: 20),
+                      margin: const EdgeInsets.only(top: 20),
                       backGroundColor: primaryColor,
                       child: Container(
                         // constraints: BoxConstraints(
@@ -130,7 +129,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                           children: [
                             Text(
                               message.user.name,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 13,
                                   fontWeight: FontWeight.w300),
@@ -139,17 +138,17 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                             Text(
                               message.message,
                               style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
+                                  const TextStyle(color: Colors.white, fontSize: 16),
                             ),
                             message.isSending
-                                ? Icon(
+                                ? const Icon(
                                     Icons.cached,
                                     size: 10,
                                     color: Colors.grey,
                                   )
                                 : Text(
                                     formatDateTime(message.createdAt),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.grey,
                                         fontSize: 10,
                                         fontWeight: FontWeight.w300),
@@ -182,9 +181,9 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                     decoration: myInputDecoration2(label: "Message"),
                   ),
                 ),
-                HorizontalSpace(),
+                const HorizontalSpace(),
                 MyButton(
-                  child: Icon(Icons.send),
+                  child: const Icon(Icons.send),
                   onTap: () {
                     controller
                         .sendMessage(controller.messageFieldControlller.text);

@@ -43,8 +43,10 @@ class _MyTabViewState extends State<MyTabView>
       appBar: TabBar(
         indicatorColor: primaryColor,
         labelColor: primaryColor,
+        unselectedLabelColor: Colors.grey,
         physics: const NeverScrollableScrollPhysics(),
         controller: _tabController,
+        indicatorWeight: 3,
         tabs: tabs,
       ),
       body: Padding(

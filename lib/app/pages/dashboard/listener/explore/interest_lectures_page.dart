@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/controllers/interest_lectures_controller.dart';
-import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/screens/empty_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
@@ -49,24 +48,24 @@ class InterestLecturesPage extends GetView<InterestLecturesController> {
                 const VerticalSpace(),
                 Row(
                   children: [
+                    Text('Description: ',
+                        style: normalTextStyle.copyWith(color: lightColor, fontWeight: FontWeight.bold)),
                     Text(controller.interest.description ?? '',
                         style: normalTextStyle.copyWith(color: lightColor))
+                    // TitleValue(title: 'Description', value: controller.interest.description??'');
                   ],
                 )
               ],
             ),
           ),
           const VerticalSpace(),
-          Text(
-            'Lectures',
-            style: biggerTextStyle,
-          ),
+          
           const VerticalSpace(),
           Expanded(
               child: controller.obx(
                   (state) => VerticalLectureListView(
-                        onAddToFavorite: (lecture) => addToFavorite(lecture),
-                        onAddToPlaylater: (lecture) => addToPlaylater(lecture),
+                        // onAddToFavorite: (lecture) => addToFavorite(lecture),
+                        // onAddToPlaylater: (lecture) => addToPlaylater(lecture),
                         label: 'Interest Lecture',
                         lectures: state ?? [],
                       ),

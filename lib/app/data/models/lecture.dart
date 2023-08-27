@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:at_tareeq/app/data/models/user.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 
 Lecture lectureFromJson(Map<String, dynamic> json) => Lecture.fromJson(json);
@@ -32,7 +33,8 @@ class Lecture {
     this.deletedAt,
     required this.downloaded,
     required this.url,
-    required this.thumb,
+    this.thumb,
+    this.user
   });
 
   int id;
@@ -49,7 +51,8 @@ class Lecture {
   dynamic deletedAt;
   String downloaded;
   String url;
-  String thumb;
+  String? thumb;
+  User? user;
 
   factory Lecture.fromJson(Map<String, dynamic> json) => Lecture(
         id: json["id"],
@@ -67,6 +70,8 @@ class Lecture {
         downloaded: json["downloaded"],
         url: json["url"],
         thumb: json["thumb"],
+        user: json["user"] == null ? null : User.fromJson(json["user"]),
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -84,6 +89,7 @@ class Lecture {
         "deleted_at": deletedAt,
         "downloaded": downloaded,
         "url": url,
-        "thumb": thumb,
+        "thumb": thumb??"",
+        "user": user?.toJson()?? "",
       };
 }

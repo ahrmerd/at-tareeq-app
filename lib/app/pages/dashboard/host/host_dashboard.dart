@@ -18,9 +18,9 @@ class HostDashboard extends GetView<HostController> {
         return BottomNavigationBar(
             backgroundColor: primaryColor,
             selectedItemColor: lightColor,
-            unselectedItemColor: darkColor,
-            unselectedIconTheme: IconThemeData(color: darkColor),
-            selectedIconTheme: IconThemeData(color: lightColor),
+            unselectedItemColor: darkColor.withOpacity(.8),
+            // unselectedIconTheme: IconThemeData(color: Colors.grey),
+            // selectedIconTheme: const IconThemeData(color: lightColor),
             currentIndex: controller.bottomNavTabIndex.value,
             onTap: controller.changeTabIndex,
             items: const [

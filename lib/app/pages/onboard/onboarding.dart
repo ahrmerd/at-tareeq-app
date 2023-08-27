@@ -54,9 +54,9 @@ class Onboarding extends StatelessWidget {
                       right: 10,
                       child: GestureDetector(
                         onTap: _controller.navigateToNext,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: const Row(
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Row(
                             children: [Text('Skip')],
                           ),
                         ),

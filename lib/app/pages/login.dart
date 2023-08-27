@@ -1,3 +1,4 @@
+import 'package:at_tareeq/app/controllers/register_controller.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
@@ -5,7 +6,6 @@ import 'package:at_tareeq/app/widgets/screens/success_screen.dart';
 import 'package:at_tareeq/app/widgets/social_media_signup.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/decorations.dart';
-import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
@@ -66,13 +66,13 @@ class LoginForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          BigText('Welcome User,'),
+          const BigText('Welcome User,'),
           // Text(
           //   'Welcome User',
           //   style: biggestTextStyle,
           // ),
           const VerticalSpace(20),
-          SmallText(
+          const SmallText(
             'Login to Continue',
           ),
           const VerticalSpace(),
@@ -88,6 +88,7 @@ class LoginForm extends StatelessWidget {
                       child: FormBuilderTextField(
                         controller: item.controller,
                         name: item.field,
+                        autofillHints: getFromAutoFillHints(item.field),
                         keyboardType: item.type,
                         obscureText: item.type == TextInputType.visiblePassword,
                         decoration: myInputDecoration(

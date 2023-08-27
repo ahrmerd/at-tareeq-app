@@ -61,7 +61,7 @@ class LibraryController extends GetxController with StateMixin<List<Lecture>> {
       print(e);
     } catch (err) {
       print(err);
-      showErrorDialogue();
+      showErrorDialogue(err.toString());
       change(null, status: RxStatus.error('Failed to Load Lecturers'));
     }
   }

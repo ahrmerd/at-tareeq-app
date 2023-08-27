@@ -24,7 +24,7 @@ String formatDate(DateTime date) {
   return DateFormat('d, MMM, yyyy').format(date);
 }
 
-R tryMapCast<R>({required Map map, dynamic key, required R fallback}) {
+R tryMapCast<R>({required Map? map, dynamic key, required R fallback}) {
   try {
     final map2 = tryCast<Map>(map, fallback: {});
     if (map2.containsKey(key)) {
@@ -121,4 +121,30 @@ String formatLength(int seconds) {
   }
 
   return result.trim();
+}
+
+String fileEntityBasename(FileSystemEntity entity) {
+  if (entity is Directory) {
+    return entity.path.split(Platform.pathSeparator).last;
+  } else if (entity is File) {
+    return entity.path.split(Platform.pathSeparator).last;
+  } else {
+    print(
+        "Please provide a Object of type File, Directory or FileSystemEntity");
+    return "";
+  }
+}
+
+String parsePhone(String phone, [String phoneCode = "234"]){
+  phone  = phone.trim();
+  if(phone.startsWith('+')){
+    return phone;
+  }
+  else if(phone.length>=12){
+    return "+$phone";
+  }else if(phone.startsWith('0')) {
+    return "+$phoneCode${phone.substring(1)}";
+  }else{
+    return "+$phoneCode$phone";
+  }
 }

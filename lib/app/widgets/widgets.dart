@@ -147,6 +147,7 @@ class SmallText extends StatelessWidget {
     this.textAlign = TextAlign.start,
     this.maxLines,
     this.overflow,
+    this.softWrap
   }) : super(key: key);
 
   final String text;
@@ -154,6 +155,7 @@ class SmallText extends StatelessWidget {
   final Color? color;
   final TextAlign textAlign;
   final int? maxLines;
+  final bool? softWrap;
 
   final TextOverflow? overflow;
 
@@ -163,6 +165,7 @@ class SmallText extends StatelessWidget {
       text,
       overflow: overflow,
       maxLines: maxLines,
+      softWrap: softWrap,
       style: TextStyle(
         fontFamily: 'Brand-Regular',
         fontSize: fontSize,
@@ -200,7 +203,7 @@ class CustomIconButton extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
         onPressed: onPressed,
         icon: Icon(icon),
-        label: Align(child: Text(text), alignment: alignment));
+        label: Align(alignment: alignment, child: Text(text)));
   }
 }
 
@@ -222,7 +225,7 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
         style: TextButton.styleFrom(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           textStyle: TextStyle(fontSize: fontSize),
           foregroundColor: color,
         ),

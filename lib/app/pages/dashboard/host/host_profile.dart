@@ -1,6 +1,10 @@
 import 'package:at_tareeq/app/data/models/my_list_item.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/dependancies.dart';
+import 'package:at_tareeq/app/pages/about_page.dart';
+import 'package:at_tareeq/app/pages/notifications_page.dart';
+import 'package:at_tareeq/app/pages/privacy_page.dart';
+import 'package:at_tareeq/app/widgets/my_iist_tile.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/upload_profile_picture_widget.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
@@ -19,15 +23,20 @@ class HostProfile extends StatefulWidget {
 
 class _HostProfileState extends State<HostProfile> {
   final libraryItems = <MyListItem>[
-    MyListItem(
-        const Icon(Icons.notifications_none_outlined), 'Notifications', () {}),
-    MyListItem(
-        const Icon(Icons.privacy_tip_outlined), 'Privacy and Location', () {}),
-    MyListItem(const Icon(Icons.info_outline), 'About', () {}),
+    MyListItem(const Icon(Icons.notifications_none_rounded), 'Notifications',
+        () {
+      Get.to(() => NotificationsPage());
+    }),
+    MyListItem(const Icon(Icons.privacy_tip_rounded), 'Privacy and Location',
+        () {
+      Get.to(() => PrivacyPage());
+    }),
+    MyListItem(const Icon(Icons.info_outline), 'About', () {
+      Get.to(() => AboutPage());
+    }),
     MyListItem(const Icon(Icons.exit_to_app), 'Log Out', () {
       Dependancies.authService().logout();
     }),
-    // MyListItem(const Icon(Icons.download), 'Downloads', () {}),
   ];
 
   var path = 'profile-image';
@@ -38,15 +47,18 @@ class _HostProfileState extends State<HostProfile> {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Profile',
-          style: biggerTextStyle,
-        ),
+        // title: Text(
+        //   'Profile',
+        //   style: biggerTextStyle,
+        // ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            BigText('Profile'),
+            VerticalSpace(48),
             Row(
               children: [
                 GestureDetector(
@@ -105,31 +117,38 @@ class _HostProfileState extends State<HostProfile> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    SmallText(
                       name,
-                      style: bigTextStyle,
+                      fontSize: 20,
+                      // style: bigTextStyle,
                     ),
-                    Text(
+                    SmallText(
                       "Edit Profile",
-                      style: biggerTextStyle,
+                      color: Colors.grey.shade700,
+                      // style: biggerTextStyle,
                     )
                   ],
                 )
               ],
             ),
+            VerticalSpace(48),
             Expanded(
               child: DefaultTextStyle.merge(
                   child: ListView.builder(
                       itemCount: libraryItems.length,
                       itemBuilder: (_, i) {
                         final item = libraryItems[i];
-                        return Card(
-                          child: ListTile(
-                            onTap: item.onTap,
-                            leading: item.icon,
-                            title: Text(item.title),
-                            trailing: const Icon(Icons.arrow_forward_ios),
-                          ),
+                        return Column(
+                          children: [
+                            MyListTile(
+                              icon: item.icon,
+                              onTap: item.onTap,
+                              text: item.title,
+                            ),
+                            Divider(
+                              height: 6,
+                            ),
+                          ],
                         );
                       })
                   //     child: ListView(children: const [

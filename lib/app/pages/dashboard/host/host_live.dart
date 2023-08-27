@@ -1,18 +1,14 @@
 import 'package:at_tareeq/app/controllers/host_live_controller.dart';
-import 'package:at_tareeq/app/data/enums/livestream_status.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/widgets/color_loader.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
-import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/decorations.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:chat_bubbles/bubbles/bubble_special_one.dart';
-import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:get/get.dart';
@@ -27,10 +23,10 @@ class HostLivePage extends GetView<HostLiveController> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: CustomColor.appBlue),
+        iconTheme: const IconThemeData(color: CustomColor.appBlue),
       ),
       body: Container(
-        margin: EdgeInsets.only(bottom: 110),
+        margin: const EdgeInsets.only(bottom: 110),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -39,7 +35,7 @@ class HostLivePage extends GetView<HostLiveController> {
                 Obx(() {
                   switch (controller.liveProcessingStatus.value) {
                     case ProcessingStatus.initial:
-                      return SizedBox(
+                      return const SizedBox(
                         height: 200,
                         child: Column(
                           children: [
@@ -57,11 +53,11 @@ class HostLivePage extends GetView<HostLiveController> {
                         ),
                       );
                     case ProcessingStatus.error:
-                      return ErrorScreen(
+                      return const ErrorScreen(
                         messsage: "Unable to initalize livestream",
                       );
                     case ProcessingStatus.loading:
-                      return ColorLoader();
+                      return const ColorLoader();
                   }
                 }),
                 const VerticalSpace(16),
@@ -88,7 +84,7 @@ class HostLivePage extends GetView<HostLiveController> {
                         ],
                       ),
                       IconButton(
-                        icon: Icon(Icons.more_vert_rounded),
+                        icon: const Icon(Icons.more_vert_rounded),
                         onPressed: () {},
                       ),
                     ],
@@ -96,7 +92,7 @@ class HostLivePage extends GetView<HostLiveController> {
                 ),
               ],
             ),
-            VerticalSpace(),
+            const VerticalSpace(),
             Expanded(child: Obx(() {
               switch (controller.messagesProcessingStatus.value) {
                 case ProcessingStatus.success:
@@ -116,7 +112,7 @@ class HostLivePage extends GetView<HostLiveController> {
                           alignment: isSentByMe
                               ? Alignment.topRight
                               : Alignment.topLeft,
-                          margin: EdgeInsets.only(top: 20),
+                          margin: const EdgeInsets.only(top: 20),
                           backGroundColor: primaryColor,
                           child: Container(
                             // constraints: BoxConstraints(
@@ -128,7 +124,7 @@ class HostLivePage extends GetView<HostLiveController> {
                               children: [
                                 Text(
                                   message.user.name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w300),
@@ -136,18 +132,18 @@ class HostLivePage extends GetView<HostLiveController> {
                                 // separa
                                 Text(
                                   message.message,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.white, fontSize: 16),
                                 ),
                                 message.isSending
-                                    ? Icon(
+                                    ? const Icon(
                                         Icons.cached,
                                         size: 10,
                                         color: Colors.grey,
                                       )
                                     : Text(
                                         formatDateTime(message.createdAt),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.grey,
                                             fontSize: 10,
                                             fontWeight: FontWeight.w300),
@@ -158,11 +154,11 @@ class HostLivePage extends GetView<HostLiveController> {
                         );
                       });
                 case ProcessingStatus.initial:
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 case ProcessingStatus.error:
-                  return ErrorScreen();
+                  return const ErrorScreen();
                 case ProcessingStatus.loading:
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
               }
             })),
           ],
@@ -187,9 +183,9 @@ class HostLivePage extends GetView<HostLiveController> {
                     decoration: myInputDecoration2(label: "Message"),
                   ),
                 ),
-                HorizontalSpace(),
+                const HorizontalSpace(),
                 MyButton(
-                  child: Icon(Icons.send),
+                  child: const Icon(Icons.send),
                   onTap: () {
                     controller
                         .sendMessage(controller.messageFieldControlller.text);
@@ -236,11 +232,11 @@ class HostLivePage extends GetView<HostLiveController> {
                             backgroundColor: Colors.grey,
                             child: IconButton(
                               isSelected: controller.isMuted.value,
-                              selectedIcon: Icon(
+                              selectedIcon: const Icon(
                                 Icons.volume_off_outlined,
                                 color: Colors.black,
                               ),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.volume_up_outlined,
                                 color: Colors.black,
                               ),
@@ -251,18 +247,18 @@ class HostLivePage extends GetView<HostLiveController> {
                               },
                             ),
                           ),
-                          HorizontalSpace(),
+                          const HorizontalSpace(),
                           MyButton(
                             onTap: () {
                               controller.stopBroadcast();
                             },
-                            child: Text('End Lecture'),
+                            child: const Text('End Lecture'),
                           ),
-                          HorizontalSpace(),
+                          const HorizontalSpace(),
                           CircleAvatar(
                             backgroundColor: Colors.grey,
                             child: IconButton(
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.share_outlined,
                                 color: Colors.black,
                               ),

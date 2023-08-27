@@ -1,4 +1,7 @@
 import 'package:at_tareeq/app/data/models/user.dart';
+import 'package:at_tareeq/app/widgets/my_network_image.dart';
+import 'package:at_tareeq/app/widgets/widgets.dart';
+import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class OrganizationsListTiles extends StatelessWidget {
@@ -22,31 +25,45 @@ class OrganizationsListTiles extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Text(
                 label,
+                style: biggerTextStyle,
                 // style: theme.headline1!.copyWith(fontSize: 13),
               )),
           SizedBox(
-            height: 150,
+            height: 180,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: users.length,
                 itemBuilder: (_, i) {
                   final user = users[i];
 
-                  return GestureDetector(
-                    onTap: () => onTap(user),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 90,
-                          width: 100,
-                          margin: const EdgeInsets.only(right: 9),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(9)),
-                          child: Image.network(user.thumb),
+                  return Container(
+                      margin: EdgeInsets.only(right: 10),
+
+                    child: Container(
+                        margin: EdgeInsets.only(right: 10),
+
+                      child: GestureDetector(
+                        onTap: () => onTap(user),
+                        child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: MyNetworkImage(
+                                path: user.thumb,
+                                fit: BoxFit.fill,
+                                width: 120,
+                                height: 140,
+                              ),
+                            ),
+                            VerticalSpace(2),
+                            SmallText(
+                              user.getOrganization(),
+                              fontSize: 14,
+                            ),
+                            // Text()
+                          ],
                         ),
-                        Text(user.organization ?? 'Unknown Organization'),
-                        // Text()
-                      ],
+                      ),
                     ),
                   );
                 }),

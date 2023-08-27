@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/controllers/library_controller.dart';
-import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/app/widgets/screens/empty_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
@@ -18,8 +17,8 @@ class LibraryLecturesPage extends GetView<LibraryController> {
         (state) => VerticalLectureListView(
           lectures: state!,
           label: '',
-          onAddToFavorite: addToFavorite,
-          onAddToPlaylater: addToPlaylater,
+          // onAddToFavorite: addToFavorite,
+          // onAddToPlaylater: addToPlaylater,
         ),
         onEmpty: const EmptyScreen(),
         onError: (error) => const ErrorScreen(),

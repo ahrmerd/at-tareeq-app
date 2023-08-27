@@ -1,5 +1,5 @@
 import 'package:at_tareeq/app/data/models/lecture.dart';
-import 'package:at_tareeq/app/widgets/lecture_thumb_widget.dart';
+import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:flutter/material.dart';
@@ -40,9 +40,10 @@ class HostLectureItem extends StatelessWidget {
                 children: [
                   ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: LectureThumbWidget(
-                        url: lecture.thumb,
-                        boxFit: BoxFit.fill,
+                      child: MyNetworkImage(
+                        path: lecture.thumb,
+                        useAppRequest: false,
+                        fit: BoxFit.fill,
                         height: 60,
                         width: 60,
                       ) /* Image.network(

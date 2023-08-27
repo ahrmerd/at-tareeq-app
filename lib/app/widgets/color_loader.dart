@@ -1,3 +1,4 @@
+import 'package:at_tareeq/core/themes/colors.dart';
 import "package:flutter/material.dart";
 import 'dart:math';
 
@@ -89,7 +90,7 @@ class ColorLoaderState extends State<ColorLoader>
                   offset: const Offset(0.0, 0.0),
                   child: Dot(
                     radius: radius,
-                    color: Colors.black12,
+                    color: primaryLightColor,
                   ),
                 ),
                 Transform.translate(
@@ -99,7 +100,7 @@ class ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Colors.amber,
+                    color: primaryColor,
                   ),
                 ),
                 Transform.translate(
@@ -109,7 +110,7 @@ class ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Colors.deepOrangeAccent,
+                    color: primaryDarkColor,
                   ),
                 ),
                 Transform.translate(
@@ -119,7 +120,7 @@ class ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Colors.pinkAccent,
+                    color: primaryLightColor,
                   ),
                 ),
                 Transform.translate(
@@ -129,7 +130,7 @@ class ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Colors.purple,
+                    color: primaryColor,
                   ),
                 ),
                 Transform.translate(
@@ -139,7 +140,7 @@ class ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Colors.yellow,
+                    color: primaryDarkColor,
                   ),
                 ),
                 Transform.translate(
@@ -149,7 +150,7 @@ class ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Colors.lightGreen,
+                    color:  primaryLightColor,
                   ),
                 ),
                 Transform.translate(
@@ -159,7 +160,7 @@ class ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Colors.orangeAccent,
+                    color: primaryColor,
                   ),
                 ),
                 Transform.translate(
@@ -169,7 +170,7 @@ class ColorLoaderState extends State<ColorLoader>
                   ),
                   child: Dot(
                     radius: dotRadius,
-                    color: Colors.blueAccent,
+                    color: primaryDarkColor,
                   ),
                 ),
               ],

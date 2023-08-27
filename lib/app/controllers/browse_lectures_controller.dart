@@ -44,7 +44,8 @@ class BrowseLecturesController extends GetxController {
   Future<List<User>> getOrganizations() async {
     final query = {
       'filter': {
-        'type': '${ServerUserTypes.host},${ServerUserTypes.verifiedHost}'
+        'type': '${ServerUserTypes.host},${ServerUserTypes.verifiedHost},${ServerUserTypes.admin}'
+        // 'type': '${ServerUserTypes.host},${ServerUserTypes.'
       }
     };
     return UserOrOrganizationTepository().fetchModels(query: query);

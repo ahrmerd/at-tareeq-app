@@ -19,41 +19,43 @@ class BrowseLectures extends GetView<BrowseLecturesController> {
         case ProcessingStatus.initial:
           return const LoadingScreen();
         case ProcessingStatus.success:
-          return Column(
-            children: [
-              InterestsListTiles(
-                interests: controller.sections,
-                label: 'Interests',
-                onTap: (SectionOrInterest interest) {
-                  Get.toNamed(Routes.INTERESTLECTURES,
-                      arguments: {'interest': interest});
-                },
-              ),
-              OrganizationsListTiles(
-                onTap: (org) {
-                  Get.toNamed(Routes.USERLECTURES, arguments: {'user': org});
-                },
-                users: controller.organizations,
-                label: 'Organization/Uploaders',
-              )
-              // HorizontalLectureListTiles(
-              //   label: 'For You',
-              //   lectures: controller.forYouLectures,
-              // ),
-              // HorizontalLectureListTiles(
-              //   label: 'Recomended',
-              //   lectures: controller.recomendedLectures,
-              // ),
-              // HorizontalLectureListTiles(
-              //   label: 'Popular',
-              //   lectures: controller.popularLectures,
-              // ),
-              // SizedBox(
-              // height: Get.height,
-              // child:
-              // Expanded(child: LectureList(filter: LecturesFilter.all)),
-              // )
-            ],
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                OrganizationsListTiles(
+                  onTap: (org) {
+                    Get.toNamed(Routes.USERLECTURES, arguments: {'user': org});
+                  },
+                  users: controller.organizations,
+                  label: 'Organization/Uploaders',
+                ),
+                InterestsListTiles(
+                  interests: controller.sections,
+                  label: 'Interests',
+                  onTap: (SectionOrInterest interest) {
+                    Get.toNamed(Routes.INTERESTLECTURES,
+                        arguments: {'interest': interest});
+                  },
+                ),
+                // HorizontalLectureListTiles(
+                //   label: 'For You',
+                //   lectures: controller.forYouLectures,
+                // ),
+                // HorizontalLectureListTiles(
+                //   label: 'Recomended',
+                //   lectures: controller.recomendedLectures,
+                // ),
+                // HorizontalLectureListTiles(
+                //   label: 'Popular',
+                //   lectures: controller.popularLectures,
+                // ),
+                // SizedBox(
+                // height: Get.height,
+                // child:
+                // Expanded(child: LectureList(filter: LecturesFilter.all)),
+                // )
+              ],
+            ),
           );
         case ProcessingStatus.error:
           return const ErrorScreen();

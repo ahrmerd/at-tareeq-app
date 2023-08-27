@@ -37,10 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   dio: ^5.1.1
-  shared_preferences: ^2.1.0
+  shared_preferences: ^2.2.0
   flutter_form_builder: ^9.1.0
   form_builder_validators: ^9.0.0
-  form_builder_phone_field: ^2.0.0
+  # form_builder_phone_field: ^2.0.0
   material_design_icons_flutter: ^6.0.7096
   audioplayers: ^3.0.1
   # flutter_sound: ^9.2.13
@@ -48,15 +48,19 @@ dependencies:
   file_picker: ^5.2.7
   device_info_plus: ^8.2.0
   record: ^4.4.4
-  path_provider: ^2.0.14
+  path_provider: ^2.1.0
   avatar_glow: ^2.0.2
   flutter_native_splash: ^2.2.19
   flutter_launcher_icons: ^0.13.0
   agora_rtc_engine: ^6.2.0
   expandable: ^5.0.1
-  chat_bubbles: ^1.4.1
+  # chat_bubbles: ^1.4.1
   flutter_chat_bubble: ^2.0.2
   ably_flutter: ^1.2.18
+  flutter_portal: ^1.1.4
+  # animate_do: ^3.0.2
+  share_plus: ^7.1.0
+  # country_pickers: ^2.0.0
   # fluttertoast: any
   # laravel_echo: ^0.2.9
   # pusher_client: ^2.0.0

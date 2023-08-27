@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class MyNetworkImage extends StatefulWidget {
-  final String path;
+  final String? path;
   final bool useAppRequest;
 
   final double? width;
@@ -20,7 +20,7 @@ class MyNetworkImage extends StatefulWidget {
 
   final String fallbackAsset;
   const MyNetworkImage({
-    this.fallbackAsset = 'assets/icon.png',
+    this.fallbackAsset = 'assets/pic_two.png',
     super.key,
     required this.path,
     this.useAppRequest = true,
@@ -36,17 +36,18 @@ class MyNetworkImage extends StatefulWidget {
 }
 
 class _MyNetworkImageState extends State<MyNetworkImage> {
-  late Future<Uint8List> futureImage;
   @override
   void initState() {
     super.initState();
 
-    futureImage = getImage();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    if (widget.path!=null) {
+    final futureImage = getImage(widget.path!);
+
+      return FutureBuilder(
       future: futureImage,
       builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
         if (snapshot.hasData) {
@@ -69,11 +70,21 @@ class _MyNetworkImageState extends State<MyNetworkImage> {
         return const CircularProgressIndicator();
       },
     );
+      
+    } else {
+      return Image.asset(widget.fallbackAsset,
+              height: widget.height,
+              width: widget.width,
+              color: widget.color,
+              fit: widget.fit,
+              alignment: widget.alignment);
+      
+    }
   }
 
-  Future<Uint8List> getImage() async {
+  Future<Uint8List> getImage(String path) async {
     final req = widget.useAppRequest ? Dependancies.http() : Dio();
-    final res = await req.get(widget.path,
+    final res = await req.get(path,
         options: Options(responseType: ResponseType.bytes));
     return Uint8List.fromList((res.data) as List<int>);
   }

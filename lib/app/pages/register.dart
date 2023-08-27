@@ -1,16 +1,15 @@
 import 'package:at_tareeq/app/controllers/register_controller.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
-import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/success_screen.dart';
 import 'package:at_tareeq/app/widgets/social_media_signup.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/decorations.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
+import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_phone_field/form_builder_phone_field.dart';
 
 import 'package:get/get.dart';
 
@@ -34,21 +33,21 @@ class RegisterView extends GetView<RegisterController> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Obx(() {
-            switch (controller.status) {
-              case ProcessingStatus.initial:
-                return RegisterForm(controller: controller);
-              case ProcessingStatus.success:
-                return const SuccessScreen();
-              case ProcessingStatus.error:
-                return RegisterForm(controller: controller);
-              // return ErrorScreen(onReturn: controller.restart);
-              case ProcessingStatus.loading:
-                return const LoadingScreen();
-            }
-          }),
-        ),
+        child: Obx(() {
+          switch (controller.status) {
+            case ProcessingStatus.error:
+            case ProcessingStatus.initial:
+              return SingleChildScrollView(
+                  child: RegisterForm(controller: controller));
+            case ProcessingStatus.success:
+              return const SuccessScreen();
+
+              // return RegisterForm(controller: controller);
+            // return ErrorScreen(onReturn: controller.restart);
+            case ProcessingStatus.loading:
+              return const LoadingScreen();
+          }
+        }),
       ),
     );
   }
@@ -81,34 +80,55 @@ class RegisterForm extends StatelessWidget {
                     final item = controller.formItems[index];
                     return Container(
                         margin: const EdgeInsets.only(top: 16),
-                        child: item.type == TextInputType.phone
-                            ? FormBuilderPhoneField(
-                                name: item.field,
-                                // controller: item.controller,
-                                decoration: myInputDecoration2(
-                                    label: item.label, icon: item.icon),
-                                priorityListByIsoCode: const ['NG'],
-                                defaultSelectedCountryIsoCode: 'NG',
-                                validator: item.validator,
-                              )
-                            : FormBuilderTextField(
-                                controller: item.controller,
-                                name: item.field,
-                                keyboardType: item.type,
-                                obscureText:
-                                    item.type == TextInputType.visiblePassword,
-                                decoration: myInputDecoration(
-                                    label: item.label, icon: item.icon),
-                                validator: item.validator,
-                              ));
+                        child:
+                            // item.type == TextInputType.phone
+                            //     ? FormBuilderPhoneField(
+
+                            //         name: item.field,
+                            //         // controller: item.controller,
+                            //         decoration: myInputDecoration2(
+                            //             label: item.label, icon: item.icon),
+                            //         priorityListByIsoCode: const ['NG'],
+                            //         defaultSelectedCountryIsoCode: 'NG',
+                            //         validator: item.validator,
+                            //         initialCountry: CountryPickerUtils.getCountryByIsoCode('NG'),
+                            //         // valueTransformer: ,
+                            //       // autofillHints: controller.getHints(item.field),
+
+                            //         // textInputAction: TextI/,
+
+                            //       )
+                            //     :
+                            FormBuilderTextField(
+                          autofillHints: getFromAutoFillHints(item.field),
+                          controller: item.controller,
+                          name: item.field,
+                          enableInteractiveSelection: true,
+                          enableSuggestions: true,
+                          valueTransformer: (value) {
+                            if (item.field != "phone") {
+                              return value;
+                            }
+                            return value != null ? parsePhone(value) : null;
+                          },
+                          // autofillHints: [],
+                          keyboardType: item.type,
+                          obscureText:
+                              item.type == TextInputType.visiblePassword,
+                          decoration: myInputDecoration(
+                              label: item.label, icon: item.icon),
+                          validator: item.validator,
+                        ));
                   }),
                   const VerticalSpace(20),
                   if (controller.states.length > 1)
-                    FormBuilderDropdown(
+                    FormBuilderDropdown<String>(
+                        initialValue: controller.selectedState,
+                        onChanged: (value) => controller.changeSelectedState(value),
                         decoration: myInputDecoration(label: 'Location'),
                         name: 'location',
                         items: controller.states
-                            .map((element) => DropdownMenuItem(
+                            .map((element) => DropdownMenuItem<String>(
                                 value: element['name'],
                                 child: Text(element['name'])))
                             .toList()),

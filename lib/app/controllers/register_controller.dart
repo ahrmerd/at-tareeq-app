@@ -22,10 +22,14 @@ import 'package:path_provider/path_provider.dart';
 class RegisterController extends GetxController {
   final AuthService _authService = Dependancies.authService();
   final formKey = GlobalKey<FormBuilderState>();
-  final _passwordController = TextEditingController();
+  // final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
+  final _orgController = TextEditingController();
   final _nameController = TextEditingController();
-  // final _phoneController = TextEditingController();
+  final _phoneController = TextEditingController();
+  var _selectedState = '';
+  String get  selectedState => _selectedState;
+
 
   bool isHost = tryMapCast(
           key: 'userType',
@@ -59,20 +63,21 @@ class RegisterController extends GetxController {
         FormItem('organization',
             label: 'Mosque/Organization/Lecturer',
             icon: const Icon(Icons.people_outline),
+            controller: _orgController,
             validator: FormBuilderValidators.compose([
               if (isHost) FormBuilderValidators.required(),
             ])),
       FormItem('phone',
           icon: const Icon(Icons.phone_outlined),
           type: TextInputType.phone,
-          // controller: _phoneController,
+          controller: _phoneController,
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.required(),
           ])),
       FormItem('password',
           icon: const Icon(Icons.lock_outline),
           type: TextInputType.visiblePassword,
-          controller: _passwordController,
+          // controller: _passwordController,
           validator: FormBuilderValidators.compose([
             FormBuilderValidators.required(),
             FormBuilderValidators.minLength(4),
@@ -87,7 +92,7 @@ class RegisterController extends GetxController {
             (val) {
               // print(val);
               // print(_passwordController.text);
-              if (val != _passwordController.text) {
+              if (val != formKey.currentState?.fields['password']?.value) {
                 return 'The Password and Password Confirmation must match';
               }
               return null;
@@ -112,9 +117,9 @@ class RegisterController extends GetxController {
 
   @override
   onClose() {
-    _emailController.dispose();
-    _nameController.dispose();
-    _passwordController.dispose();
+    // _emailController.dispose();
+    // _nameController.dispose();
+    // _passwordController.dispose();
     // _phoneController.dispose();
     super.onClose();
   }
@@ -125,6 +130,10 @@ class RegisterController extends GetxController {
   }
 
   Future onRegisterButtonClick() async {
+    // formKey.currentState?.save();
+    // print(formKey.currentState?.value.toString());
+    // print(formKey.currentState?.fields.map((key, value) => value.value));
+    // return;
     if (!validateData()) {
       Get.snackbar("Error", "the form is not completed",
           colorText: Colors.white, backgroundColor: Colors.red);
@@ -147,7 +156,7 @@ class RegisterController extends GetxController {
   }
 
   Future<void> register() async {
-    if (formKey.currentState!.validate()) {
+    if (formKey.currentState!.saveAndValidate()) {
       final data = {
         for (var e in formItems)
           e.field: formKey.currentState?.fields[e.field]?.value
@@ -158,8 +167,6 @@ class RegisterController extends GetxController {
       data['device_name'] = await getDeviceName();
       print(data);
       await _authService.registerFromData(data: data);
-      // ApiClient.getInstance().req.post('');
-      // print(data);
     } else {
       // throw Exception();
     }
@@ -171,11 +178,37 @@ class RegisterController extends GetxController {
   }
 
   bool validateData() {
-    return formKey.currentState!.validate();
+    return formKey.currentState!.saveAndValidate();
   }
 
   Future loadStates() async {
     String data = await rootBundle.loadString('assets/json/states.json');
     states.addAll(json.decode(data) as List);
   }
+
+  
+
+  changeSelectedState(String? state) {
+    _selectedState=state??'';
+  }
 }
+
+List<String> getFromAutoFillHints(String field) {
+    // return [AutofillHints.birthdayDay];
+    switch (field) {
+      case 'name':
+        return [AutofillHints.name, AutofillHints.givenName];
+      case 'email':
+        return [AutofillHints.email];
+      case 'password':
+        return [AutofillHints.password];
+      case 'password_confirmation':
+        return [AutofillHints.password];
+      case 'organization':
+        return [AutofillHints.organizationName];
+      case 'phone':
+        return [AutofillHints.telephoneNumber];
+      default:
+        return [];
+    }
+  }

@@ -1,8 +1,6 @@
 import 'package:at_tareeq/app/data/enums/user_type.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/extentions/string_extensions.dart';
-import 'package:at_tareeq/core/styles/text_styles.dart';
-import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +17,7 @@ class SelectUserType extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -42,14 +42,14 @@ class ListenNowController extends GetxController {
   }
 
   Future<List<Lecture>> getLatestLectures() async {
-    return LectureRepository().fetchModels();
+    return LectureRepository().fetchModels(query: {"include": "user"});
   }
 
   Future<List<Lecture>> getPopularLectures() {
-    return LectureRepository().fetchModels();
+    return LectureRepository().fetchModels(query: {"include": "user"});
   }
 
   Future<List<Lecture>> getRecommendedLectures() {
-    return LectureRepository().fetchModels();
+    return LectureRepository().fetchModels(query: {"include": "user"});
   }
 }

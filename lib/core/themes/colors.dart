@@ -70,7 +70,8 @@ const List<Color> splashScreenGradient4 = [
   Color(0xFF4E0076),
 ];
 
-const red = Color(0xffe63946);
+const primaryColorHex  = "#2C195C";
+const dangerColor = Color(0xffe63946);
 const navyBlue = Color(0xff1d3557);
 const lightBlue = Color(0xff457b9d);
 const cream = Color(0xfff1faee);
