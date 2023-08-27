@@ -34,20 +34,18 @@ class LoginView extends GetView<LoginController> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: SingleChildScrollView(
-          child: Obx(() {
-            switch (controller.status) {
-              case ProcessingStatus.initial:
-                return LoginForm(controller: controller);
-              case ProcessingStatus.success:
-                return const SuccessScreen();
-              case ProcessingStatus.error:
-                return ErrorScreen(onReturn: controller.restart);
-              case ProcessingStatus.loading:
-                return const LoadingScreen();
-            }
-          }),
-        ),
+        child: Obx(() {
+          switch (controller.status) {
+            case ProcessingStatus.initial:
+              return SingleChildScrollView(child: LoginForm(controller: controller));
+            case ProcessingStatus.success:
+              return const SuccessScreen();
+            case ProcessingStatus.error:
+              return ErrorScreen(onReturn: controller.restart);
+            case ProcessingStatus.loading:
+              return const LoadingScreen();
+          }
+        }),
       ),
     );
   }
