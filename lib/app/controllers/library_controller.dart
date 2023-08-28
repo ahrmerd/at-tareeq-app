@@ -1,12 +1,16 @@
 import 'package:at_tareeq/app/data/enums/library_type.dart';
 import 'package:at_tareeq/app/data/models/lecture.dart';
+import 'package:at_tareeq/app/data/models/library_item.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
+import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/data/repositories/lecture_repository.dart';
+import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
-class LibraryController extends GetxController with StateMixin<List<Lecture>> {
+class LibraryController extends GetxController
+    with StateMixin<List<LibraryItem>> {
   LibraryType libraryType = Get.arguments['type'];
 
   @override
@@ -43,12 +47,24 @@ class LibraryController extends GetxController with StateMixin<List<Lecture>> {
     }
     try {
       change(null, status: RxStatus.loading());
-      List<Lecture> models = [];
+      List<LibraryItem> models = [];
 
       // final res = await (ApiClient.getInstance().req.get(url));
       // models = libraryLectureListFromJson(res.data['data']);
-      models = await LectureRepository().fetchModelsFromCustomPath(url,
-          customTransformer: libraryLectureListFromJson);
+      // models = await LectureRepository().fetchModelsFromCustomPath(url,
+      //     customTransformer: libraryLectureListFromJson);
+      models = await LibraryRepository().fetchModelsFromCustomPath(url,query: {'sort': '-updated_at'});
+
+      switch (libraryType) {
+        case LibraryType.history:
+          break;
+        case LibraryType.playLater:
+          SharedPreferencesHelper.addLecturesToPlaylaters(models);
+          break;
+        case LibraryType.favorite:
+          SharedPreferencesHelper.addLecturesToFavorites(models);
+          break;
+      }
 
       if (models.isEmpty) {
         change(models, status: RxStatus.empty());

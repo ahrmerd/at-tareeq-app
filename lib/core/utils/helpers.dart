@@ -80,13 +80,14 @@ int dynamicIntParsing(dynamic val) {
   if (val is int) {
     return val;
   } else if (val is String) {
-    // try {
-    return int.parse(val);
-    // } catch (e) {
+    return int.tryParse(val)??0;
+  }
+  else if (val is double) {
+    return val.toInt();
+  }
+   else {
+    return dynamicIntParsing(val.toString());
     // return 0;
-    // }
-  } else {
-    return 0;
   }
 }
 
@@ -122,6 +123,30 @@ String formatLength(int seconds) {
 
   return result.trim();
 }
+
+
+  String formatDuration(Duration duration) {
+    // String twoDigits(int n) {
+    //   if (n >= 10) return "$n";
+    //   return "0$n";
+    // }
+
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    int seconds = duration.inSeconds.remainder(60);
+
+    String twoDigitHours = twoDigits(hours);
+    String twoDigitMinutes = twoDigits(minutes);
+    String twoDigitSeconds = twoDigits(seconds);
+
+    if (hours > 0) {
+      return '$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds';
+    } else {
+      return '$twoDigitMinutes:$twoDigitSeconds';
+    }
+  }
 
 String fileEntityBasename(FileSystemEntity entity) {
   if (entity is Directory) {

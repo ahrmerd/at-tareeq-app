@@ -24,7 +24,8 @@ class DownloadsPage extends GetView<DownloadController> {
               final item = state[index];
               return GestureDetector(
                 onTap: () {
-                  print(item.path);
+                  controller.setAudio(index);
+                  // print(item.path);
                   Get.toNamed(Routes.DOWNLOADSPLAYER);
                 },
                 child: Card(

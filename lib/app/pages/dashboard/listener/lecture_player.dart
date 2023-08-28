@@ -7,6 +7,7 @@ import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
+import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:expandable/expandable.dart';
 // import 'package:audioplayers/audioplayers.dart';
@@ -427,28 +428,7 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
     );
   }
 
-  String formatDuration(Duration duration) {
-    // String twoDigits(int n) {
-    //   if (n >= 10) return "$n";
-    //   return "0$n";
-    // }
 
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
-
-    int hours = duration.inHours;
-    int minutes = duration.inMinutes.remainder(60);
-    int seconds = duration.inSeconds.remainder(60);
-
-    String twoDigitHours = twoDigits(hours);
-    String twoDigitMinutes = twoDigits(minutes);
-    String twoDigitSeconds = twoDigits(seconds);
-
-    if (hours > 0) {
-      return '$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds';
-    } else {
-      return '$twoDigitMinutes:$twoDigitSeconds';
-    }
-  }
 
   Future setAudio() async {
     String url = widget.lecture.url;

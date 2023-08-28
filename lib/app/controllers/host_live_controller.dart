@@ -52,30 +52,31 @@ class HostLiveController extends GetxController {
     realtime.connection
         .on()
         .listen((ably.ConnectionStateChange stateChange) async {
+          // print(stateChange.current.toString());
       // if(stateChange.event);
       // Handle connection state change events
     });
-    final channel = realtime.channels.get(livestream.channel);
+    final channel = realtime.channels.get("public:${livestream.channel}");
     await channel.attach();
+    // print(channel.name);
     channel.subscribe().listen((event) {
-      print(event.name);
+      // print(event);
       if (event.name == Events.startLivestream) {
         livestreamStatus.value = LivestreamStatus.started;
       } else if (event.name == Events.stopLivestream) {
         livestreamStatus.value = LivestreamStatus.finished;
       } else if (event.name == Events.livemessage) {
         fetchMessages();
-        addToMessages(event.data);
+        // addToMessages(event.data as Map);
       } else {
-        print(event.data.runtimeType);
-        print(event.name);
-        print(event.data);
+
       }
     });
   }
 
   @override
   void onInit() async {
+    // print(livestream.channel);
     try {
       initAbly();
       // print(Get.arguments);
@@ -86,6 +87,11 @@ class HostLiveController extends GetxController {
     } catch (e) {
       showErrorDialogue(e.toString());
     }
+  }
+
+  void disposeAbly(){
+    realtime.close();
+
   }
 
   @override
@@ -257,21 +263,29 @@ class HostLiveController extends GetxController {
     try {
       final res = (await LiveMessageRepository()
           .fetchModelsFromCustomPath("livestreams/${livestream.id}/messages"));
-      print(res);
       messages.clear();
       messages.addAll(res);
       messagesProcessingStatus.value = ProcessingStatus.success;
 
     } on DioError catch (e) {
       messagesProcessingStatus.value = ProcessingStatus.error;
-      print(e);
+      // print(e);
       ApiClient.showErrorDialogue(e);
     } catch (err) {
-      print(err);
+      // print(err);
       messagesProcessingStatus.value = ProcessingStatus.error;
       showErrorDialogue(err.toString());
     }
   }
 
-  void addToMessages(Object? data) {}
+  void addToMessages(Map data) {
+            // print(data.runtimeType);
+            final messageMap =Map<String, dynamic>.from(data['message']);
+            print(messageMap);
+           final message = LiveMessage.fromJson(messageMap);
+            // print(message.toJson());
+            // print( as Map));
+        // print(event.name);
+        // print(event.data);
+  }
 }

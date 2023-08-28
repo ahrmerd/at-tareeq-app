@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:at_tareeq/app/data/models/livestream.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
+import 'package:at_tareeq/core/utils/helpers.dart';
 
 import 'user.dart';
 
@@ -18,11 +19,14 @@ class LiveMessage {
   final int livestreamId;
   final int userId;
   final User user;
+  int id;
+
   // final Livestream livestream;
   DateTime createdAt;
   final bool isSending;
-
+  
   LiveMessage({
+    required this.id,
     required this.message,
     required this.livestreamId,
     required this.userId,
@@ -33,10 +37,11 @@ class LiveMessage {
   });
 
   factory LiveMessage.fromJson(Map<String, dynamic> json) => LiveMessage(
+        id: dynamicIntParsing(json["id"]),
         message: json["message"],
-        livestreamId: json["livestream_id"],
-        userId: json["user_id"],
-        user: User.fromJson(json["user"]),
+        livestreamId: dynamicIntParsing(json["livestream_id"]),
+        userId: dynamicIntParsing(json["user_id"]),
+        user: User.fromJson(Map<String, dynamic>.from(json["user"])),
         createdAt: DateTime.parse(json["created_at"]),
         // livestream: Livestream.fromJson(json["livestream"]),
       );
@@ -57,6 +62,6 @@ class LiveMessage {
         user: User.createCurrUserDummy(),
         createdAt: DateTime.now(),
         // livestream: livestream,
-        isSending: true);
+        isSending: true, id: 0);
   }
 }

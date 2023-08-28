@@ -15,7 +15,7 @@ class LibraryLecturesPage extends GetView<LibraryController> {
       appBar: AppBar(title: Text(controller.libraryType.getTitle())),
       body: controller.obx(
         (state) => VerticalLectureListView(
-          lectures: state!,
+          lectures: state!.map((e) => e.lecture).toList(),
           label: '',
           // onAddToFavorite: addToFavorite,
           // onAddToPlaylater: addToPlaylater,

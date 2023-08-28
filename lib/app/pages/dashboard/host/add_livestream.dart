@@ -43,13 +43,18 @@ class AddLivestream extends GetView<AddLiveController> {
             Obx(() {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Scheduled StartTime:'),
-                    const HorizontalSpace(),
-                    Text(
-                      formatDateTime(controller.scheduledTime.value),
-                      style: bigTextStyle,
+                    Row(
+                      children: [
+                        const Text('Scheduled StartTime:'),
+                        const HorizontalSpace(),
+                        Text(
+                          formatDateTime(controller.scheduledTime.value.add(Duration(hours: 1))),
+                          style: bigTextStyle,
+                        ),
+                      ],
                     ),
                     const HorizontalSpace(),
                     MyButton(
@@ -61,7 +66,7 @@ class AddLivestream extends GetView<AddLiveController> {
                                 initialDate: controller.scheduledTime.value,
                                 firstDate: DateTime.now(),
                                 lastDate: DateTime.now()
-                                    .add(const Duration(days: 4)))) ??
+                                    .add(const Duration(days: 7)))) ??
                             DateTime.now();
                         final time = (await showTimePicker(
                                 context: context,
