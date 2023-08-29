@@ -2,7 +2,6 @@ import 'package:at_tareeq/app/data/enums/library_type.dart';
 import 'package:at_tareeq/app/data/models/my_list_item.dart';
 import 'package:at_tareeq/app/widgets/my_iist_tile.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
-import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -34,12 +33,12 @@ class ListenerLibrary extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
-        title: BigText(
+        title: const BigText(
           'Library',
         ),
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 40),
+        margin: const EdgeInsets.only(top: 40),
         // style: biggestTextStyle,
           child: Padding(
             padding: const EdgeInsets.all(15.0),
@@ -50,7 +49,7 @@ class ListenerLibrary extends StatelessWidget {
                   return Column(
                     children: [
                       MyListTile(icon: item.icon, onTap: item.onTap, text: item.title,),
-                                    Divider(height: 6,),
+                                    const Divider(height: 6,),
                     ],
                   );
                   // return Card(

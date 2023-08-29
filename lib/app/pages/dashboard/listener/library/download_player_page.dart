@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/controllers/download_controller.dart';
-import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/core/utils/downloader.dart';
@@ -17,7 +16,7 @@ class DownloadPlayerPage extends GetView<DownloadController> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: CustomColor.appBlue,
         ),
       ),
@@ -42,7 +41,7 @@ class DownloadPlayerPage extends GetView<DownloadController> {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      VerticalSpace(32),
+                      const VerticalSpace(32),
                       Obx(() {
                           return Row(
                             children: [
@@ -68,7 +67,7 @@ class DownloadPlayerPage extends GetView<DownloadController> {
                       // SmallText(widget.lecture.),
                       Obx(() {
                           return SliderTheme(
-                            data: SliderThemeData(
+                            data: const SliderThemeData(
                               thumbColor: Colors.black,
                               trackHeight: 2,
                               thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
@@ -108,7 +107,7 @@ class DownloadPlayerPage extends GetView<DownloadController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.replay,
                               color: Colors.black,
                             ),
@@ -118,7 +117,7 @@ class DownloadPlayerPage extends GetView<DownloadController> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.skip_previous_rounded,
                               color: Colors.black,
                             ),
@@ -150,7 +149,7 @@ class DownloadPlayerPage extends GetView<DownloadController> {
                             ),
                           ),
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.skip_next_rounded,
                               color: Colors.black,
                             ),
@@ -160,7 +159,7 @@ class DownloadPlayerPage extends GetView<DownloadController> {
                             },
                           ),
                           IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.stop,
                               color: Colors.black,
                             ),

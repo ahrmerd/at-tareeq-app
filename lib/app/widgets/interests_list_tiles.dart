@@ -39,7 +39,7 @@ class InterestsListTiles extends StatelessWidget {
                 itemBuilder: (_, i) {
                   final interest = interests[i];
                   return Container(
-                        margin: EdgeInsets.only(right: 10),
+                        margin: const EdgeInsets.only(right: 10),
 
                     child: GestureDetector(
                       onTap: () => onTap(interest),
@@ -54,7 +54,7 @@ class InterestsListTiles extends StatelessWidget {
                               height: 140,
                             ),
                           ),
-                          VerticalSpace(2),
+                          const VerticalSpace(2),
                           SmallText(
                            interest.name,
                             fontSize: 14,

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
-import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 

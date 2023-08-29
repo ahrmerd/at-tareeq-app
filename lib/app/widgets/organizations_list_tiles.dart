@@ -37,10 +37,10 @@ class OrganizationsListTiles extends StatelessWidget {
                   final user = users[i];
 
                   return Container(
-                      margin: EdgeInsets.only(right: 10),
+                      margin: const EdgeInsets.only(right: 10),
 
                     child: Container(
-                        margin: EdgeInsets.only(right: 10),
+                        margin: const EdgeInsets.only(right: 10),
 
                       child: GestureDetector(
                         onTap: () => onTap(user),
@@ -55,7 +55,7 @@ class OrganizationsListTiles extends StatelessWidget {
                                 height: 140,
                               ),
                             ),
-                            VerticalSpace(2),
+                            const VerticalSpace(2),
                             SmallText(
                               user.getOrganization(),
                               fontSize: 14,

@@ -16,7 +16,7 @@ class DownloadsPage extends GetView<DownloadController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Downloads')),
+      appBar: AppBar(title: const Text('Downloads')),
       body: controller.obx(
         (state) => ListView.builder(
             itemCount: state!.length,
@@ -87,7 +87,7 @@ class DownloadsPage extends GetView<DownloadController> {
                                               color: Colors.white,
                                             )),
                                       ),
-                                HorizontalSpace(9),
+                                const HorizontalSpace(9),
                                 GestureDetector(
                                         onTap: () {
                                           controller.deleteItem(item);

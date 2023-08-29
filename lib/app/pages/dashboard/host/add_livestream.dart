@@ -51,7 +51,7 @@ class AddLivestream extends GetView<AddLiveController> {
                         const Text('Scheduled StartTime:'),
                         const HorizontalSpace(),
                         Text(
-                          formatDateTime(controller.scheduledTime.value.add(Duration(hours: 1))),
+                          formatDateTime(controller.scheduledTime.value.add(const Duration(hours: 1))),
                           style: bigTextStyle,
                         ),
                       ],

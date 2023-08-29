@@ -1,6 +1,5 @@
 import 'package:at_tareeq/app/controllers/listener_controller.dart';
 import 'package:at_tareeq/app/widgets/my_tab_view.dart';
-import 'package:at_tareeq/core/styles/decorations.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,8 +15,8 @@ class ListenerExplore extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: 80,
 
-          title: Padding(
-            padding: const EdgeInsets.all(8.0),
+          title: const Padding(
+            padding: EdgeInsets.all(8.0),
             child: CustomSearch(),
           ),
           // flexibleSpace: MyTextInput(
@@ -45,23 +44,23 @@ class CustomSearch extends StatelessWidget {
         TextFormField(
           textAlign: TextAlign.center,
           decoration: InputDecoration(
-            hintText: 'Search for lectures here', hintStyle: TextStyle(color: CustomColor.appBlue),
-            suffixIcon: Icon(Icons.search_outlined, color: CustomColor.appBlue,),
+            hintText: 'Search for lectures here', hintStyle: const TextStyle(color: CustomColor.appBlue),
+            suffixIcon: const Icon(Icons.search_outlined, color: CustomColor.appBlue,),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: CustomColor.appBlue,
               ),
             ),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(50),
-                borderSide: BorderSide(
+                borderSide: const BorderSide(
                   color: CustomColor.appBlue,
                 )
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(50),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: CustomColor.appBlue,
               ),
             ),

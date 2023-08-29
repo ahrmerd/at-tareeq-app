@@ -17,14 +17,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: CustomColor.appBlue
         ),
-        title: BigText('Notifications'),
+        title: const BigText('Notifications'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
             NotificationItem(text: 'Host near me notifications'),
@@ -42,7 +42,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
 
 class NotificationItem extends StatelessWidget {
-  NotificationItem({Key? key,
+  const NotificationItem({Key? key,
     required this.text,
     this.fontSize = 16,
   }) : super(key: key);
@@ -58,7 +58,7 @@ class NotificationItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SmallText(text, fontSize: fontSize,),
-          SwitchScreen(),
+          const SwitchScreen(),
         ],
       ),
     );
@@ -66,8 +66,10 @@ class NotificationItem extends StatelessWidget {
 }
 
 class SwitchScreen extends StatefulWidget{
+  const SwitchScreen({super.key});
+
   @override
-  SwitchClass createState() => new SwitchClass();
+  SwitchClass createState() => SwitchClass();
 }
 
 class SwitchClass extends State{

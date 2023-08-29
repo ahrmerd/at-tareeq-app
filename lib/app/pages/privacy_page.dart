@@ -18,14 +18,14 @@ class _PrivacyPageState extends State<PrivacyPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
             color: CustomColor.appBlue
         ),
-        title: BigText('Privacy and Location'),
+        title: const BigText('Privacy and Location'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
             NotificationItem(text: 'Pause location-based recommendations', fontSize: 14,),

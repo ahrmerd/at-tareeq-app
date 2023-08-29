@@ -8,7 +8,6 @@ import 'package:at_tareeq/app/widgets/my_iist_tile.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/upload_profile_picture_widget.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
-import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
@@ -25,14 +24,14 @@ class _HostProfileState extends State<HostProfile> {
   final libraryItems = <MyListItem>[
     MyListItem(const Icon(Icons.notifications_none_rounded), 'Notifications',
         () {
-      Get.to(() => NotificationsPage());
+      Get.to(() => const NotificationsPage());
     }),
     MyListItem(const Icon(Icons.privacy_tip_rounded), 'Privacy and Location',
         () {
-      Get.to(() => PrivacyPage());
+      Get.to(() => const PrivacyPage());
     }),
     MyListItem(const Icon(Icons.info_outline), 'About', () {
-      Get.to(() => AboutPage());
+      Get.to(() => const AboutPage());
     }),
     MyListItem(const Icon(Icons.exit_to_app), 'Log Out', () {
       Dependancies.authService().logout();
@@ -57,8 +56,8 @@ class _HostProfileState extends State<HostProfile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            BigText('Profile'),
-            VerticalSpace(48),
+            const BigText('Profile'),
+            const VerticalSpace(48),
             Row(
               children: [
                 GestureDetector(
@@ -131,7 +130,7 @@ class _HostProfileState extends State<HostProfile> {
                 )
               ],
             ),
-            VerticalSpace(48),
+            const VerticalSpace(48),
             Expanded(
               child: DefaultTextStyle.merge(
                   child: ListView.builder(
@@ -145,7 +144,7 @@ class _HostProfileState extends State<HostProfile> {
                               onTap: item.onTap,
                               text: item.title,
                             ),
-                            Divider(
+                            const Divider(
                               height: 6,
                             ),
                           ],
