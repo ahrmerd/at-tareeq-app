@@ -42,15 +42,15 @@ class AddLecture extends GetView<AddLectureController> {
             controller.obx(
               (state) {
                 return LectureDetailsForm(
-                  onSubmit: (title, sectionId, description) {
-                    controller.submitForm(title, sectionId, description);
+                  onSubmit: (title, sectionId, description, _) {
+                    controller.submitForm(title, sectionId, description,);
                   },
                   sections: state!,
                 );
               },
               onLoading: const LoadingScreen(),
               onError: (err) => ErrorScreen(
-                onReturn: controller.refetchSections,
+                onRetry: controller.refetchSections,
               ),
               onEmpty: EmptyScreen(
                   onReturn: controller.refetchSections,

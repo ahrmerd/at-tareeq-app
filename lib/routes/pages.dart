@@ -12,6 +12,7 @@ import 'package:at_tareeq/app/controllers/interest_lectures_controller.dart';
 import 'package:at_tareeq/app/controllers/library_controller.dart';
 import 'package:at_tareeq/app/controllers/livestream_player_controller.dart';
 import 'package:at_tareeq/app/controllers/lives_controller.dart';
+import 'package:at_tareeq/app/controllers/playlist_controller.dart';
 import 'package:at_tareeq/app/controllers/user_lectures_controller.dart';
 import 'package:at_tareeq/app/pages/dashboard/guest/guest_dashboard.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/add_lecture.dart';
@@ -27,6 +28,7 @@ import 'package:at_tareeq/app/pages/dashboard/listener/library/library_lectures_
 import 'package:at_tareeq/app/pages/dashboard/listener/listener_dashboard.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/lives_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/livestream_player.dart';
+import 'package:at_tareeq/app/pages/dashboard/listener/playlists_page.dart';
 import 'package:at_tareeq/app/pages/home.dart';
 // import 'package:at_tareeq/app/pages/onboarding.dart';
 import 'package:at_tareeq/app/pages/login.dart';
@@ -155,6 +157,13 @@ class Pages {
       page: () => const DownloadPlayerPage(),
       binding: BindingsBuilder(() {
         Get.lazyPut<DownloadController>(() => DownloadController());
+      }),
+    ),
+    GetPage(
+      name: Routes.PLAYLISTS,
+      page: () => const PlaylistsPage(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<PlaylistController>(() => PlaylistController());
       }),
     ),
   ];

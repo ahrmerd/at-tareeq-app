@@ -1,9 +1,15 @@
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:at_tareeq/app/controllers/livestream_player_controller.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
+import 'package:at_tareeq/app/pages/dashboard/host/host_live.dart';
 import 'package:at_tareeq/app/widgets/color_loader.dart';
+import 'package:at_tareeq/app/widgets/host_live_controls_widget.dart';
+import 'package:at_tareeq/app/widgets/live_messages_widget.dart';
+import 'package:at_tareeq/app/widgets/livestream_info_widget.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
+import 'package:at_tareeq/app/widgets/send_live_message_widget.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/decorations.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
@@ -18,242 +24,138 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: CustomColor.appBlue),
-      ),
-      body: Container(
-        margin: const EdgeInsets.only(bottom: 110),
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(32),
-                  child: MyNetworkImage(
-                    path: controller.livestream.value.user?.thumb ?? "",
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Obx(() {
-                  switch (controller.liveProcessingStatus.value) {
-                    case ProcessingStatus.initial:
-                      return const SizedBox(
-                        height: 200,
-                        child: Column(
-                          children: [
-                            ColorLoader(),
-                          ],
-                        ),
-                      );
-                    case ProcessingStatus.success:
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(32),
-                        child: MyNetworkImage(
-                          path: controller.livestream.value.user?.thumb ?? "",
-                          height: 200,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    case ProcessingStatus.error:
-                      return const ErrorScreen(
-                        messsage: "Unable to initalize livestream",
-                      );
-                    case ProcessingStatus.loading:
-                      return const ColorLoader();
-                  }
-                }),
-                const VerticalSpace(16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          BigText(
-                            controller.livestream.value.title,
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          SmallText(
-                            controller.livestream.value.user?.name ?? "",
-                            fontSize: 15,
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.more_vert_rounded),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const VerticalSpace(),
-            Expanded(child: Obx(() {
-              return ListView.builder(
-                  controller: controller.messageScrollController,
-                  itemCount: controller.messages.length,
-                  itemBuilder: (_, i) {
-                    final message = controller.messages[i];
-                    final bool isSentByMe =
-                        SharedPreferencesHelper.getUserId() == message.user.id;
-                    return ChatBubble(
-                      clipper: ChatBubbleClipper3(
-                          type: isSentByMe
-                              ? BubbleType.sendBubble
-                              : BubbleType.receiverBubble),
-                      alignment:
-                          isSentByMe ? Alignment.topRight : Alignment.topLeft,
-                      margin: const EdgeInsets.only(top: 20),
-                      backGroundColor: primaryColor,
-                      child: Container(
-                        // constraints: BoxConstraints(
-                        // maxWidth: MediaQuery.of(context).size.width * 0.7,
-                        // ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              message.user.name,
-                              style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w300),
-                            ),
-                            // separa
-                            Text(
-                              message.message,
-                              style:
-                                  const TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                            message.isSending
-                                ? const Icon(
-                                    Icons.cached,
-                                    size: 10,
-                                    color: Colors.grey,
-                                  )
-                                : Text(
-                                    formatDateTime(message.createdAt),
-                                    style: const TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w300),
-                                  ),
-                          ],
-                        ),
-                      ),
-                    );
-                  });
-            })),
-          ],
+        iconTheme: IconThemeData(color: Colors.white),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            colors: [Colors.black87, Colors.transparent],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          )),
         ),
       ),
-      bottomSheet: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  // constraints: BoxConstraints.loose(Size(Get.width - 70, 200)),
-                  // width: Get.width - 170,
-                  child: TextField(
-                    controller: controller.messageFieldControlller,
-                    onSubmitted: (val) {
-                      controller.sendMessage(val);
-                    },
-                    decoration: myInputDecoration2(label: "Message"),
-                  ),
-                ),
-                const HorizontalSpace(),
-                MyButton(
-                  child: const Icon(Icons.send),
-                  onTap: () {
-                    controller
-                        .sendMessage(controller.messageFieldControlller.text);
-                  },
-                )
-              ],
-            ),
-          ),
-          /*         Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AvatarGlow(
-                  glowColor: Colors.redAccent,
-                  endRadius: controller.isLive.value ? 30 : 20,
-                  child: CircleAvatar(
-                    backgroundColor:
-                        controller.isLive.value ? Colors.red : Colors.grey,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.mic_none_rounded,
-                        color: controller.isLive.value
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                ),
-                Row(
+      body: Container(
+        color: Colors.black87,
+        height: Get.height,
+        width: Get.width,
+        // decoration: Colors
+        // decoration: BoxDecoration(),
+        // margin: const EdgeInsets.only(bottom: 110),
+        // padding: const EdgeInsets.all(16.0),
+        child: Obx(() {
+            return Stack(children: [
+              if (controller.livestream.value.isVideo&&
+                        controller.isPlaying.value)
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      child: IconButton(
-                        isSelected: controller.isMuted.value,
-                        selectedIcon: Icon(
-                          Icons.volume_off_outlined,
-                          color: Colors.black,
-                        ),
-                        icon: Icon(
-                          Icons.volume_up_outlined,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {},
+                    SizedBox(
+                      height: 400,
+                      width: 500,
+                      child: AgoraVideoView(
+                      // remember for listenet use VideoViewController.remote
+                        controller: VideoViewController.remote(
+                          rtcEngine: controller.engine,
+                          connection: RtcConnection(channelId: controller.livestream.value.channel, localUid: SharedPreferencesHelper.getUserId()),
+                          canvas: VideoCanvas(uid: controller.livestream.value.userId, sourceType: VideoSourceType.videoSourceRemote)),
                       ),
                     ),
-                    HorizontalSpace(),
-                    MyButton(
-                      // onPressed: () {},
-                      child: Text('End Lecture'),
-                    ),
-                    HorizontalSpace(),
-                    CircleAvatar(
-                      backgroundColor: Colors.grey,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.share_outlined,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {},
-                      ),
-                    ),
+                    // VideoPlayerWidget(controller: controller),
                   ],
                 ),
-              ],
+              Positioned(
+                  top: 80,
+                  left: 0,
+                  right: 0,
+                  // left: 16,
+                  child: LiveStreamInfoWidget(
+                    lecturer: controller.livestream.value.user?.getOrganization() ?? "",
+                    showThumb: (!(controller.livestream.value.isVideo &&
+                        controller.isPlaying.value)),
+                    // showThumb: ,
+                    thumbPath: controller.livestream.value.user?.thumb ?? '',
+                    title: controller.livestream.value.title,
+                    // title: '',
+                  )),
+              LiveTopRightWidget(isLive: controller.isPlaying.value, isVideo: controller.livestream.value.isVideo,),
+              Positioned(
+                  bottom: 150,
+                  right: 0,
+                  left: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    width: Get.width,
+                    height: 250,
+                    child: LiveMessagesWidget(
+                      onRefresh: (){controller.fetchAllMessages(true);},
+                      messageScrollController: controller.messageScrollController,
+                      messages: controller.messages.value,
+                      messagesProcessingStatus:
+                          controller.messagesProcessingStatus.value,
+                    ),
+                  )),
+            ]);
+          }
+        ),
+        //   Obx(() {
+        //     return Column(
+        //       children: [
+        //         LiveStreamInfoWidget(
+        //           lecturer: controller.livestream.user?.getOrganization() ?? '',
+        //           showThumb: (controller.livestream.isVideo && (!controller.isLive.value)),
+        //           thumbPath: controller.livestream.user?.thumb ?? '',
+        //           title: controller.livestream.title,
+        //         ),
+        //         const VerticalSpace(),
+        //         Builder(builder: (_) {
+        //           switch (controller.liveProcessingStatus.value) {
+        //             case ProcessingStatus.error:
+        //             case ProcessingStatus.initial:
+        //             case ProcessingStatus.loading:
+        //               return Container();
+        //             case ProcessingStatus.success:
+        //               return HostLiveControlsWidget(controller: controller);
+        //           }
+        //         }),
+        //         LiveMessagesWidget(
+        //           messages: controller.messages,
+        //           messagesProcessingStatus:
+        //               controller.messagesProcessingStatus.value,
+        //           messageScrollController: controller.messageScrollController,
+        //         ),
+        //         // messagesWidget(),
+        //       ],
+        //     );
+        //   }),
+      ),
+      bottomSheet: Container(
+        margin: const EdgeInsets.only(bottom: 30),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+
+            // HostLiveControlsWidget(controller: controller),
+            Obx(() {
+            if(!controller.isSending.value && controller.messagesProcessingStatus.value==ProcessingStatus.success){
+                return SendMessageWidget(
+                  messageFieldControlller: controller.messageFieldControlller,
+                  onSubmit: (String val) {
+                    controller.sendMessage(val);
+                  },
+                );
+
+            }else{
+              return LinearProgressIndicator();
+            }
+              }
             ),
-          ),
- */
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -22,12 +22,13 @@ import 'host_live_controller.dart';
 class LivestreamPlayerController extends GetxController {
   RxBool isPlaying = false.obs;
   Rx<Livestream> livestream = (Get.arguments['livestream'] as Livestream).obs;
-  final RtcEngine _engine = createAgoraRtcEngine();
+  final RtcEngine engine = createAgoraRtcEngine();
   Rx<ProcessingStatus> liveProcessingStatus = ProcessingStatus.initial.obs;
-  Rx<ProcessingStatus> messagesprocessingStatus = ProcessingStatus.initial.obs;
-  bool isReady = false;
+  Rx<ProcessingStatus> messagesProcessingStatus = ProcessingStatus.initial.obs;
+  RxBool isReady = false.obs;
 
-  RxBool isMuted = true.obs;
+  RxBool isAudioMuted = false.obs;
+  RxBool isVideoMuted = false.obs;
 
   TextEditingController messageFieldControlller = TextEditingController();
   RxBool isSending = false.obs;
@@ -38,11 +39,15 @@ class LivestreamPlayerController extends GetxController {
 
   @override
   void onInit() async {
-    await initAbly();
-    // print(Get.arguments);
-    // initEcho();
-    await initAgora();
-    super.onInit(); // }
+    try {
+      await initAbly();
+      await initAgora();
+      fetchAllMessages();
+    } catch (e) {
+      showErrorDialogue(e.toString());
+    }finally{
+      super.onInit();
+    }
   }
 
   initAbly() async {
@@ -61,62 +66,77 @@ class LivestreamPlayerController extends GetxController {
       } else if (event.name == Events.stopLivestream) {
         livestream.value.status = LivestreamStatus.finished;
       } else if (event.name == Events.livemessage) {
-        fetchMessages();
-        addToMessages(event.data);
+        fetchAllMessages();
+        // addToMessages(event.data);
       } else {
-        print(event.data.runtimeType);
-        print(event.name);
-        print(event.data);
       }
     });
+  }
+
+  Future<void> disposeAbly()async {
+    await realtime.close();
   }
 
   @override
   void dispose() async {
     await disposeAgora();
+    await disposeAbly();
     super.dispose();
   }
 
   Future<void> disposeAgora() async {
-    await _engine.leaveChannel();
-    await _engine.release();
+    await engine.leaveChannel();
+    await engine.release();
   }
 
   Future<void> togglePlayer() async {
-    if (isReady && !isPlaying.value) {
+    if (isReady.value && !isPlaying.value) {
       await joinChannel();
       isPlaying.value = true;
-    } else if (isReady && isPlaying.value) {
+    } else if (isReady.value && isPlaying.value) {
       await leaveChannel();
       isPlaying.value = false;
     }
   }
 
   Future<void> leaveChannel() async {
-    await _engine.leaveChannel();
+    await engine.leaveChannel();
   }
 
-  Future<void> muteStream() async {
-    await _engine.muteAllRemoteAudioStreams(true);
-    isMuted.value = true;
+  Future<void> muteAudioStream() async {
+    await engine.muteAllRemoteAudioStreams(true);
+    isAudioMuted.value = true;
   }
 
-  Future<void> unmuteStream() async {
-    await _engine.muteAllRemoteAudioStreams(false);
-    isMuted.value = false;
+  Future<void> muteVideoStream() async {
+    await engine.muteAllRemoteVideoStreams(true);
+    isVideoMuted.value = true;
+  }
+  Future<void> unmuteAudioStream() async {
+    await engine.muteAllRemoteAudioStreams(false);
+    isAudioMuted.value = false;
   }
 
-  void toggleMute() {
-    if (isMuted.value) {
-      muteStream();
-      return;
-    }
-    unmuteStream();
+  Future<void> unmuteVideoStream() async {
+    await engine.muteAllRemoteVideoStreams(false);
+    isVideoMuted.value = false;
   }
+
+  // void toggleMute() {
+  //   if (isMuted.value) {
+  //     muteStream();
+  //     return;
+  //   }
+  //   unmuteStream();
+  // }
 
   Future<void> joinChannel() async {
-    await _engine.enableLocalAudio(false);
-    await _engine.joinChannel(
+    await engine.enableLocalAudio(false);
+    await engine.enableLocalVideo(false);
+    if(livestream.value.isVideo){
+      await engine.muteAllRemoteVideoStreams(false);
+    }
+    await engine.joinChannel(
       token: livestream.value.token ?? '',
       channelId: livestream.value.channel,
       uid: SharedPreferencesHelper.getUserId(),
@@ -131,74 +151,89 @@ class LivestreamPlayerController extends GetxController {
 
   Future<void> initAgora() async {
     // retrieve permissions
-    final permissionStatus = await requestPermissions();
+    // final permissionStatus = await requestPermissions();
 
     // //create the engine
     // _engine = createAgoraRtcEngine();
-    await _engine.initialize(const RtcEngineContext(
+    try{
+await engine.initialize(const RtcEngineContext(
       appId: appId,
       channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
       audioScenario: AudioScenarioType.audioScenarioDefault,
       // logConfig: LogConfig()
     ));
 
-    _engine.registerEventHandler(RtcEngineEventHandler(onError: (err, _) {
+    engine.registerEventHandler(RtcEngineEventHandler(onError: (err, _) {
       print(_);
     }
         // on
         ));
-    await _engine.disableVideo();
-    await _engine.setClientRole(role: ClientRoleType.clientRoleAudience);
-    if (permissionStatus) {
-      isReady = true;
+    if (livestream.value.isVideo) {
+          await engine.enableVideo();
+        } else {
+          await engine.disableVideo();
+        }
+    // await _engine.disableVideo();
+    await engine.setClientRole(role: ClientRoleType.clientRoleAudience);
+      isReady.value = true;
+    }catch(e){
+      isReady.value = false;
+      liveProcessingStatus.value = ProcessingStatus.error;
     }
+    
   }
 
-  Future<bool> requestPermissions() async {
-    if (Platform.isAndroid || Platform.isIOS) {
-      final permissionStatus = await Permission.microphone.request();
-      if (permissionStatus.isGranted) {
-        return true;
-      }
-      return false;
-    } else {
-      return true;
-    }
-  }
 
-  Future<void> fetchMessages() async {
+Future<void> fetchAllMessages([bool isRefresh = false]) async {
+    if(isRefresh){
+      messagesProcessingStatus.value = ProcessingStatus.loading;
+    }
     try {
-      final res = (await LiveMessageRepository().fetchModelsFromCustomPath(
-          "livestreams/${livestream.value.id}/messages"));
-      print(res);
+      final res = (await LiveMessageRepository()
+          .fetchModelsFromCustomPath("livestreams/${livestream.value.id}/messages"));
       messages.clear();
       messages.addAll(res);
+      messages.refresh();
+
+      messagesProcessingStatus.value = ProcessingStatus.success;
+      // messagesProcessingStatus.value = ProcessingStatus.error;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(messageScrollController.hasClients){
+      messageScrollController.animateTo(
+          messageScrollController.position.maxScrollExtent + 100,
+          duration: .5.seconds,
+          curve: Curves.easeIn);
+      }
+});
+   
     } on DioError catch (e) {
-      messagesprocessingStatus.value = ProcessingStatus.error;
-      print(e);
+      messagesProcessingStatus.value = ProcessingStatus.error;
+      // print(e);
       ApiClient.showErrorDialogue(e);
     } catch (err) {
-      print(err);
-      messagesprocessingStatus.value = ProcessingStatus.error;
+      // print(err);
+      messagesProcessingStatus.value = ProcessingStatus.error;
       showErrorDialogue(err.toString());
     }
   }
 
-  Future<void> sendMessage(String strMsg) async {
+    Future<void> sendMessage(String strMsg) async {
     isSending.value = true;
-    messages.add(LiveMessage.createSendingMessage(strMsg, livestream.value));
-    messageScrollController.animateTo(
-        messageScrollController.position.maxScrollExtent + 100,
-        duration: .5.seconds,
-        curve: Curves.easeIn);
+      messages.add(LiveMessage.createSendingMessage(strMsg, livestream.value));
+      messages.refresh();
+
+    if(messageScrollController.hasClients){
+      messageScrollController.animateTo(
+          messageScrollController.position.maxScrollExtent + 100,
+          duration: .5.seconds,
+          curve: Curves.easeIn);
+      }
     final res = await Dependancies.http().post('livemessages',
         data: {"message": strMsg, "livestream_id": livestream.value.id});
     // print(res);
     messageFieldControlller.clear();
     isSending.value = false;
-
-    fetchMessages();
   }
 
-  void addToMessages(Object? data) {}
+  // void addToMessages(Object? data) {}
 }

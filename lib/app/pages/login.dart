@@ -41,7 +41,7 @@ class LoginView extends GetView<LoginController> {
             case ProcessingStatus.success:
               return const SuccessScreen();
             case ProcessingStatus.error:
-              return ErrorScreen(onReturn: controller.restart);
+              return ErrorScreen(onRetry: controller.restart);
             case ProcessingStatus.loading:
               return const LoadingScreen();
           }

@@ -49,7 +49,7 @@ class AddLiveController extends GetxController with StateMixin {
   }
 
   Future<void> submitForm(
-      String title, int sectionId, String description) async {
+      String title, int sectionId, String description, bool isVideo) async {
     if (validate(title, sectionId)) {
       try {
         change([], status: RxStatus.loading());
@@ -59,7 +59,8 @@ class AddLiveController extends GetxController with StateMixin {
           'start_time': scheduledTime.value.toIso8601String(),
           'title': title,
           'interest_id': sectionId,
-          'description': description
+          'description': description,
+          'is_video': isVideo 
         };
         final res = await Dependancies.http().post('livestreams', data: data);
         // int id = res.data?['data']['id'];

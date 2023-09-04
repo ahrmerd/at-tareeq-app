@@ -1,17 +1,17 @@
 import 'package:at_tareeq/app/controllers/host_live_controller.dart';
-import 'package:at_tareeq/app/data/enums/processing_status.dart';
+import 'package:at_tareeq/app/controllers/livestream_player_controller.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HostLiveControlsWidget extends StatelessWidget {
-  const HostLiveControlsWidget({
+class ListenerLiveControlsWidget extends StatelessWidget {
+  const ListenerLiveControlsWidget({
     super.key,
     required this.controller,
   });
 
-  final HostLiveController controller;
+  final LivestreamPlayerController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -21,29 +21,37 @@ class HostLiveControlsWidget extends StatelessWidget {
         return !controller.isReady.value ? CircularProgressIndicator() :  Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            MyButton(
+                    onTap: () {
+                      if(!controller.isPlaying.value)
+                      controller.joinChannel();
+                    },
+                    child: const Text('End Lecture'),
+                  ),
+                  HorizontalSpace(),
             AvatarGlow(
               glowColor: Colors.redAccent,
-              endRadius: controller.isLive.value ? 30 : 20,
+              endRadius: controller.isPlaying.value ? 30 : 20,
               child: CircleAvatar(
                 backgroundColor:
-                    controller.isLive.value ? Colors.red : Colors.grey,
+                    controller.isPlaying.value ? Colors.red : Colors.grey,
                 child: IconButton(
                   icon: Icon(
                     Icons.mic_none_rounded,
                     color:
-                        controller.isLive.value ? Colors.white : Colors.black,
+                        controller.isPlaying.value ? Colors.white : Colors.black,
                   ),
                   onPressed: () {
-                    if (controller.isLive.value) {
-                      controller.stopBroadcast();
+                    if (controller.isPlaying.value) {
+                      controller.leaveChannel();
                     } else {
-                      controller.startBroadcast();
+                      controller.joinChannel();
                     }
                   },
                 ),
               ),
             ),
-            if (controller.isLive.value)
+            if (controller.isPlaying.value)
               Row(
                 children: [
                   CircleAvatar(
@@ -60,8 +68,8 @@ class HostLiveControlsWidget extends StatelessWidget {
                       ),
                       onPressed: () {
                         controller.isAudioMuted.value
-                            ? controller.unmuteAudioBroadcast()
-                            : controller.muteAudioBroadcast();
+                            ? controller.unmuteAudioStream()
+                            : controller.muteAudioStream();
                       },
                     ),
                   ),
@@ -81,29 +89,18 @@ class HostLiveControlsWidget extends StatelessWidget {
                       ),
                       onPressed: () {
                         controller.isVideoMuted.value
-                            ? controller.unmuteVideoBroadcast()
-                            : controller.muteVideoBroadcast();
+                            ? controller.unmuteVideoStream()
+                            : controller.muteVideoStream();
                       },
                     ),
                   ),
                   //camera switch
-                  CircleAvatar(
-                    backgroundColor: Colors.grey,
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.cameraswitch_rounded,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        controller.switchCamera();
-                      },
-                    ),
-                  ),
+                  
 
                   const HorizontalSpace(),
                   MyButton(
                     onTap: () {
-                      controller.stopBroadcast();
+                      controller.leaveChannel();
                     },
                     child: const Text('End Lecture'),
                   ),

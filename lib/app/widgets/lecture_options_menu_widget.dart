@@ -4,6 +4,7 @@ import 'package:at_tareeq/app/data/models/library_item.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
+import 'package:at_tareeq/app/widgets/playlists_dialogue.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/core/utils/downloader.dart';
@@ -205,8 +206,14 @@ class _LectureOptionsMenuWidgetState extends State<LectureOptionsMenuWidget> {
 
                         // AudioPlayerOptionsMenuItem(
                         //     icon: Icons.skip_next, text: 'Play Next'),
-                        // const AudioPlayerOptionsMenuItem(
-                        //     icon: Icons.playlist_add, text: 'Add to Playlist'),
+                        AudioPlayerOptionsMenuItem(
+                            icon: Icons.playlist_add, text: 'Add to Playlist', onTap: () {
+                              closeMenu();
+                              showDialog(context: context, builder: (_){
+                                return PlaylistsDialogue(lecture: widget.lecture,);
+                              });
+                              // Get.showOverlay(asyncFunction: asyncFunction)
+                            },),
                         AudioPlayerOptionsMenuItem(
                           icon: Icons.download_rounded,
                           text: 'Download',

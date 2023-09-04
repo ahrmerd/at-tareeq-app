@@ -1,3 +1,4 @@
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:at_tareeq/app/controllers/host_live_controller.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/widgets/host_live_controls_widget.dart';
@@ -16,57 +17,133 @@ class HostLivePage extends GetView<HostLiveController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: CustomColor.appBlue),
+        iconTheme: IconThemeData(color: Colors.white),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+            colors: [Colors.black87, Colors.transparent],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          )),
+        ),
       ),
       body: Container(
-        margin: const EdgeInsets.only(bottom: 110),
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Obx(() {
-            return Column(
-              children: [
-                LiveStreamInfoWidget(
-                  lecturer: controller.livestream.user?.getOrganization() ?? '',
-                  processingStatus: controller.liveProcessingStatus.value,
-                  thumbPath: controller.livestream.user?.thumb ?? '',
-                  title: controller.livestream.title,
+        color: Colors.black87,
+        height: Get.height,
+        width: Get.width,
+        // decoration: Colors
+        // decoration: BoxDecoration(),
+        // margin: const EdgeInsets.only(bottom: 110),
+        // padding: const EdgeInsets.all(16.0),
+        child: Obx(() {
+            return Stack(children: [
+              if (controller.livestream.isVideo&&
+                        controller.isLive.value)
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 400,
+                      width: 500,
+                      child: AgoraVideoView(
+                      // remember for listenet use VideoViewController.remote
+                        controller: VideoViewController(
+                          rtcEngine: controller.engine,
+                          canvas: VideoCanvas(uid: 0)),
+                      ),
+                    ),
+                    // VideoPlayerWidget(controller: controller),
+                  ],
                 ),
-                const VerticalSpace(),
-                Builder(builder: (_) {
-                  switch (controller.liveProcessingStatus.value) {
-                    case ProcessingStatus.error:
-                    case ProcessingStatus.initial:
-                    case ProcessingStatus.loading:
-                      return Container();
-                    case ProcessingStatus.success:
-                      return HostLiveControlsWidget(controller: controller);
-                  }
-                }),
-                LiveMessagesWidget(
-                  messages: controller.messages,
-                  messagesProcessingStatus:
-                      controller.messagesProcessingStatus.value,
-                  messageScrollController: controller.messageScrollController,
-                ),
-                // messagesWidget(),
-              ],
-            );
-          }),
+              Positioned(
+                  top: 80,
+                  left: 0,
+                  right: 0,
+                  // left: 16,
+                  child: LiveStreamInfoWidget(
+                    lecturer: controller.livestream.user?.getOrganization() ?? "",
+                    showThumb: (!(controller.livestream.isVideo &&
+                        controller.isLive.value)),
+                    // showThumb: ,
+                    thumbPath: controller.livestream.user?.thumb ?? '',
+                    title: controller.livestream.title,
+                    // title: '',
+                  )),
+              LiveTopRightWidget(isLive: controller.isLive.value, isVideo: controller.livestream.isVideo,),
+              Positioned(
+                  bottom: 150,
+                  right: 0,
+                  left: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    width: Get.width,
+                    height: 250,
+                    child: LiveMessagesWidget(
+                      onRefresh: (){controller.fetchAllMessages(true);},
+                      messageScrollController: controller.messageScrollController,
+                      messages: controller.messages.value,
+                      messagesProcessingStatus:
+                          controller.messagesProcessingStatus.value,
+                    ),
+                  )),
+            ]);
+          }
         ),
+        //   Obx(() {
+        //     return Column(
+        //       children: [
+        //         LiveStreamInfoWidget(
+        //           lecturer: controller.livestream.user?.getOrganization() ?? '',
+        //           showThumb: (controller.livestream.isVideo && (!controller.isLive.value)),
+        //           thumbPath: controller.livestream.user?.thumb ?? '',
+        //           title: controller.livestream.title,
+        //         ),
+        //         const VerticalSpace(),
+        //         Builder(builder: (_) {
+        //           switch (controller.liveProcessingStatus.value) {
+        //             case ProcessingStatus.error:
+        //             case ProcessingStatus.initial:
+        //             case ProcessingStatus.loading:
+        //               return Container();
+        //             case ProcessingStatus.success:
+        //               return HostLiveControlsWidget(controller: controller);
+        //           }
+        //         }),
+        //         LiveMessagesWidget(
+        //           messages: controller.messages,
+        //           messagesProcessingStatus:
+        //               controller.messagesProcessingStatus.value,
+        //           messageScrollController: controller.messageScrollController,
+        //         ),
+        //         // messagesWidget(),
+        //       ],
+        //     );
+        //   }),
       ),
       bottomSheet: Container(
         margin: const EdgeInsets.only(bottom: 30),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SendMessageWidget(
-              messageFieldControlller: controller.messageFieldControlller,
-              onSubmit: (String val) {
-                controller.sendMessage(val);
-              },
+            HostLiveControlsWidget(controller: controller),
+            Obx(() {
+            if(!controller.isSending.value && controller.messagesProcessingStatus.value==ProcessingStatus.success){
+                return SendMessageWidget(
+                  messageFieldControlller: controller.messageFieldControlller,
+                  onSubmit: (String val) {
+                    controller.sendMessage(val);
+                  },
+                );
+
+            }else{
+              return LinearProgressIndicator();
+            }
+              }
             ),
           ],
         ),
@@ -159,3 +236,57 @@ class HostLivePage extends GetView<HostLiveController> {
   // }
 }
 
+class LiveTopRightWidget extends StatelessWidget {
+  final bool isVideo;
+  final bool isLive;
+  const LiveTopRightWidget({
+    super.key, required this.isVideo, required this.isLive,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+        top: 80,
+        right: 30,
+        child: Column(
+          children: [
+            if(isLive)
+            Container(
+              width: 52,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4), color: Colors.red),
+              child: SmallText(
+                'LIVE',
+                textAlign: TextAlign.center,
+                color: Colors.white,
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Container(
+              width: 79,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4), color: Colors.red),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Icon(
+                    Icons.people_alt_rounded,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                  SmallText(
+                    isVideo?'Video': 'Audio',
+                    textAlign: TextAlign.center,
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
+  }
+}

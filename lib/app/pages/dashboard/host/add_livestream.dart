@@ -89,15 +89,16 @@ class AddLivestream extends GetView<AddLiveController> {
                 (state) {
                   return LectureDetailsForm(
                     label: 'Start Live',
-                    onSubmit: (title, sectionId, description) {
-                      controller.submitForm(title, sectionId, description);
+                    onSubmit: (title, sectionId, description, isVideo) {
+                      controller.submitForm(title, sectionId, description, isVideo);
                     },
                     sections: state!,
+                    isLive: true,
                   );
                 },
                 onLoading: const LoadingScreen(),
                 onError: (err) => ErrorScreen(
-                  onReturn: controller.refetchSections,
+                  onRetry: controller.refetchSections,
                 ),
                 onEmpty: EmptyScreen(
                     onReturn: controller.refetchSections,

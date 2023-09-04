@@ -24,6 +24,7 @@ abstract class Routes {
   static const LIBRARYLECTURES = '/library-lectures';
   static const DOWNLOADS = '/downloads';
   static const DOWNLOADSPLAYER = '/downloads-player';
+  static const PLAYLISTS = '/playlists';
 }
 
 // abstract class _Paths {

@@ -38,7 +38,7 @@ class SelectUserType extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 16),
                             child: CustomIconButton(
                                 text: FormUserType.values[index].name
-                                    .toCapitalize(),
+                                    .toCapitalize,
                                 onPressed: () {
                                   onSelect(FormUserType.values[index]);
                                 }),

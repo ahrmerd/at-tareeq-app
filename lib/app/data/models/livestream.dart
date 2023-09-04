@@ -23,6 +23,7 @@ class Livestream {
     required this.startTime,
     required this.createdAt,
     required this.updatedAt,
+    required this.isVideo,
     this.deletedAt,
     this.token,
     this.user,
@@ -41,6 +42,7 @@ class Livestream {
   dynamic deletedAt;
   String? token;
   User? user;
+  bool isVideo;
 
   factory Livestream.fromJson(Map<String, dynamic> json) => Livestream(
         id: json["id"],
@@ -56,6 +58,7 @@ class Livestream {
         deletedAt: json["deleted_at"],
         token: json["token"],
         user: json["user"] == null ? null : User.fromJson(json["user"]),
+        isVideo: json["is_video"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,6 +75,7 @@ class Livestream {
         "deleted_at": deletedAt,
         "token": token,
         "user": user?.toJson(),
+        "is_video": isVideo,
       };
 
   static Livestream createDummy() {
@@ -85,7 +89,9 @@ class Livestream {
         channel: "channel",
         startTime: DateTime.now(),
         createdAt: DateTime.now(),
-        updatedAt: DateTime.now());
+        updatedAt: DateTime.now(),
+        isVideo: false,
+        );
   }
 
   static Livestream createDummyForUser() {
@@ -99,6 +105,8 @@ class Livestream {
         channel: "channel",
         startTime: DateTime.now(),
         createdAt: DateTime.now(),
-        updatedAt: DateTime.now());
+        updatedAt: DateTime.now(),
+        isVideo: false
+        );
   }
 }

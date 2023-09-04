@@ -4,11 +4,12 @@ import 'package:at_tareeq/core/styles/decorations.dart';
 import 'package:flutter/material.dart';
 
 class LectureDetailsForm extends StatefulWidget {
-  final void Function(String title, int sectionId, String description) onSubmit;
+  final void Function(String title, int sectionId, String description, bool isVideo) onSubmit;
   final List<SectionOrInterest> sections;
   final String? label;
+  final bool isLive;
   const LectureDetailsForm(
-      {super.key, required this.onSubmit, required this.sections, this.label});
+      {super.key, required this.onSubmit, required this.sections, this.label, this.isLive = false});
 
   @override
   State<LectureDetailsForm> createState() => _LectureDetailsFormState();
@@ -18,6 +19,7 @@ class _LectureDetailsFormState extends State<LectureDetailsForm> {
   String _titleField = "";
   String _descriptionField = "";
   int _sectionId = 0;
+  bool _isVideo = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,12 +61,25 @@ class _LectureDetailsFormState extends State<LectureDetailsForm> {
                     _sectionId = value.id;
                   }
                 })),
+            if(widget.isLive)
+            Row(
+              children: [
+                Text('Live Video Lecture '),
+                HorizontalSpace(),
+                Switch(value: _isVideo, onChanged: (val){
+                  setState(() {
+                  _isVideo = val;
+                    
+                  });
+                })
+              ],
+            ),
             const VerticalSpace(20),
             MyButton(
                 filled: true,
                 maxWidth: true,
                 onTap: () =>
-                    widget.onSubmit(_titleField, _sectionId, _descriptionField),
+                    widget.onSubmit(_titleField, _sectionId, _descriptionField, _isVideo),
                 child: Text(widget.label ?? 'Submit'))
           ],
         ),

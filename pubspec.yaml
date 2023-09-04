@@ -60,7 +60,7 @@ dependencies:
   flutter_portal: ^1.1.4
   # animate_do: ^3.0.2
   share_plus: ^7.1.0
-  awesome_notifications: ^0.6.19
+  awesome_notifications: ^0.7.4+1
   # country_pickers: ^2.0.0
   # fluttertoast: any
   # laravel_echo: ^0.2.9
@@ -80,7 +80,8 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+dependency_overrides:
+  intl: ^0.18.1
 # The following section is specific to Flutter packages.
 flutter:
 

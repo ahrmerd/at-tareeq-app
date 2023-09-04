@@ -69,7 +69,7 @@ class _ListenerLectureListState extends State<ListenerLectureList> {
                 );
               }
               return ErrorScreen(
-                onReturn: refreshLectures,
+                onRetry: refreshLectures,
               );
           }
         });

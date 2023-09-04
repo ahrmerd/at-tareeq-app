@@ -20,7 +20,9 @@ class ListenerLibrary extends StatelessWidget {
         Get.toNamed(Routes.LIBRARYLECTURES,
             arguments: {'type': LibraryType.playLater});
       }),
-      MyListItem(const Icon(Icons.playlist_play_rounded), 'Playlist', () {}),
+      MyListItem(const Icon(Icons.playlist_play_rounded), 'Playlist', () {
+        Get.toNamed(Routes.PLAYLISTS);
+      }),
       MyListItem(const Icon(Icons.favorite_rounded), 'Favourite', () {
         Get.toNamed(Routes  .LIBRARYLECTURES,
             arguments: {'type': LibraryType.favorite});

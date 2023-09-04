@@ -84,9 +84,9 @@ class HostLivePage extends GetView<HostLiveController> {
                           ),
                         const HorizontalSpace(),
                         if (controller.isLive.value &&
-                            !controller.isMuted.value)
+                            !controller.isAudioMuted.value)
                           GestureDetector(
-                            onTap: controller.muteBroadcast,
+                            onTap: controller.muteAudioBroadcast,
                             child: Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: const BoxDecoration(
@@ -106,9 +106,9 @@ class HostLivePage extends GetView<HostLiveController> {
                                   ),
                                 )),
                           ),
-                        if (controller.isLive.value && controller.isMuted.value)
+                        if (controller.isLive.value && controller.isAudioMuted.value)
                           GestureDetector(
-                            onTap: controller.unmuteBroadcast,
+                            onTap: controller.unmuteAudioBroadcast,
                             child: Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: const BoxDecoration(

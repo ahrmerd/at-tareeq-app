@@ -39,7 +39,7 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
       Get.toNamed(Routes.ADDLECTURE,
           arguments: {'mode': AddLectureMode.uploading});
     }),
-    HostAction('Live Audio',
+    HostAction('Schedule Livestream',
         icon: const Icon(
           Icons.record_voice_over_outlined,
           size: actionIconSize,
@@ -47,7 +47,7 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
         ), onTap: () {
       Get.toNamed(Routes.ADDLIVE);
     }),
-    HostAction('My Live',
+    HostAction('My Livestreams',
         icon: const Icon(
           MdiIcons.podcast,
           size: actionIconSize,

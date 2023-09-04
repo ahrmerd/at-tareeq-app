@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class ErrorScreen extends StatelessWidget {
   final String? messsage;
-  final VoidCallback? onReturn;
-  const ErrorScreen({Key? key, this.messsage, this.onReturn}) : super(key: key);
+  final String? retryMessage;
+  final VoidCallback? onRetry;
+  const ErrorScreen({Key? key, this.messsage, this.onRetry, this.retryMessage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +24,9 @@ class ErrorScreen extends StatelessWidget {
             messsage ?? 'An Error Occurred',
             style: biggerTextStyle.copyWith(color: Colors.red),
           ),
-          if (onReturn != null) const HorizontalSpace(),
-          if (onReturn != null)
-            MyButton(danger: true, onTap: onReturn, child: const Text('Return'))
+          if (onRetry != null) const HorizontalSpace(),
+          if (onRetry != null)
+            MyButton(danger: true, onTap: onRetry, child: Text(retryMessage??'Retry'))
         ],
       ),
     );
