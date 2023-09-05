@@ -106,8 +106,9 @@ class RegisterForm extends StatelessWidget {
                           enableInteractiveSelection: true,
                           enableSuggestions: true,
                           valueTransformer: (value) {
-                            if (item.field != "phone") {
+                            if (item.type != TextInputType.phone) {
                               return value;
+                              
                             }
                             return value != null ? parsePhone(value) : null;
                           },

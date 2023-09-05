@@ -118,7 +118,9 @@ class DownloadsPage extends GetView<DownloadController> {
               );
             }),
         onEmpty: const EmptyScreen(),
-        onError: (error) => ErrorScreen(messsage: error.toString()),
+        onError: (error) => ErrorScreen(
+            onRetry: (){controller.fetchDownloads();},
+           messsage: error.toString()),
         onLoading: const LoadingScreen(),
       ),
     );

@@ -21,7 +21,11 @@ class LibraryLecturesPage extends GetView<LibraryController> {
           // onAddToPlaylater: addToPlaylater,
         ),
         onEmpty: const EmptyScreen(),
-        onError: (error) => const ErrorScreen(),
+        onError: (error) => ErrorScreen(
+          onRetry: () {
+            controller.fetchLectures();
+          },
+        ),
         onLoading: const LoadingScreen(),
       ),
     );

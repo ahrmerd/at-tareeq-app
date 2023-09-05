@@ -5,6 +5,7 @@ import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/host_live.dart';
 import 'package:at_tareeq/app/widgets/color_loader.dart';
 import 'package:at_tareeq/app/widgets/host_live_controls_widget.dart';
+import 'package:at_tareeq/app/widgets/listener_live_controls_widget.dart';
 import 'package:at_tareeq/app/widgets/live_messages_widget.dart';
 import 'package:at_tareeq/app/widgets/livestream_info_widget.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
@@ -92,6 +93,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                     width: Get.width,
                     height: 250,
                     child: LiveMessagesWidget(
+                      hostUserId: controller.livestream.value.userId,
                       onRefresh: (){controller.fetchAllMessages(true);},
                       messageScrollController: controller.messageScrollController,
                       messages: controller.messages.value,
@@ -138,8 +140,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-
-            // HostLiveControlsWidget(controller: controller),
+            ListenerLiveControlsWidget(controller: controller),
             Obx(() {
             if(!controller.isSending.value && controller.messagesProcessingStatus.value==ProcessingStatus.success){
                 return SendMessageWidget(

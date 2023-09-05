@@ -22,7 +22,9 @@ import 'host_live_controller.dart';
 class LivestreamPlayerController extends GetxController {
   RxBool isPlaying = false.obs;
   Rx<Livestream> livestream = (Get.arguments['livestream'] as Livestream).obs;
-  final RtcEngine engine = createAgoraRtcEngine();
+  // final RtcEngine engine = createAgoraRtcEngine();
+  late RtcEngine _engine;
+  RtcEngine get engine => _engine;
   Rx<ProcessingStatus> liveProcessingStatus = ProcessingStatus.initial.obs;
   Rx<ProcessingStatus> messagesProcessingStatus = ProcessingStatus.initial.obs;
   RxBool isReady = false.obs;
@@ -39,6 +41,7 @@ class LivestreamPlayerController extends GetxController {
 
   @override
   void onInit() async {
+  _engine = createAgoraRtcEngine();
     try {
       await initAbly();
       await initAgora();
@@ -58,13 +61,16 @@ class LivestreamPlayerController extends GetxController {
       // if(stateChange.event);
       // Handle connection state change events
     });
-    final channel = realtime.channels.get(livestream.value.channel);
+    final channel = realtime.channels.get("public:${livestream.value.channel}");
     await channel.attach();
     channel.subscribe().listen((event) {
       if (event.name == Events.startLivestream) {
         livestream.value.status = LivestreamStatus.started;
+        startPlaying();
       } else if (event.name == Events.stopLivestream) {
         livestream.value.status = LivestreamStatus.finished;
+        stopPlaying();
+        // leaveChannel();
       } else if (event.name == Events.livemessage) {
         fetchAllMessages();
         // addToMessages(event.data);
@@ -91,12 +97,21 @@ class LivestreamPlayerController extends GetxController {
 
   Future<void> togglePlayer() async {
     if (isReady.value && !isPlaying.value) {
-      await joinChannel();
-      isPlaying.value = true;
+      await startPlaying();
     } else if (isReady.value && isPlaying.value) {
-      await leaveChannel();
-      isPlaying.value = false;
+      await stopPlaying();
     }
+  }
+
+  Future<void> startPlaying() async{
+    await joinChannel();
+      isPlaying.value = true;
+
+  }
+
+  Future<void> stopPlaying() async{
+  await leaveChannel();
+      isPlaying.value = false;
   }
 
   Future<void> leaveChannel() async {

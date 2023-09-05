@@ -23,34 +23,31 @@ class ListenerLiveControlsWidget extends StatelessWidget {
           children: [
             MyButton(
                     onTap: () {
-                      if(!controller.isPlaying.value)
-                      controller.joinChannel();
+
+                      controller.togglePlayer();
+                      // if(!controller.isPlaying.value)
                     },
-                    child: const Text('End Lecture'),
+                    child: Text(controller.isPlaying.value ? 'Stop Listening': 'Start Listening'),
                   ),
                   HorizontalSpace(),
-            AvatarGlow(
-              glowColor: Colors.redAccent,
-              endRadius: controller.isPlaying.value ? 30 : 20,
-              child: CircleAvatar(
-                backgroundColor:
-                    controller.isPlaying.value ? Colors.red : Colors.grey,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.mic_none_rounded,
-                    color:
-                        controller.isPlaying.value ? Colors.white : Colors.black,
-                  ),
-                  onPressed: () {
-                    if (controller.isPlaying.value) {
-                      controller.leaveChannel();
-                    } else {
-                      controller.joinChannel();
-                    }
-                  },
-                ),
-              ),
-            ),
+            // AvatarGlow(
+            //   glowColor: Colors.redAccent,
+            //   endRadius: controller.isPlaying.value ? 30 : 20,
+            //   child: CircleAvatar(
+            //     backgroundColor:
+            //         controller.isPlaying.value ? Colors.red : Colors.grey,
+            //     child: IconButton(
+            //       icon: Icon(
+            //         Icons.mic_none_rounded,
+            //         color:
+            //             controller.isPlaying.value ? Colors.white : Colors.black,
+            //       ),
+            //       onPressed: () {
+            //         controller.togglePlayer();
+            //       },
+            //     ),
+            //   ),
+            // ),
             if (controller.isPlaying.value)
               Row(
                 children: [
@@ -97,14 +94,14 @@ class ListenerLiveControlsWidget extends StatelessWidget {
                   //camera switch
                   
 
-                  const HorizontalSpace(),
-                  MyButton(
-                    onTap: () {
-                      controller.leaveChannel();
-                    },
-                    child: const Text('End Lecture'),
-                  ),
-                  const HorizontalSpace(),
+                  // const HorizontalSpace(),
+                  // MyButton(
+                  //   onTap: () {
+                  //     controller.leaveChannel();
+                  //   },
+                  //   child: const Text('End Lecture'),
+                  // ),
+                  // const HorizontalSpace(),
                 ],
               ),
             CircleAvatar(

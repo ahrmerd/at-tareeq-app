@@ -156,16 +156,19 @@ class RegisterController extends GetxController {
   }
 
   Future<void> register() async {
+    // print(formKey.currentState!.value);
+  // return;
     if (formKey.currentState!.saveAndValidate()) {
       final data = {
         for (var e in formItems)
-          e.field: formKey.currentState?.fields[e.field]?.value
+          e.field: formKey.currentState?.value[e.field]
       };
 
       data['type'] = isHost ? ServerUserTypes.host : ServerUserTypes.listener;
       data['location'] = formKey.currentState?.fields['location']?.value;
       data['device_name'] = await getDeviceName();
       print(data);
+      // return;
       await _authService.registerFromData(data: data);
     } else {
       // throw Exception();

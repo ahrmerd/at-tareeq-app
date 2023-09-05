@@ -84,6 +84,7 @@ class HostLivePage extends GetView<HostLiveController> {
                     width: Get.width,
                     height: 250,
                     child: LiveMessagesWidget(
+                      hostUserId: controller.livestream.userId,
                       onRefresh: (){controller.fetchAllMessages(true);},
                       messageScrollController: controller.messageScrollController,
                       messages: controller.messages.value,

@@ -42,7 +42,11 @@ class ListenNow extends GetView<ListenNowController> {
             ),
           );
         case ProcessingStatus.error:
-          return const ErrorScreen();
+          return ErrorScreen(
+            onRetry: () {
+              controller.fetchLectures();
+            },
+          );
         case ProcessingStatus.loading:
           return const LoadingScreen();
       }

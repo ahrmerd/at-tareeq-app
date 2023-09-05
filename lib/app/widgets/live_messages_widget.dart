@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 
 class LiveMessagesWidget extends StatelessWidget {
-  const LiveMessagesWidget({super.key, required this.messagesProcessingStatus, required this.messageScrollController, required this.messages, this.onRefresh,});
+  const LiveMessagesWidget({super.key, required this.messagesProcessingStatus, required this.messageScrollController, required this.messages, this.onRefresh, this.hostUserId,});
   final ProcessingStatus messagesProcessingStatus;
   final ScrollController messageScrollController;
   final VoidCallback? onRefresh;
+  final int? hostUserId;
   final List<LiveMessage> messages;
 
   @override
@@ -30,6 +31,7 @@ class LiveMessagesWidget extends StatelessWidget {
                 final message = messages[i];
                 final bool isSentByMe =
                     SharedPreferencesHelper.getUserId() == message.user.id;
+                                final bool isHost = hostUserId == message.user.id;
                 return Container(
                   // constraints: BoxConstraints(
                   // maxWidth: MediaQuery.of(context).size.width * 0.7,
@@ -39,11 +41,11 @@ class LiveMessagesWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        message.user.name,
-                        style: const TextStyle(
+                        message.user.name+ (isHost?'(Lecture Host)':''),
+                        style: TextStyle(
                             color: Colors.grey,
                             fontSize: 13,
-                            fontWeight: FontWeight.w300),
+                            fontWeight: isHost ? FontWeight.w500 :  FontWeight.w300),
                       ),
                       // separa
                       Text(
@@ -75,7 +77,7 @@ class LiveMessagesWidget extends StatelessWidget {
           return ColorLoader();
           // return const CircularProgressIndicator();
         case ProcessingStatus.error:
-          return ErrorScreen( onRetry: onRefresh, messsage: "Couldn't fetch messages",);
+          return ErrorScreen(onRetry: onRefresh, messsage: "Couldn't fetch messages",);
       }
   }
 }

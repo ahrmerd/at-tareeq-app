@@ -34,7 +34,7 @@ class HostLiveController extends GetxController {
   RxBool isAudioMuted = false.obs;
   RxBool isVideoMuted = false.obs;
   // PermissionStatus broadcastingStatus = PermissionStatus.limited;
-  final RtcEngine _engine = createAgoraRtcEngine();
+  late final RtcEngine _engine;
   RtcEngine get engine => _engine;
   // late Echo<PusherClient, PusherChannel> _echo;
   RxBool isReady = false.obs;
@@ -76,6 +76,8 @@ class HostLiveController extends GetxController {
 
   @override
   void onInit() async {
+  _engine = createAgoraRtcEngine();
+
     try {
       await initAbly();
       await initAgora();

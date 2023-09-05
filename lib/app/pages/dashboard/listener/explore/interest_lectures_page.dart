@@ -49,7 +49,8 @@ class InterestLecturesPage extends GetView<InterestLecturesController> {
                 Row(
                   children: [
                     Text('Description: ',
-                        style: normalTextStyle.copyWith(color: lightColor, fontWeight: FontWeight.bold)),
+                        style: normalTextStyle.copyWith(
+                            color: lightColor, fontWeight: FontWeight.bold)),
                     Text(controller.interest.description ?? '',
                         style: normalTextStyle.copyWith(color: lightColor))
                     // TitleValue(title: 'Description', value: controller.interest.description??'');
@@ -59,7 +60,6 @@ class InterestLecturesPage extends GetView<InterestLecturesController> {
             ),
           ),
           const VerticalSpace(),
-          
           const VerticalSpace(),
           Expanded(
               child: controller.obx(
@@ -71,7 +71,11 @@ class InterestLecturesPage extends GetView<InterestLecturesController> {
                       ),
                   onEmpty: const EmptyScreen(),
                   onLoading: const LoadingScreen(),
-                  onError: (err) => const ErrorScreen()))
+                  onError: (err) => ErrorScreen(
+                        onRetry: () {
+                          controller.fetchLectures();
+                        },
+                      )))
         ]),
       ),
     );

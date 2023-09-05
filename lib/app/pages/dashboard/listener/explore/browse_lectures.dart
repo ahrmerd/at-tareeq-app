@@ -58,7 +58,11 @@ class BrowseLectures extends GetView<BrowseLecturesController> {
             ),
           );
         case ProcessingStatus.error:
-          return const ErrorScreen();
+          return ErrorScreen(
+            onRetry: () {
+              controller.fetchData();
+            },
+          );
         case ProcessingStatus.loading:
           return const LoadingScreen();
       }

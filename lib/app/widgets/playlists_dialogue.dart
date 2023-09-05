@@ -108,7 +108,11 @@ class _PlaylistsDialogueState extends State<PlaylistsDialogue> {
           ),
         );
       case ProcessingStatus.error:
-        return ErrorScreen();
+        return ErrorScreen(
+          onRetry: () {
+            initPlaylists();
+          },
+        );
     }
 
     // return FutureBuilder(

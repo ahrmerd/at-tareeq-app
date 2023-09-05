@@ -61,13 +61,15 @@ class _UploadProfilePictureWidgetState
       case ProcessingStatus.success:
         return const SuccessScreen();
       case ProcessingStatus.error:
-        return const ErrorScreen();
+        return ErrorScreen( onRetry: () {
+          onPickImage();
+        });
       case ProcessingStatus.loading:
         return const CircularProgressIndicator();
     }
   }
 
-  onPickImage() async {
+  void onPickImage() async {
     final result = await FilePicker.platform.pickFiles(type: FileType.image);
     if (result == null) {
       Get.showSnackbar(GetSnackBar(
@@ -86,7 +88,7 @@ class _UploadProfilePictureWidgetState
     }
   }
 
-  uploadImage() async {
+  void uploadImage() async {
     try {
       if (file != null) {
         setState(() {

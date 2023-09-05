@@ -39,7 +39,11 @@ class PlaylistsPage extends GetView<PlaylistController> {
           // onAddToPlaylater: addToPlaylater,
 
         onEmpty: const EmptyScreen(),
-        onError: (error) => const ErrorScreen(),
+        onError: (error) => ErrorScreen(
+          onRetry: (){
+           controller.fetchPlaylists();
+          } 
+        ),
         onLoading: const LoadingScreen(),
       ),
     );

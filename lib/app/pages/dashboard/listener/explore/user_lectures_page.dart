@@ -82,7 +82,11 @@ class UserLecturesPage extends GetView<UserLecturesController> {
                   ),
               onEmpty: const EmptyScreen(),
               onLoading: const LoadingScreen(),
-              onError: (err) => const ErrorScreen())
+              onError: (err) => ErrorScreen(
+                onRetry: () {
+                  controller.fetchLectures();
+                },
+              ))
         ]),
       ),
     );
