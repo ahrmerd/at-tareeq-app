@@ -11,4 +11,4 @@ PRODUCT_NAME = at_tareeq
 PRODUCT_BUNDLE_IDENTIFIER = com.atTareek.app
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.atTareek. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 com.atTareeq. All rights reserved.

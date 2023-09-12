@@ -10,14 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    
-    
-
     return Portal(
       child: SafeArea(
         child: GetMaterialApp(
-          title: 'At-Tareek',
+          title: 'At-Tareeq',
           transitionDuration: 300.milliseconds,
           defaultTransition: Transition.rightToLeft,
           theme: AppTheme.lightTheme,

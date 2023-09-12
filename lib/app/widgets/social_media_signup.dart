@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SocialMediaSignup extends StatelessWidget {
-  VoidCallback? onGoogleSignup;
-  VoidCallback? onFacebookSignup;
-  SocialMediaSignup({super.key, this.onGoogleSignup, this.onFacebookSignup});
+  final VoidCallback? onGoogleSignup;
+  final VoidCallback? onFacebookSignup;
+  const SocialMediaSignup({super.key, this.onGoogleSignup, this.onFacebookSignup});
 
   @override
   Widget build(BuildContext context) {

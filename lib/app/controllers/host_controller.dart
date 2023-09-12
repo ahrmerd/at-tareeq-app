@@ -9,7 +9,6 @@ import 'package:dio/dio.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HostController extends GetxController with StateMixin<List<Lecture>> {
   final bottomNavTabIndex = 0.obs;
@@ -49,7 +48,7 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
     }),
     HostAction('My Livestreams',
         icon: const Icon(
-          MdiIcons.podcast,
+          Icons.podcasts,
           size: actionIconSize,
           color: Colors.blue,
         ), onTap: () {

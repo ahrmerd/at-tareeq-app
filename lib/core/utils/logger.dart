@@ -14,7 +14,7 @@ class Logger {
   }
 
   static Future<String> getLogPath() async {
-    return '${(await getApplicationDocumentsDirectory()).path}${Platform.pathSeparator}attareeklogs';
+    return '${(await getApplicationDocumentsDirectory()).path}${Platform.pathSeparator}attareeqlogs';
   }
 
   static clearLog() async {
