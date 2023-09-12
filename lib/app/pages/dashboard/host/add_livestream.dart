@@ -14,101 +14,100 @@ class AddLivestream extends GetView<AddLiveController> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const VerticalSpace(15),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Details',
-                    style: biggestTextStyle,
-                  ),
-                  Text(
-                    'Fill in the details about this stream',
-                    style: bigTextStyle,
-                  ),
-                ],
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const VerticalSpace(15),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Details',
+                style: biggestTextStyle,
               ),
-            ),
-            const VerticalSpace(15),
-            Obx(() {
-              return SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Text(
+                'Fill in the details about this stream',
+                style: bigTextStyle,
+              ),
+            ],
+          ),
+        ),
+        const VerticalSpace(15),
+        Obx(() {
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Row(
-                      children: [
-                        const Text('Scheduled StartTime:'),
-                        const HorizontalSpace(),
-                        Text(
-                          formatDateTime(controller.scheduledTime.value.add(const Duration(hours: 1))),
-                          style: bigTextStyle,
-                        ),
-                      ],
-                    ),
+                    const Text('Scheduled StartTime:'),
                     const HorizontalSpace(),
-                    MyButton(
-                      child:
-                          const Text('Select scheduled time to start stream'),
-                      onTap: () async {
-                        final date = (await showDatePicker(
-                                context: context,
-                                initialDate: controller.scheduledTime.value,
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime.now()
-                                    .add(const Duration(days: 7)))) ??
-                            DateTime.now();
-                        final time = (await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.fromDateTime(date))) ??
-                            TimeOfDay.now();
-                        // print(time.hour);
-                        // print(time.minute);
-                        controller.scheduledTime.value =
-                            date.copyWith(hour: time.hour, minute: time.minute);
-                        // print(controller.scheduledTime.value.hour);
-                      },
+                    Text(
+                      formatDateTime(controller.scheduledTime.value.add(const Duration(hours: 1))),
+                      style: bigTextStyle,
                     ),
                   ],
                 ),
-              );
-            }),
-            const VerticalSpace(15),
-            Expanded(
-              child: controller.obx(
-                (state) {
-                  return LectureDetailsForm(
-                    label: 'Start Live',
-                    onSubmit: (title, sectionId, description, isVideo) {
-                      controller.submitForm(title, sectionId, description, isVideo);
-                    },
-                    sections: state!,
-                    isLive: true,
-                  );
-                },
-                onLoading: const LoadingScreen(),
-                onError: (err) => ErrorScreen(
-                  onRetry: controller.refetchSections,
+                const HorizontalSpace(),
+                MyButton(
+                  child:
+                      const Text('Select scheduled time to start stream'),
+                  onTap: () async {
+                    final date = (await showDatePicker(
+                            context: context,
+                            initialDate: controller.scheduledTime.value,
+                            firstDate: DateTime.now(),
+                            lastDate: DateTime.now()
+                                .add(const Duration(days: 7)))) ??
+                        DateTime.now();
+                    final time = (await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.fromDateTime(date))) ??
+                        TimeOfDay.now();
+                    // print(time.hour);
+                    // print(time.minute);
+                    controller.scheduledTime.value =
+                        date.copyWith(hour: time.hour, minute: time.minute);
+                    // print(controller.scheduledTime.value.hour);
+                  },
                 ),
-                onEmpty: EmptyScreen(
-                    onReturn: controller.refetchSections,
-                    message:
-                        'There are no interest, you wont be able to add a lecture please contact admin to add some interest'),
-              ),
+              ],
             ),
-          ],
+          );
+        }),
+        const VerticalSpace(15),
+        Expanded(
+          child: controller.obx(
+            (state) {
+              return LectureDetailsForm(
+                label: 'Start Live',
+                onSubmit: (title, sectionId, description, isVideo) {
+                  controller.submitForm(title, sectionId, description, isVideo);
+                },
+                sections: state!,
+                isLive: true,
+              );
+            },
+            onLoading: const LoadingScreen(),
+            onError: (err) => ErrorScreen(
+              onRetry: controller.refetchSections,
+            ),
+            onEmpty: EmptyScreen(
+                onReturn: controller.refetchSections,
+                message:
+                    'There are no interest, you wont be able to add a lecture please contact admin to add some interest'),
+          ),
         ),
+      ],
+    ),
       ),
-    ));
+    );
   }
 }

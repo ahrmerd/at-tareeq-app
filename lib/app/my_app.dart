@@ -15,13 +15,15 @@ class MyApp extends StatelessWidget {
     
 
     return Portal(
-      child: GetMaterialApp(
-        title: 'At-Tareek',
-        transitionDuration: 300.milliseconds,
-        defaultTransition: Transition.rightToLeft,
-        theme: AppTheme.lightTheme,
-        initialRoute: Pages.initial,
-        getPages: Pages.routes,
+      child: SafeArea(
+        child: GetMaterialApp(
+          title: 'At-Tareek',
+          transitionDuration: 300.milliseconds,
+          defaultTransition: Transition.rightToLeft,
+          theme: AppTheme.lightTheme,
+          initialRoute: Pages.initial,
+          getPages: Pages.routes,
+        ),
       ),
     );
   }

@@ -12,34 +12,33 @@ class HostDashboard extends GetView<HostController> {
   const HostDashboard({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       bottomNavigationBar: Obx(() {
-        return BottomNavigationBar(
-            backgroundColor: primaryColor,
-            selectedItemColor: lightColor,
-            unselectedItemColor: darkColor.withOpacity(.8),
-            // unselectedIconTheme: IconThemeData(color: Colors.grey),
-            // selectedIconTheme: const IconThemeData(color: lightColor),
-            currentIndex: controller.bottomNavTabIndex.value,
-            onTap: controller.changeTabIndex,
-            items: const [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined), label: 'Home'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.video_library_outlined), label: 'Library'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person_outlined), label: 'Profile'),
-            ]);
+    return BottomNavigationBar(
+        backgroundColor: primaryColor,
+        selectedItemColor: lightColor,
+        unselectedItemColor: darkColor.withOpacity(.8),
+        // unselectedIconTheme: IconThemeData(color: Colors.grey),
+        // selectedIconTheme: const IconThemeData(color: lightColor),
+        currentIndex: controller.bottomNavTabIndex.value,
+        onTap: controller.changeTabIndex,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home_outlined), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.video_library_outlined), label: 'Library'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_outlined), label: 'Profile'),
+        ]);
       }),
       body: Obx(() => IndexedStack(
-            index: controller.bottomNavTabIndex.value,
-            children: const [
-              HostHome(),
-              HostLibrary(),
-              HostProfile(),
-            ],
-          )),
-    ));
+        index: controller.bottomNavTabIndex.value,
+        children: const [
+          HostHome(),
+          HostLibrary(),
+          HostProfile(),
+        ],
+      )),
+    );
   }
 }

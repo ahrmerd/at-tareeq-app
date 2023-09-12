@@ -11,66 +11,65 @@ class ListenerDashboard extends GetView<ListenerController> {
   const ListenerDashboard({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       bottomNavigationBar: Obx(() {
-        return Container(
-          decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(18), topLeft: Radius.circular(18)
-          ),
-        ),
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(18), topRight: Radius.circular(18),
-          ),
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.shifting,
-              iconSize: 28,
+    return Container(
+      decoration: const BoxDecoration(
+      borderRadius: BorderRadius.only(
+          topRight: Radius.circular(18), topLeft: Radius.circular(18)
+      ),
+    ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(18), topRight: Radius.circular(18),
+      ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.shifting,
+          iconSize: 28,
 
-                          // backgroundColor: primaryColor,
-            selectedItemColor: lightColor,
-            unselectedItemColor: Colors.blueGrey.withOpacity(.8),
-            // unselectedIconTheme: const IconThemeData(color: darkColor),
-            // selectedIconTheme: const IconThemeData(color: lightColor),
-              
-                currentIndex: controller.bottomNavTabIndex.value,
-                onTap: controller.changeTabIndex,
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home_outlined), label: 'Home',
-                    backgroundColor: primaryColor
-                    ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.search_outlined), label: 'Explore',
-                    backgroundColor: primaryColor
+                      // backgroundColor: primaryColor,
+        selectedItemColor: lightColor,
+        unselectedItemColor: Colors.blueGrey.withOpacity(.8),
+        // unselectedIconTheme: const IconThemeData(color: darkColor),
+        // selectedIconTheme: const IconThemeData(color: lightColor),
+          
+            currentIndex: controller.bottomNavTabIndex.value,
+            onTap: controller.changeTabIndex,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined), label: 'Home',
+                backgroundColor: primaryColor
+                ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.search_outlined), label: 'Explore',
+                backgroundColor: primaryColor
 
-                      ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.video_library), label: 'Library', 
-                    backgroundColor: primaryColor
-                      ),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.person_outline), label: 'Profile',
-                    backgroundColor: primaryColor
-                      ),
-                ]),
-          ),
-        );
+                  ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.video_library), label: 'Library', 
+                backgroundColor: primaryColor
+                  ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person_outline), label: 'Profile',
+                backgroundColor: primaryColor
+                  ),
+            ]),
+      ),
+    );
       }),
       body: Obx(() => Stack(
+    children: [
+      IndexedStack(
+        index: controller.bottomNavTabIndex.value,
         children: [
-          IndexedStack(
-            index: controller.bottomNavTabIndex.value,
-            children: [
-              ListenerHome(),
-              ListenerExplore(),
-              const ListenerLibrary(),
-              const ListenerProfile(),
-            ],
-          )
+          ListenerHome(),
+          ListenerExplore(),
+          const ListenerLibrary(),
+          const ListenerProfile(),
         ],
+      )
+    ],
       )),
-    ));
+    );
   }
 }

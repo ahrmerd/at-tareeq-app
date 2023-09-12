@@ -43,131 +43,130 @@ class _HostProfileState extends State<HostProfile> {
   final name = SharedPreferencesHelper.getName();
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        // title: Text(
-        //   'Profile',
-        //   style: biggerTextStyle,
-        // ),
+    // title: Text(
+    //   'Profile',
+    //   style: biggerTextStyle,
+    // ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+    padding: const EdgeInsets.all(10.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const BigText('Profile'),
+        const VerticalSpace(48),
+        Row(
           children: [
-            const BigText('Profile'),
-            const VerticalSpace(48),
-            Row(
-              children: [
-                GestureDetector(
-                  onTap: () => Get.defaultDialog(
-                    title: 'upload profile picture',
-                    content: const UploadProfilePictureWidget(),
+            GestureDetector(
+              onTap: () => Get.defaultDialog(
+                title: 'upload profile picture',
+                content: const UploadProfilePictureWidget(),
 
-                    // onConfirm: () => build(Get.context!),
-                  ).then((value) {
-                    setState(() {});
-                  }),
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 100,
-                        height: 100,
-                        decoration: const BoxDecoration(
-                            color: primaryColor,
-                            // borderRadius: BorderRadius.circular(50),
-                            shape: BoxShape.circle),
-                        child: ClipOval(
-                          // borderRadius: BorderRadius.circular(radius),
-                          // width: 100,
-                          // height: 100,
-                          // decoration: const BoxDecoration(
+                // onConfirm: () => build(Get.context!),
+              ).then((value) {
+                setState(() {});
+              }),
+              child: Stack(
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: const BoxDecoration(
+                        color: primaryColor,
+                        // borderRadius: BorderRadius.circular(50),
+                        shape: BoxShape.circle),
+                    child: ClipOval(
+                      // borderRadius: BorderRadius.circular(radius),
+                      // width: 100,
+                      // height: 100,
+                      // decoration: const BoxDecoration(
 
-                          // borderRadius: BorderRadius.circular(50),
-                          // shape: BoxShape.circle),
+                      // borderRadius: BorderRadius.circular(50),
+                      // shape: BoxShape.circle),
 
-                          // backgroundColor: p,
-                          // radius: 50,
-                          child: MyNetworkImage(
-                            key: Key(DateTime.now()
-                                .millisecondsSinceEpoch
-                                .toString()),
-                            path: path,
-                            fit: BoxFit.cover,
-                          ),
-                          // Image.asset(
-                          // '${apiUrl}profile-image',
-                          // fit: BoxFit.fill,
-                          // ),
-                        ),
+                      // backgroundColor: p,
+                      // radius: 50,
+                      child: MyNetworkImage(
+                        key: Key(DateTime.now()
+                            .millisecondsSinceEpoch
+                            .toString()),
+                        path: path,
+                        fit: BoxFit.cover,
                       ),
-                      const Positioned(
-                          top: 0,
-                          right: 0,
-                          child: Icon(
-                            Icons.add_a_photo,
-                            color: primaryDarkColor,
-                          ))
-                    ],
-                  ),
-                ),
-                const HorizontalSpace(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SmallText(
-                      name,
-                      fontSize: 20,
-                      // style: bigTextStyle,
+                      // Image.asset(
+                      // '${apiUrl}profile-image',
+                      // fit: BoxFit.fill,
+                      // ),
                     ),
-                    SmallText(
-                      "Edit Profile",
-                      color: Colors.grey.shade700,
-                      // style: biggerTextStyle,
-                    )
-                  ],
+                  ),
+                  const Positioned(
+                      top: 0,
+                      right: 0,
+                      child: Icon(
+                        Icons.add_a_photo,
+                        color: primaryDarkColor,
+                      ))
+                ],
+              ),
+            ),
+            const HorizontalSpace(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SmallText(
+                  name,
+                  fontSize: 20,
+                  // style: bigTextStyle,
+                ),
+                SmallText(
+                  "Edit Profile",
+                  color: Colors.grey.shade700,
+                  // style: biggerTextStyle,
                 )
               ],
-            ),
-            const VerticalSpace(48),
-            Expanded(
-              child: DefaultTextStyle.merge(
-                  child: ListView.builder(
-                      itemCount: libraryItems.length,
-                      itemBuilder: (_, i) {
-                        final item = libraryItems[i];
-                        return Column(
-                          children: [
-                            MyListTile(
-                              icon: item.icon,
-                              onTap: item.onTap,
-                              text: item.title,
-                            ),
-                            const Divider(
-                              height: 6,
-                            ),
-                          ],
-                        );
-                      })
-                  //     child: ListView(children: const [
-                  //   Card(
-                  //     child: ListTile(
-                  //       leading: Icon(Icons.play_circle_filled),
-                  //       title: Text('History'),
-                  //       trailing: Icon(Icons.arrow_forward_ios),
-                  //     ),
-                  //   )
-                  // ])
-                  ),
-            ),
-            MyButton(
-                onTap: () => Get.offNamed(Routes.LISTENERDASHBOARD),
-                child: const Text('Go to Listener dashboard')),
+            )
           ],
         ),
+        const VerticalSpace(48),
+        Expanded(
+          child: DefaultTextStyle.merge(
+              child: ListView.builder(
+                  itemCount: libraryItems.length,
+                  itemBuilder: (_, i) {
+                    final item = libraryItems[i];
+                    return Column(
+                      children: [
+                        MyListTile(
+                          icon: item.icon,
+                          onTap: item.onTap,
+                          text: item.title,
+                        ),
+                        const Divider(
+                          height: 6,
+                        ),
+                      ],
+                    );
+                  })
+              //     child: ListView(children: const [
+              //   Card(
+              //     child: ListTile(
+              //       leading: Icon(Icons.play_circle_filled),
+              //       title: Text('History'),
+              //       trailing: Icon(Icons.arrow_forward_ios),
+              //     ),
+              //   )
+              // ])
+              ),
+        ),
+        MyButton(
+            onTap: () => Get.offNamed(Routes.LISTENERDASHBOARD),
+            child: const Text('Go to Listener dashboard')),
+      ],
+    ),
       ),
-    ));
+    );
     // return Scaffold(
     //   body: SafeArea(
     //       child: Column(children: [

@@ -10,24 +10,22 @@ class ListenerExplore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 80,
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 80,
 
-          title: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: CustomSearch(),
-          ),
-          // flexibleSpace: MyTextInput(
-          //   controller: controller.searchController,
-          //   hintText: 'search',
-          //   icon: Icon(Icons.search),
-          // ),
+        title: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: CustomSearch(),
         ),
-        body: MyTabView(
-          tabs: controller.exploreTabs,
-        ),
+        // flexibleSpace: MyTextInput(
+        //   controller: controller.searchController,
+        //   hintText: 'search',
+        //   icon: Icon(Icons.search),
+        // ),
+      ),
+      body: MyTabView(
+        tabs: controller.exploreTabs,
       ),
     );
   }

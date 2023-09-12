@@ -32,49 +32,48 @@ class ListenerLibrary extends StatelessWidget {
       }),
     ];
 
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: const BigText(
-          'Library',
-        ),
+    title: const BigText(
+      'Library',
+    ),
       ),
       body: Container(
-        margin: const EdgeInsets.only(top: 40),
-        // style: biggestTextStyle,
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: ListView.builder(
-                itemCount: libraryItems.length,
-                itemBuilder: (_, i) {
-                  final item = libraryItems[i];
-                  return Column(
-                    children: [
-                      MyListTile(icon: item.icon, onTap: item.onTap, text: item.title,),
-                                    const Divider(height: 6,),
-                    ],
-                  );
-                  // return Card(
-                  //   child: ListTile(
-                  //     onTap: item.onTap,
-                  //     leading: item.icon,
-                  //     title: Text(item.title),
-                  //     trailing: const Icon(Icons.arrow_forward_ios),
-                  //   ),
-                  // );
-                }),
-          )
-          //     child: ListView(children: const [
-          //   Card(
-          //     child: ListTile(
-          //       leading: Icon(Icons.play_circle_filled),
-          //       title: Text('History'),
-          //       trailing: Icon(Icons.arrow_forward_ios),
-          //     ),
-          //   )
-          // ])
-          ),
-    ));
+    margin: const EdgeInsets.only(top: 40),
+    // style: biggestTextStyle,
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: ListView.builder(
+            itemCount: libraryItems.length,
+            itemBuilder: (_, i) {
+              final item = libraryItems[i];
+              return Column(
+                children: [
+                  MyListTile(icon: item.icon, onTap: item.onTap, text: item.title,),
+                                const Divider(height: 6,),
+                ],
+              );
+              // return Card(
+              //   child: ListTile(
+              //     onTap: item.onTap,
+              //     leading: item.icon,
+              //     title: Text(item.title),
+              //     trailing: const Icon(Icons.arrow_forward_ios),
+              //   ),
+              // );
+            }),
+      )
+      //     child: ListView(children: const [
+      //   Card(
+      //     child: ListTile(
+      //       leading: Icon(Icons.play_circle_filled),
+      //       title: Text('History'),
+      //       trailing: Icon(Icons.arrow_forward_ios),
+      //     ),
+      //   )
+      // ])
+      ),
+    );
     // return Scaffold(
     //   body: SafeArea(
     //       child: Column(children: [
