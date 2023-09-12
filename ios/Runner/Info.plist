@@ -49,5 +49,17 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<true/>
+		<key>NSAppleMusicUsageDescription</key>
+		<string>We need access to your audio library to upload and play audio files for lectures and content.</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>We need access to your photo library to upload and set profile photos and thumbnails for your account.</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>We need access to your device's microphone to record audio lectures for you.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>We need access to your device's camera to capture photos and videos for profile pictures and content, as well as to livestream lectures.</string>
+
+
+
+
 	</dict>
 </plist>

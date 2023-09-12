@@ -8,7 +8,6 @@
 
 #include <agora_rtc_engine/agora_rtc_engine_plugin.h>
 #include <audioplayers_windows/audioplayers_windows_plugin.h>
-#include <awesome_notifications/awesome_notifications_plugin_c_api.h>
 #include <iris_method_channel/iris_method_channel_plugin_c_api.h>
 #include <permission_handler_windows/permission_handler_windows_plugin.h>
 #include <record_windows/record_windows_plugin_c_api.h>
@@ -20,8 +19,6 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("AgoraRtcEnginePlugin"));
   AudioplayersWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("AudioplayersWindowsPlugin"));
-  AwesomeNotificationsPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("AwesomeNotificationsPluginCApi"));
   IrisMethodChannelPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("IrisMethodChannelPluginCApi"));
   PermissionHandlerWindowsPluginRegisterWithRegistrar(

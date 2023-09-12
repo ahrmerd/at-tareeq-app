@@ -13,7 +13,6 @@ import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 class LectureOptionsMenuWidget extends StatefulWidget {
@@ -60,12 +59,12 @@ class _LectureOptionsMenuWidgetState extends State<LectureOptionsMenuWidget> {
       //     ),
       child: IconButton(
         onPressed: () {
-          // getApplicationSupportDirectory().then((value) => print(value));
-          getApplicationDocumentsDirectory().then((dir) {
-            dir.list(recursive: true).forEach((f) {
-              print(f);
-            });
-          });
+          // // getApplicationSupportDirectory().then((value) => print(value));
+          // getApplicationDocumentsDirectory().then((dir) {
+          //   dir.list(recursive: true).forEach((f) {
+          //     print(f);
+          //   });
+          // });
 
           setState(() {
             _isOpen = true;

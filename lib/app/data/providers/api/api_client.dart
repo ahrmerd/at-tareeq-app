@@ -64,7 +64,8 @@ class ApiClient {
       headers: {
         "Authorization": "Bearer ${SharedPreferencesHelper.getToken()}",
         "Content-Type": "application/json",
-        "Accept": "application/json"
+        "Accept": "application/json",
+        "Client-Version": "1"
       });
 
   static void showErrorDialogue(DioError e) {

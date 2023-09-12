@@ -56,7 +56,7 @@ class AddLectureController extends GetxController
   }
 
   Future<bool> ensureRecordingFolderExists() async {
-    final path = await getStorageDirectory('at-tareek');
+    final path = await getStoragePath('at-tareek');
     // print(path);
 
     if (path != null) {

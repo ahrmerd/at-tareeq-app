@@ -55,12 +55,13 @@ dependencies:
   agora_rtc_engine: ^6.2.0
   expandable: ^5.0.1
   # chat_bubbles: ^1.4.1
-  flutter_chat_bubble: ^2.0.2
+  # flutter_chat_bubble: ^2.0.2
   ably_flutter: ^1.2.18
   flutter_portal: ^1.1.4
   # animate_do: ^3.0.2
   share_plus: ^7.1.0
-  awesome_notifications: ^0.7.4+1
+  # awesome_notifications: ^0.7.4+1
+  intl: ^0.18.1
   # country_pickers: ^2.0.0
   # fluttertoast: any
   # laravel_echo: ^0.2.9

@@ -16,7 +16,6 @@ import 'package:at_tareeq/core/styles/decorations.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:get/get.dart';
 
 class LivestreamPlayer extends GetView<LivestreamPlayerController> {

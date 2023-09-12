@@ -59,7 +59,7 @@ Future<String> getDeviceName() async {
   }
 }
 
-Future<String?> getStorageDirectory(String folder) async {
+Future<String?> getStoragePath(String folder) async {
   Directory? dir;
   if (Platform.isAndroid) {
     dir = await getExternalStorageDirectory();

@@ -17,7 +17,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 
 class RegisterController extends GetxController {
   final AuthService _authService = Dependancies.authService();
@@ -110,8 +109,6 @@ class RegisterController extends GetxController {
   void onInit() {
     formItems = getFormItems();
     loadStates();
-    getApplicationDocumentsDirectory().then((value) => print(value));
-
     super.onInit();
   }
 

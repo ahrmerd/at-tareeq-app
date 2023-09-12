@@ -13,7 +13,7 @@ class Dependancies {
     Get.put(ApiClient());
     await Get.putAsync(() => AuthService().init());
     Get.put(AudioPlayer());
-    await NotificationService.initializeLocalNotifications();
+    // await NotificationService.initializeLocalNotifications();
   }
 
   static AudioPlayer audioPlayer() => Get.find<AudioPlayer>();
