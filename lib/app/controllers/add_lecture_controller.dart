@@ -84,9 +84,8 @@ class AddLectureController extends GetxController
   }
 
   Future startRecord() async {
-      await recorder.start(path: filePath);
-      recordingStatus.value = RecordingStatus.recording;
-
+      // await recorder.start(path: filePath);
+      // recordingStatus.value = RecordingStatus.recording;
     if (await recorder.hasPermission() && recorderReady.value) {
       await recorder.start(path: filePath);
       recordingStatus.value = RecordingStatus.recording;
