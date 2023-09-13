@@ -49,8 +49,8 @@ class _MyNetworkImageState extends State<MyNetworkImage> {
 
       return FutureBuilder(
       future: futureImage,
-      builder: (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
-        if (snapshot.hasData) {
+      builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
+        if (snapshot.hasData && snapshot.data!=null) {
           return Image.memory(
             snapshot.data!,
             height: widget.height,
@@ -59,7 +59,7 @@ class _MyNetworkImageState extends State<MyNetworkImage> {
             fit: widget.fit,
             alignment: widget.alignment,
           );
-        } else if (snapshot.hasError) {
+        } else if (snapshot.hasError ||snapshot.data==null ) {
           return Image.asset(widget.fallbackAsset,
               height: widget.height,
               width: widget.width,
@@ -82,10 +82,14 @@ class _MyNetworkImageState extends State<MyNetworkImage> {
     }
   }
 
-  Future<Uint8List> getImage(String path) async {
+  Future<Uint8List?> getImage(String path) async {
     final req = widget.useAppRequest ? Dependancies.http() : Dio();
+    try {
     final res = await req.get(path,
         options: Options(responseType: ResponseType.bytes));
     return Uint8List.fromList((res.data) as List<int>);
+    } catch (e) {
+      return null;
+    }
   }
 }

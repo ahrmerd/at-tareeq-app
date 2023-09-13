@@ -1,0 +1,4 @@
+Pod::PICKER_MEDIA = false, resp. Pod::PICKER_AUDIO = false, resp. Pod::PICKER_DOCUMENT = false
+target 'Runner' do
+  use_frameworks!
+  use_modular_headers!

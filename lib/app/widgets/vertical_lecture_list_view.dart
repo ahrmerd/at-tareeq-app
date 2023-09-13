@@ -130,7 +130,7 @@ class _VerticalLectureListViewState extends State<VerticalLectureListView> {
                                     SmallText(item.title),
                                     const HorizontalSpace(4),
                                     SmallText(
-                                      item.description,
+                                      item.description??"",
                                       fontSize: 14,
                                       color: Colors.grey,
                                       overflow: TextOverflow.ellipsis,

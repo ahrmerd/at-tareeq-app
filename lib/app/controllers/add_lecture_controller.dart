@@ -84,15 +84,23 @@ class AddLectureController extends GetxController
   }
 
   Future startRecord() async {
+      await recorder.start(path: filePath);
+      recordingStatus.value = RecordingStatus.recording;
+
     if (await recorder.hasPermission() && recorderReady.value) {
       await recorder.start(path: filePath);
       recordingStatus.value = RecordingStatus.recording;
     } else {
+
       Get.defaultDialog(
           title: 'unable to start recording',
           middleText:
               'please accept all permissions requests; it you have previously denied the permissions. go to your device settings. check the app settings and provide alll the required permissions',
           onConfirm: () => Get.back());
+      requestPermissions();
+            print("mic ${(await Permission.microphone.request())}");
+            print("storage ${(await Permission.storage.request())}");
+
       // Get.showSnackbar(GetSnackBar(
       // title: 'unable to start recording',
       // message: 'please accept all permissions',

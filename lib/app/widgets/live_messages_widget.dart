@@ -6,7 +6,6 @@ import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat_bubble/chat_bubble.dart';
 
 class LiveMessagesWidget extends StatelessWidget {
   const LiveMessagesWidget({super.key, required this.messagesProcessingStatus, required this.messageScrollController, required this.messages, this.onRefresh, this.hostUserId,});
