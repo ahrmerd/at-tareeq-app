@@ -61,7 +61,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                   ],
                 ),
               Positioned(
-                  top: 80,
+                  top: 50,
                   left: 0,
                   right: 0,
                   // left: 16,

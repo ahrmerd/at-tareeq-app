@@ -55,12 +55,18 @@ class Downloader{
 
 
   static Future<List<File>> getDownloads()async{
+    await Downloader.ensureDownloadFolderExist();
     return (Directory(await getDownloadsPath())).listSync().whereType<File>().toList();
   }
 
   static String idTitleSeparator='-';  
 
   static String lectureTitleFromFile(File file)=> fileEntityBasename(file).split(idTitleSeparator).last;
+
+  static Future<void> ensureDownloadFolderExist() async{
+    final dir = Directory(await getDownloadsPath());
+      return dir.createSync(recursive: true);
+  }
 
 
   static String lectureFilename(Lecture lecture)=> '${lecture.id}$idTitleSeparator${lecture.title}';

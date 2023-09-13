@@ -52,7 +52,11 @@ dependencies:
   avatar_glow: ^2.0.2
   flutter_native_splash: ^2.2.19
   flutter_launcher_icons: ^0.13.0
-  agora_rtc_engine: ^6.2.0
+  # agora_rtc_engine: ^6.2.0
+  agora_rtc_engine:
+    git: 
+      url: https://github.com/ahrmerd/Agora-Flutter-SDK.git
+      ref: main
   expandable: ^5.0.1
   # chat_bubbles: ^1.4.1
   # flutter_chat_bubble: ^2.0.2

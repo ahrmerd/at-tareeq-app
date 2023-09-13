@@ -102,8 +102,11 @@ class LivestreamPlayerController extends GetxController {
   }
 
   Future<void> startPlaying() async{
+    if(isReady.value){
     await joinChannel();
       isPlaying.value = true;
+
+    }
 
   }
 

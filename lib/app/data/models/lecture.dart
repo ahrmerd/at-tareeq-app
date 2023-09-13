@@ -90,6 +90,6 @@ class Lecture {
         "downloaded": downloaded,
         "url": url,
         "thumb": thumb??"",
-        "user": user?.toJson()?? "",
+        "user": user?.toJson(),
       };
 }

@@ -60,7 +60,8 @@ class HostLivePage extends GetView<HostLiveController> {
                   ],
                 ),
               Positioned(
-                  top: 80,
+                  top: 50,
+                  // top: 80,
                   left: 0,
                   right: 0,
                   // left: 16,

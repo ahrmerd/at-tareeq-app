@@ -73,29 +73,27 @@ class HostLectureItem extends StatelessWidget {
                     children: [
                       SmallText(lecture.title),
                       const VerticalSpace(2),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Row(
-                          children: [
-                            SmallText(
-                              formatDate(lecture.createdAt),
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-                            const HorizontalSpace(8),
-                            SmallText(
-                              formatTime(lecture.createdAt),
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-                            const HorizontalSpace(8),
-                            SmallText(
-                              formatLength(lecture.duration),
-                              fontSize: 12,
-                              color: Colors.grey,
-                            ),
-                          ],
-                        ),
+                      Row(
+                        children: [
+                          SmallText(
+                            formatDate(lecture.createdAt),
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                          const HorizontalSpace(8),
+                          SmallText(
+                            formatTime(lecture.createdAt),
+                            fontSize: 12,
+                            color: Colors.grey,
+                          ),
+                          const HorizontalSpace(8),
+                          SmallText(
+                            formatLength(lecture.duration),
+                            fontSize: 12,
+                            color: Colors.grey,
+                            // overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
                     ],
                   ),
