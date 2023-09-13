@@ -16,6 +16,7 @@ class ListenerHome extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           toolbarHeight: 100,
+          centerTitle: false,
           title: BigText(
             "Hi ${SharedPreferencesHelper.getName()}",
             // style: biggerTextStyle,
