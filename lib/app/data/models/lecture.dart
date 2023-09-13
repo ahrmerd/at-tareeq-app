@@ -47,7 +47,7 @@ class Lecture {
   int userId;
   int interestId;
   int duration;
-  dynamic description;
+  String? description;
   dynamic deletedAt;
   String downloaded;
   String url;
