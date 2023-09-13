@@ -6,7 +6,6 @@ import 'package:at_tareeq/app/widgets/live_messages_widget.dart';
 import 'package:at_tareeq/app/widgets/send_live_message_widget.dart';
 import 'package:at_tareeq/app/widgets/livestream_info_widget.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
-import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -22,9 +21,9 @@ class HostLivePage extends GetView<HostLiveController> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
             colors: [Colors.black87, Colors.transparent],
             begin: Alignment.topCenter,
@@ -54,7 +53,7 @@ class HostLivePage extends GetView<HostLiveController> {
                       // remember for listenet use VideoViewController.remote
                         controller: VideoViewController(
                           rtcEngine: controller.engine,
-                          canvas: VideoCanvas(uid: 0)),
+                          canvas: const VideoCanvas(uid: 0)),
                       ),
                     ),
                     // VideoPlayerWidget(controller: controller),
@@ -80,7 +79,7 @@ class HostLivePage extends GetView<HostLiveController> {
                   right: 0,
                   left: 0,
                   child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     width: Get.width,
                     height: 250,
                     child: LiveMessagesWidget(
@@ -142,7 +141,7 @@ class HostLivePage extends GetView<HostLiveController> {
                 );
 
             }else{
-              return LinearProgressIndicator();
+              return const LinearProgressIndicator();
             }
               }
             ),
@@ -256,7 +255,7 @@ class LiveTopRightWidget extends StatelessWidget {
               width: 52,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4), color: Colors.red),
-              child: SmallText(
+              child: const SmallText(
                 'LIVE',
                 textAlign: TextAlign.center,
                 color: Colors.white,
@@ -273,7 +272,7 @@ class LiveTopRightWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.people_alt_rounded,
                     color: Colors.white,
                     size: 18,

@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/controllers/host_live_controller.dart';
-import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,7 @@ class HostLiveControlsWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Obx(() {
-        return !controller.isReady.value ? CircularProgressIndicator() :  Row(
+        return !controller.isReady.value ? const CircularProgressIndicator() :  Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AvatarGlow(
@@ -65,7 +64,7 @@ class HostLiveControlsWidget extends StatelessWidget {
                       },
                     ),
                   ),
-                  HorizontalSpace(),
+                  const HorizontalSpace(),
                   //video
                   CircleAvatar(
                     backgroundColor: Colors.grey,

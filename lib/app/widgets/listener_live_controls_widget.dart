@@ -1,7 +1,5 @@
-import 'package:at_tareeq/app/controllers/host_live_controller.dart';
 import 'package:at_tareeq/app/controllers/livestream_player_controller.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +16,7 @@ class ListenerLiveControlsWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Obx(() {
-        return !controller.isReady.value ? CircularProgressIndicator() :  Row(
+        return !controller.isReady.value ? const CircularProgressIndicator() :  Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             MyButton(
@@ -29,7 +27,7 @@ class ListenerLiveControlsWidget extends StatelessWidget {
                     },
                     child: Text(controller.isPlaying.value ? 'Stop Listening': 'Start Listening'),
                   ),
-                  HorizontalSpace(),
+                  const HorizontalSpace(),
             // AvatarGlow(
             //   glowColor: Colors.redAccent,
             //   endRadius: controller.isPlaying.value ? 30 : 20,
@@ -70,7 +68,7 @@ class ListenerLiveControlsWidget extends StatelessWidget {
                       },
                     ),
                   ),
-                  HorizontalSpace(),
+                  const HorizontalSpace(),
                   //video
                   CircleAvatar(
                     backgroundColor: Colors.grey,

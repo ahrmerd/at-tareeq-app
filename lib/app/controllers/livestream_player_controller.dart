@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:at_tareeq/app/data/enums/livestream_status.dart';
@@ -14,7 +13,6 @@ import 'package:at_tareeq/core/values/const.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:ably_flutter/ably_flutter.dart' as ably;
 
 import 'host_live_controller.dart';

@@ -1,5 +1,4 @@
 import 'package:at_tareeq/app/data/services/auth_service.dart';
-import 'package:at_tareeq/app/data/services/notifications_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';

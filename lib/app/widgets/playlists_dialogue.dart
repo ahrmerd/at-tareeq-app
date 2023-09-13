@@ -59,7 +59,7 @@ class _PlaylistsDialogueState extends State<PlaylistsDialogue> {
     switch (processingStatus) {
       case ProcessingStatus.loading:
       case ProcessingStatus.initial:
-        return ColorLoader();
+        return const ColorLoader();
       case ProcessingStatus.success:
         return Dialog(
           child: Padding(
@@ -74,19 +74,19 @@ class _PlaylistsDialogueState extends State<PlaylistsDialogue> {
                         controller: _searchController,
                         decoration: myInputDecoration(
                             label: 'Search or Create a playlist',
-                            icon: Icon(Icons.search_off_rounded)),
+                            icon: const Icon(Icons.search_off_rounded)),
                       ),
                     ),
-                    HorizontalSpace(),
+                    const HorizontalSpace(),
                     MyButton(
-                      child: Icon(Icons.save_rounded),
                       onTap: createPlaylistAndLectureToPlaylist,
+                      child: const Icon(Icons.save_rounded),
                     )
                   ],
                 ),
                 hasNoItems
-                    ? Padding(
-                      padding: const EdgeInsets.all(18.0),
+                    ? const Padding(
+                      padding: EdgeInsets.all(18.0),
                       child: EmptyScreen(),
                     )
                     : Expanded(

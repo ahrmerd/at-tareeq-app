@@ -74,7 +74,7 @@ class LiveMessagesWidget extends StatelessWidget {
               });
         case ProcessingStatus.loading:
         case ProcessingStatus.initial:
-          return ColorLoader();
+          return const ColorLoader();
           // return const CircularProgressIndicator();
         case ProcessingStatus.error:
           return ErrorScreen(onRetry: onRefresh, messsage: "Couldn't fetch messages",);

@@ -64,8 +64,8 @@ class _LectureDetailsFormState extends State<LectureDetailsForm> {
             if(widget.isLive)
             Row(
               children: [
-                Text('Live Video Lecture '),
-                HorizontalSpace(),
+                const Text('Live Video Lecture '),
+                const HorizontalSpace(),
                 Switch(value: _isVideo, onChanged: (val){
                   setState(() {
                   _isVideo = val;

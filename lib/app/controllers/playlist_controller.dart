@@ -1,8 +1,5 @@
-import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/models/playlist.dart';
-import 'package:at_tareeq/app/data/models/user.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
-import 'package:at_tareeq/app/data/repositories/lecture_repository.dart';
 import 'package:at_tareeq/app/data/repositories/playlist_repository.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:dio/dio.dart';

@@ -1,8 +1,4 @@
-import 'package:at_tareeq/app/data/enums/processing_status.dart';
-import 'package:at_tareeq/app/widgets/livestream_details_widget.dart';
-import 'package:at_tareeq/app/widgets/color_loader.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
-import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/extentions/string_extensions.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
@@ -33,10 +29,10 @@ class LiveStreamInfoWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            VerticalSpace(),
+            const VerticalSpace(),
             Row(
               children: [
-                Text(
+                const Text(
                   "Title:  ",
                   style: TextStyle(fontSize: 16),
                 ),
@@ -49,7 +45,7 @@ class LiveStreamInfoWidget extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(
+                const Text(
                   "Lecturer:  ",
                   style: TextStyle(fontSize: 16),
                 ),
@@ -60,7 +56,7 @@ class LiveStreamInfoWidget extends StatelessWidget {
                 ),
               ],
             ),
-            VerticalSpace(7),
+            const VerticalSpace(7),
             // BigText(
             //   title,
             //   fontSize: 16,
@@ -75,7 +71,7 @@ class LiveStreamInfoWidget extends StatelessWidget {
             //   color: lightColor,
             // ),
             if (showThumb) ...[
-              VerticalSpace(30),
+              const VerticalSpace(30),
               Center(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(32),

@@ -3,18 +3,10 @@ import 'package:at_tareeq/app/controllers/livestream_player_controller.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/host_live.dart';
-import 'package:at_tareeq/app/widgets/color_loader.dart';
-import 'package:at_tareeq/app/widgets/host_live_controls_widget.dart';
 import 'package:at_tareeq/app/widgets/listener_live_controls_widget.dart';
 import 'package:at_tareeq/app/widgets/live_messages_widget.dart';
 import 'package:at_tareeq/app/widgets/livestream_info_widget.dart';
-import 'package:at_tareeq/app/widgets/my_network_image.dart';
-import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/send_live_message_widget.dart';
-import 'package:at_tareeq/app/widgets/widgets.dart';
-import 'package:at_tareeq/core/styles/decorations.dart';
-import 'package:at_tareeq/core/themes/colors.dart';
-import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,9 +21,9 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               gradient: LinearGradient(
             colors: [Colors.black87, Colors.transparent],
             begin: Alignment.topCenter,
@@ -88,7 +80,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                   right: 0,
                   left: 0,
                   child: Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     width: Get.width,
                     height: 250,
                     child: LiveMessagesWidget(
@@ -150,7 +142,7 @@ class LivestreamPlayer extends GetView<LivestreamPlayerController> {
                 );
 
             }else{
-              return LinearProgressIndicator();
+              return const LinearProgressIndicator();
             }
               }
             ),
