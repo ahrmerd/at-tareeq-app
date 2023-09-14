@@ -36,68 +36,76 @@ class HostLectureItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: MyNetworkImage(
-                        path: lecture.thumb,
-                        useAppRequest: false,
+              Expanded(
+                child: Row(
+                  children: [
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: MyNetworkImage(
+                          path: lecture.thumb,
+                          useAppRequest: false,
+                          fit: BoxFit.fill,
+                          height: 60,
+                          width: 60,
+                        ) /* Image.network(
+                          lecture.thumb,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              defaultImageAsset,
+                              fit: BoxFit.fill,
+                              height: 60,
+                              width: 60,
+                            );
+                          },
+                          fit: BoxFit.fill,
+                          height: 60,
+                          width: 60,
+                        )*/
+                        /*Image(
                         fit: BoxFit.fill,
-                        height: 60,
                         width: 60,
-                      ) /* Image.network(
-                        lecture.thumb,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Image.asset(
-                            defaultImageAsset,
-                            fit: BoxFit.fill,
-                            height: 60,
-                            width: 60,
-                          );
-                        },
-                        fit: BoxFit.fill,
                         height: 60,
-                        width: 60,
+                        image: AssetImage(image),
                       )*/
-                      /*Image(
-                      fit: BoxFit.fill,
-                      width: 60,
-                      height: 60,
-                      image: AssetImage(image),
-                    )*/
-                      ),
-                  const HorizontalSpace(16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SmallText(lecture.title),
-                      const VerticalSpace(2),
-                      Row(
+                        ),
+                    const HorizontalSpace(16),
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SmallText(
-                            formatDate(lecture.createdAt),
-                            fontSize: 12,
-                            color: Colors.grey,
+                          Row(
+                        mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(child: SmallText(lecture.title)),
+                            ],
                           ),
-                          const HorizontalSpace(8),
-                          SmallText(
-                            formatTime(lecture.createdAt),
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                          const HorizontalSpace(8),
-                          SmallText(
-                            formatLength(lecture.duration),
-                            fontSize: 12,
-                            color: Colors.grey,
-                            // overflow: TextOverflow.ellipsis,
+                          const VerticalSpace(2),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Flexible(
+                                child: SmallText(
+                                  formatDate(lecture.createdAt),
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                overflow: TextOverflow.ellipsis,
+                                  
+                                ),
+                              ),
+                              const HorizontalSpace(8),
+                              SmallText(
+                                formatLength(lecture.duration),
+                                fontSize: 12,
+                                color: Colors.grey,
+                                // overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
               Row(
                 children: [
