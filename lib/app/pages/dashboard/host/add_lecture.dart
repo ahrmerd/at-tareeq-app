@@ -43,7 +43,11 @@ class AddLecture extends GetView<AddLectureController> {
               (state) {
                 return LectureDetailsForm(
                   onSubmit: (title, sectionId, description, _) {
-                    controller.submitForm(title, sectionId, description,);
+                    controller.submitForm(
+                      title,
+                      sectionId,
+                      description,
+                    );
                   },
                   sections: state!,
                 );
@@ -132,8 +136,22 @@ class FileUploadWidget extends StatelessWidget {
             children: [
               MyButton(
                 onTap: () async {
-                  final result =
-                      await FilePicker.platform.pickFiles(type: FileType.audio);
+                  final result = Platform.isIOS
+                      ? await FilePicker.platform.pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: [
+                            'wav',
+                            'aiff',
+                            'alac',
+                            'flac',
+                            'mp3',
+                            'aac',
+                            'wma',
+                            'ogg'
+                          ],
+                        )
+                      : await FilePicker.platform
+                          .pickFiles(type: FileType.audio);
                   if (result == null) {
                     Get.showSnackbar(GetSnackBar(
                       duration: 2.seconds,
