@@ -62,7 +62,8 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
   }
 
   @override
-  void dispose() {
+  void dispose() async {
+    await audioPlayer.dispose();
     super.dispose();
   }
 
