@@ -2,6 +2,7 @@ import 'package:at_tareeq/app/controllers/add_lecture_controller.dart';
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/repositories/lecture_repository.dart';
+import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/logger.dart';
 import 'package:at_tareeq/routes/pages.dart';
@@ -77,15 +78,21 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
       } else {
         change(models, status: RxStatus.success());
       }
-    } on DioError catch (e) {
-      change(null, status: RxStatus.error('Failed to Load Lectures'));
-      ApiClient.showErrorDialogue(e);
-      Logger.log(e.toString());
-    } catch (err) {
-      Logger.log(err.toString());
-      showErrorDialogue();
-      change(null, status: RxStatus.error('Failed to Load Lecturers'));
+    } 
+    on Exception catch(e){
+      Dependancies.errorService.addStateMixinError(stateChanger: change as dynamic, exception: e);
     }
+    // on DioError catch (e) {
+    //   change(null, status: RxStatus.error(ApiClient.getDioErrorMessage(e)));
+
+    //   // change(null, status: RxStatus.error('Failed to Load Lectures'));
+    //   ApiClient.showErrorDialogue(e);
+    //   Logger.log(e.toString());
+    // } catch (err) {
+    //   Logger.log(err.toString());
+    //   showErrorDialogue();
+    //   change(null, status: RxStatus.error('Failed to Load Lecturers'));
+    // }
   }
 
   @override

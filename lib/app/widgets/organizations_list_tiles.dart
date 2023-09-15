@@ -8,10 +8,17 @@ class OrganizationsListTiles extends StatelessWidget {
   final String label;
   final List<User> users;
   final void Function(User organization) onTap;
+  final ScrollController scrollController;
+  final bool isLoadingMore;
 
-  const OrganizationsListTiles(
-      {Key? key, required this.label, required this.users, required this.onTap})
-      : super(key: key);
+  const OrganizationsListTiles({
+    Key? key,
+    required this.label,
+    required this.users,
+    required this.onTap,
+    required this.scrollController,
+    this.isLoadingMore = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,43 +37,55 @@ class OrganizationsListTiles extends StatelessWidget {
               )),
           SizedBox(
             height: 180,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: users.length,
-                itemBuilder: (_, i) {
-                  final user = users[i];
-
-                  return Container(
-                      margin: const EdgeInsets.only(right: 10),
-
-                    child: Container(
-                        margin: const EdgeInsets.only(right: 10),
-
-                      child: GestureDetector(
-                        onTap: () => onTap(user),
-                        child: Column(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: MyNetworkImage(
-                                path: user.thumb,
-                                fit: BoxFit.fill,
-                                width: 120,
-                                height: 140,
+            child: Row(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: users.length,
+                      physics: BouncingScrollPhysics(),
+                      controller: scrollController,
+                      itemBuilder: (_, i) {
+                        final user = users[i];
+                        return Container(
+                          margin: const EdgeInsets.only(right: 10),
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            child: GestureDetector(
+                              onTap: () => onTap(user),
+                              child: Column(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: MyNetworkImage(
+                                      path: user.thumb,
+                                      fit: BoxFit.fill,
+                                      width: 120,
+                                      height: 140,
+                                    ),
+                                  ),
+                                  const VerticalSpace(2),
+                                  SmallText(
+                                    user.getOrganization(),
+                                    fontSize: 14,
+                                  ),
+                                  // Text()
+                                ],
                               ),
                             ),
-                            const VerticalSpace(2),
-                            SmallText(
-                              user.getOrganization(),
-                              fontSize: 14,
-                            ),
-                            // Text()
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }),
+                          ),
+                        );
+                      }),
+                ),
+                if (isLoadingMore)
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              ],
+            ),
           ),
           // SingleChildScrollView(
           //   scrollDirection: Axis.horizontal,

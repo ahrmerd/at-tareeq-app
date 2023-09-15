@@ -23,7 +23,8 @@ class InterestLecturesController extends GetxController
         change(models, status: RxStatus.success());
       }
     } on DioError catch (e) {
-      change(null, status: RxStatus.error('Failed to Load Lectures'));
+      change(null, status: RxStatus.error(ApiClient.getDioErrorMessage(e)));
+      // change(null, status: RxStatus.error('Failed to Load Lectures'));
       ApiClient.showErrorDialogue(e);
       print(e);
     } catch (err) {

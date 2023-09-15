@@ -38,6 +38,7 @@ class PlaylistsPage extends GetView<PlaylistController> {
 
         onEmpty: const EmptyScreen(),
         onError: (error) => ErrorScreen(
+          messsage: error,
           onRetry: (){
            controller.fetchPlaylists();
           } 

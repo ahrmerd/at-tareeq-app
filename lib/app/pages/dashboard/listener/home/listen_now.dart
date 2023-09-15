@@ -30,7 +30,7 @@ class ListenNow extends GetView<ListenNowController> {
                   lectures: controller.popularLectures,
                 ),
                 VerticalLectureListView(
-                  // isPrimary: false,
+                  isPrimary: false,
                   // onAddToFavorite: addToFavorite,
                   // onAddToPlaylater: addToPlaylater,
                   label: 'Lectures',

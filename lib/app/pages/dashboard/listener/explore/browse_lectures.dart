@@ -23,6 +23,8 @@ class BrowseLectures extends GetView<BrowseLecturesController> {
             child: Column(
               children: [
                 OrganizationsListTiles(
+                  isLoadingMore: controller.isLoadingMoreOrganizations.value,
+                  scrollController: controller.organizationsScrollController,
                   onTap: (org) {
                     Get.toNamed(Routes.USERLECTURES, arguments: {'user': org});
                   },
@@ -60,7 +62,7 @@ class BrowseLectures extends GetView<BrowseLecturesController> {
         case ProcessingStatus.error:
           return ErrorScreen(
             onRetry: () {
-              controller.fetchData();
+              controller.fetchInitialData();
             },
           );
         case ProcessingStatus.loading:

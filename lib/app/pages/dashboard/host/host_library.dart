@@ -22,6 +22,7 @@ class HostLibrary extends GetView<HostController> {
         ),
         onEmpty: const EmptyScreen(),
         onError: (error) => ErrorScreen(
+          messsage: error,
           onRetry: (){
             controller.fetchLectures();
           }

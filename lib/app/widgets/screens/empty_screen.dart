@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class EmptyScreen extends StatelessWidget {
   final String? message;
-  final VoidCallback? onReturn;
-  const EmptyScreen({Key? key, this.message, this.onReturn}) : super(key: key);
+  final VoidCallback? onRetry;
+  const EmptyScreen({Key? key, this.message, this.onRetry}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +27,11 @@ class EmptyScreen extends StatelessWidget {
               style: biggerTextStyle.copyWith(color: CustomColor.appPurple),
             ),
           ),
-          if (onReturn != null) const HorizontalSpace(),
-          if (onReturn != null)
+          if (onRetry != null) const HorizontalSpace(),
+          if (onRetry != null)
             MyButton(
                 color: Colors.orangeAccent,
-                onTap: onReturn,
+                onTap: onRetry,
                 child: const Text('Return'))
         ],
       ),

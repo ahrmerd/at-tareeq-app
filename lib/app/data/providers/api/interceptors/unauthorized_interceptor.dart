@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 class UnAuthorizedInterceptor extends Interceptor {
   @override
   Future onError(DioError err, ErrorInterceptorHandler handler) async {
-    print('hit');
     if (err.response?.statusCode == 401) {
       await AuthService.signOut();
     }

@@ -72,6 +72,7 @@ class InterestLecturesPage extends GetView<InterestLecturesController> {
                   onEmpty: const EmptyScreen(),
                   onLoading: const LoadingScreen(),
                   onError: (err) => ErrorScreen(
+                    messsage: err,
                         onRetry: () {
                           controller.fetchLectures();
                         },

@@ -23,7 +23,7 @@
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>LSRequiresIPhoneOS</key>
-		<true/>
+		<true />
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
@@ -42,28 +42,34 @@
 			<string>UIInterfaceOrientationLandscapeRight</string>
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
-		<false/>
+		<false />
 		<key>CADisableMinimumFrameDurationOnPhone</key>
-		<true/>
+		<true />
 		<key>UIApplicationSupportsIndirectInputEvents</key>
-		<true/>
+		<true />
 		<key>UIStatusBarHidden</key>
-		<true/>
+		<true />
 		<key>UIBackgroundModes</key>
 		<array>
-   			<string>fetch</string>
-   			<string>remote-notification</string>
+			<string>fetch</string>
+			<string>remote-notification</string>
+		</array>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>http</string>
+			<string>https</string>
 		</array>
 		<key>NSAppleMusicUsageDescription</key>
-		<string>We need access to your audio library to upload and play audio files for lectures and content.</string>
+		<string>We need access to your audio library to upload and play audio files for lectures and
+			content.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>We need access to your photo library to upload and set profile photos and thumbnails for your account.</string>
+		<string>We need access to your photo library to upload and set profile photos and thumbnails
+			for your account.</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>We need access to your device's microphone to record audio lectures for you.</string>
 		<key>NSCameraUsageDescription</key>
-		<string>We need access to your device's camera to capture photos and videos for profile pictures and content, as well as to livestream lectures.</string>
-
-
+		<string>We need access to your device's camera to capture photos and videos for profile
+			pictures and content, as well as to livestream lectures.</string>
 
 
 	</dict>

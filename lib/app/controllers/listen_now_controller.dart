@@ -42,14 +42,22 @@ class ListenNowController extends GetxController {
   }
 
   Future<List<Lecture>> getLatestLectures() async {
-    return LectureRepository().fetchModels(query: {"include": "user"});
+    return LectureRepository().paginate(perPage: 3, query: {"sort": "-created_at"}).start();
+
+    // return LectureRepository().paginate(perPage: 3).start();
+
+    // return LectureRepository().fetchModels(query: {"include": "user", ""});
   }
 
   Future<List<Lecture>> getPopularLectures() {
+    return LectureRepository().paginate(perPage: 3, query: {"sort": "-created_at"}).start();
+
     return LectureRepository().fetchModels(query: {"include": "user"});
   }
 
   Future<List<Lecture>> getRecommendedLectures() {
-    return LectureRepository().fetchModels(query: {"include": "user"});
+    return LectureRepository().paginate(perPage: 3, query: {"sort": "created_at"}).start();
+    // return LectureRepository().paginate(perPage: 3).start();
+    // return LectureRepository().fetchModels(query: {"include": "user"});
   }
 }

@@ -97,10 +97,11 @@ class AddLivestream extends GetView<AddLiveController> {
             },
             onLoading: const LoadingScreen(),
             onError: (err) => ErrorScreen(
+              messsage: err,
               onRetry: controller.refetchSections,
             ),
             onEmpty: EmptyScreen(
-                onReturn: controller.refetchSections,
+                onRetry: controller.refetchSections,
                 message:
                     'There are no interest, you wont be able to add a lecture please contact admin to add some interest'),
           ),

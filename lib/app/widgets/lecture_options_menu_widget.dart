@@ -232,7 +232,7 @@ class _LectureOptionsMenuWidgetState extends State<LectureOptionsMenuWidget> {
 
                         AudioPlayerOptionsMenuItem(
                             icon: Icons.share_outlined, text: 'Share', onTap: (){
-                              Share.share("check out this amazing lecture, titled '${widget.lecture.title}' by ${widget.lecture.user?.getOrganization()??'unknown individual'}. $url/lectures/${widget.lecture.id}/download2");
+                              Share.share("check out this amazing lecture, titled '${widget.lecture.title}' by ${widget.lecture.user?.getOrganization()??'unknown individual'}. $appUrl/lectures/${widget.lecture.id}/download2");
                               closeMenu();
                             },),
                       ],

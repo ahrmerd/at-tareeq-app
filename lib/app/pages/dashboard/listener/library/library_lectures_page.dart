@@ -22,6 +22,7 @@ class LibraryLecturesPage extends GetView<LibraryController> {
         ),
         onEmpty: const EmptyScreen(),
         onError: (error) => ErrorScreen(
+          messsage: error,
           onRetry: () {
             controller.fetchLectures();
           },

@@ -54,7 +54,7 @@ class User {
         name: json["name"],
         email: json["email"],
         phoneNo: json["phone_no"],
-        emailVerifiedAt: json["email_verified_at"],
+        emailVerifiedAt: json["email_verified_at"]!=null? DateTime.parse(json["email_verified_at"]):null ,
         type: dynamicIntParsing(json["type"]),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),

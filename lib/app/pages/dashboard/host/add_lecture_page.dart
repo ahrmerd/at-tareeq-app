@@ -17,8 +17,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class AddLecture extends GetView<AddLectureController> {
-  const AddLecture({super.key});
+class AddLecturePage extends GetView<AddLectureController> {
+  const AddLecturePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +54,11 @@ class AddLecture extends GetView<AddLectureController> {
               },
               onLoading: const LoadingScreen(),
               onError: (err) => ErrorScreen(
+                messsage: err,
                 onRetry: controller.refetchSections,
               ),
               onEmpty: EmptyScreen(
-                  onReturn: controller.refetchSections,
+                  onRetry: controller.refetchSections,
                   message:
                       'There are no interest, you wont be able to add a lecture please contact admin to add some interest'),
             ),

@@ -8,12 +8,19 @@ class InterestsListTiles extends StatelessWidget {
   final String label;
   final List<SectionOrInterest> interests;
   final void Function(SectionOrInterest interest) onTap;
-  const InterestsListTiles(
-      {Key? key,
-      required this.label,
-      required this.interests,
-      required this.onTap})
-      : super(key: key);
+  final ScrollController? scrollController;
+  final bool isLoadingMore;
+  // final bool usePagination;
+
+  const InterestsListTiles({
+    Key? key,
+    required this.label,
+    required this.interests,
+    required this.onTap,
+    this.scrollController,
+    this.isLoadingMore = false,
+    // this.usePagination = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,38 +40,50 @@ class InterestsListTiles extends StatelessWidget {
               )),
           SizedBox(
             height: 180,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: interests.length,
-                itemBuilder: (_, i) {
-                  final interest = interests[i];
-                  return Container(
-                        margin: const EdgeInsets.only(right: 10),
-
-                    child: GestureDetector(
-                      onTap: () => onTap(interest),
-                      child: Column(
-                        children: [
-                  ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: MyNetworkImage(
-                              path: interest.thumb,
-                              fit: BoxFit.fill,
-                              width: 120,
-                              height: 140,
+            child: Row(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: interests.length,
+                      physics: BouncingScrollPhysics(),
+                      controller: scrollController,
+                      itemBuilder: (_, i) {
+                        final interest = interests[i];
+                        return Container(
+                          margin: const EdgeInsets.only(right: 10),
+                          child: GestureDetector(
+                            onTap: () => onTap(interest),
+                            child: Column(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: MyNetworkImage(
+                                    path: interest.thumb,
+                                    fit: BoxFit.fill,
+                                    width: 120,
+                                    height: 140,
+                                  ),
+                                ),
+                                const VerticalSpace(2),
+                                SmallText(
+                                  interest.name,
+                                  fontSize: 14,
+                                ),
+                                // Text(interest.title)
+                              ],
                             ),
                           ),
-                          const VerticalSpace(2),
-                          SmallText(
-                           interest.name,
-                            fontSize: 14,
-                          ),
-                          // Text(interest.title)
-                        ],
-                      ),
-                    ),
-                  );
-                }),
+                        );
+                      }),
+                ),
+                if (isLoadingMore)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  )
+              ],
+            ),
           ),
           // SingleChildScrollView(
           //   scrollDirection: Axis.horizontal,

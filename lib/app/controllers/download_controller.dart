@@ -31,10 +31,10 @@ class DownloadController extends GetxController with StateMixin<List<File>> {
         currPlayingIndex.value=0;
         change(lDownloads, status: RxStatus.success());
       }
-    } catch (e) {
-      showErrorDialogue(e.toString());
-      change(null, status: RxStatus.error(e.toString()));
-    }
+    } on Exception catch (e) {
+        Dependancies.errorService
+            .addStateMixinError(stateChanger: change as dynamic, exception: e);
+      }
     downloads.refresh();
   }
 

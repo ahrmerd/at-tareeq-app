@@ -8,7 +8,7 @@ class SectionOrInterest {
     this.description,
     required this.createdAt,
     required this.updatedAt,
-    required this.thumb,
+    this.thumb,
   });
 
   int id;
@@ -16,7 +16,7 @@ class SectionOrInterest {
   String? description;
   DateTime createdAt;
   DateTime updatedAt;
-  String thumb;
+  String? thumb;
 
   factory SectionOrInterest.fromJson(Map<String, dynamic> json) =>
       SectionOrInterest(

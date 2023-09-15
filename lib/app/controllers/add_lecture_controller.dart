@@ -56,7 +56,7 @@ class AddLectureController extends GetxController
   }
 
   Future<bool> ensureRecordingFolderExists() async {
-    final path = await getStoragePath('at-tareek');
+    final path = await getStoragePath('at-tareeq');
     // print(path);
 
     if (path != null) {
@@ -84,21 +84,20 @@ class AddLectureController extends GetxController
   }
 
   Future startRecord() async {
-      // await recorder.start(path: filePath);
-      // recordingStatus.value = RecordingStatus.recording;
+    // await recorder.start(path: filePath);
+    // recordingStatus.value = RecordingStatus.recording;
     if (await recorder.hasPermission() && recorderReady.value) {
       await recorder.start(path: filePath);
       recordingStatus.value = RecordingStatus.recording;
     } else {
-
       Get.defaultDialog(
           title: 'unable to start recording',
           middleText:
               'please accept all permissions requests; it you have previously denied the permissions. go to your device settings. check the app settings and provide alll the required permissions',
           onConfirm: () => Get.back());
       requestPermissions();
-            print("mic ${(await Permission.microphone.request())}");
-            print("storage ${(await Permission.storage.request())}");
+      print("mic ${(await Permission.microphone.request())}");
+      print("storage ${(await Permission.storage.request())}");
 
       // Get.showSnackbar(GetSnackBar(
       // title: 'unable to start recording',
@@ -182,15 +181,21 @@ class AddLectureController extends GetxController
       } else {
         change(sections, status: RxStatus.success());
       }
-    } on Dio.DioError catch (e) {
-      change(null, status: RxStatus.error('Failed to Load Sections'));
-      ApiClient.showErrorDialogue(e);
-      print(e);
-    } catch (err) {
-      print(err);
-      showErrorDialogue();
-      change(null, status: RxStatus.error('Failed to Load Section'));
+    } on Exception catch (e) {
+      Dependancies.errorService
+          .addStateMixinError(stateChanger: change as dynamic, exception: e);
     }
+    // on Dio.DioError catch (e) {
+    //   Dependancies.errorService.addStateMixinError(stateChanger: change as dynamic, exception: e);
+    //   // change(null, status: RxStatus.error(ApiClient.getDioErrorMessage(e)));
+    //   // ApiClient.showErrorDialogue(e);
+    //   // print(e);
+    // }
+    // catch (err) {
+    //   print(err);
+    //   showErrorDialogue();
+    //   change(null, status: RxStatus.error('Failed to Load Section'));
+    // }
   }
 
   Future<void> submitForm(
@@ -209,16 +214,20 @@ class AddLectureController extends GetxController
         await Dependancies.http().post('lectures', data: formData);
         Get.back();
         // createLecture(name: name, sectionId: sectionId)
-      } on Dio.DioError catch (e) {
-        print(e);
-        change(null, status: RxStatus.error('Failed to Upload '));
-        ApiClient.showErrorDialogue(e);
-        print(e);
-      } catch (err) {
-        print(err);
-        showErrorDialogue();
-        change(null, status: RxStatus.error('Failed to Upload'));
+      } on Exception catch (e) {
+        Dependancies.errorService
+            .addStateMixinError(stateChanger: change as dynamic, exception: e);
       }
+      // on Dio.DioError catch (e) {
+      //   print(e);
+      // change(null, status: RxStatus.error(ApiClient.getDioErrorMessage(e)));
+      //   ApiClient.showErrorDialogue(e);
+      //   print(e);
+      // } catch (err) {
+      //   print(err);
+      //   showErrorDialogue();
+      //   change(null, status: RxStatus.error('Failed to Upload'));
+      // }
     } else {
       showDialogue(
           title: 'Warning',

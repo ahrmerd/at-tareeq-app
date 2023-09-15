@@ -15,7 +15,7 @@ import 'package:at_tareeq/app/controllers/lives_controller.dart';
 import 'package:at_tareeq/app/controllers/playlist_controller.dart';
 import 'package:at_tareeq/app/controllers/user_lectures_controller.dart';
 import 'package:at_tareeq/app/pages/dashboard/guest/guest_dashboard.dart';
-import 'package:at_tareeq/app/pages/dashboard/host/add_lecture.dart';
+import 'package:at_tareeq/app/pages/dashboard/host/add_lecture_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/add_livestream.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/host_dashboard.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/host_live.dart';
@@ -90,7 +90,7 @@ class Pages {
     ),
     GetPage(
       name: Routes.ADDLECTURE,
-      page: () => const AddLecture(),
+      page: () => const AddLecturePage(),
       binding: AddLectureBinding(),
     ),
     GetPage(

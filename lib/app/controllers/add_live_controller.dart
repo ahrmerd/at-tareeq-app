@@ -39,13 +39,20 @@ class AddLiveController extends GetxController with StateMixin {
       } else {
         change(sections, status: RxStatus.success());
       }
-    } on Dio.DioError catch (e) {
-      change(null, status: RxStatus.error('Failed to Load Sections'));
-      ApiClient.showErrorDialogue(e);
-    } catch (err) {
-      showErrorDialogue();
-      change(null, status: RxStatus.error('Failed to Load Section'));
+    } on Exception catch (e) {
+      Dependancies.errorService
+          .addStateMixinError(stateChanger: change as dynamic, exception: e);
     }
+    // on Dio.DioError catch (e) {
+
+    //   change(null, status: RxStatus.error(ApiClient.getDioErrorMessage(e)));
+
+    //   ApiClient.showErrorDialogue(e);
+    // }
+    // catch (err) {
+    //   showErrorDialogue();
+    //   change(null, status: RxStatus.error('Failed to Load Section'));
+    // }
   }
 
   Future<void> submitForm(
@@ -60,7 +67,7 @@ class AddLiveController extends GetxController with StateMixin {
           'title': title,
           'interest_id': sectionId,
           'description': description,
-          'is_video': isVideo 
+          'is_video': isVideo
         };
         final res = await Dependancies.http().post('livestreams', data: data);
         // int id = res.data?['data']['id'];
@@ -70,15 +77,19 @@ class AddLiveController extends GetxController with StateMixin {
         // print(res);
         Get.toNamed(Routes.HOSTLIVE, arguments: {'livestream': livestream});
         // createLecture(name: name, sectionId: sectionId)
-      } on Dio.DioError catch (e) {
-        change(null, status: RxStatus.error('Failed to Create a live session'));
-        ApiClient.showErrorDialogue(e);
-        print(e);
-      } catch (err) {
-        print(err);
-        showErrorDialogue();
-        change(null, status: RxStatus.error('Failed to Create a live session'));
+      } on Exception catch (e) {
+        Dependancies.errorService
+            .addStateMixinError(stateChanger: change as dynamic, exception: e);
       }
+      //  on Dio.DioError catch (e) {
+      // change(null, status: RxStatus.error(ApiClient.getDioErrorMessage(e)));
+      //   ApiClient.showErrorDialogue(e);
+      //   print(e);
+      // } catch (err) {
+      //   print(err);
+      //   showErrorDialogue();
+      //   change(null, status: RxStatus.error('Failed to Create a live session'));
+      // }
     } else {
       showDialogue(
           title: 'Warning', message: 'Please fill all the required fields');
