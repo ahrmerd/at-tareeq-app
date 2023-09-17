@@ -1,10 +1,8 @@
 import 'package:at_tareeq/app/data/models/livestream.dart';
 import 'package:at_tareeq/app/data/models/section_or_interest.dart';
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/routes/pages.dart';
-import 'package:dio/dio.dart' as Dio;
 import 'package:get/get.dart';
 
 import '../data/repositories/section_interest_repository.dart';
@@ -69,7 +67,7 @@ class AddLiveController extends GetxController with StateMixin {
           'description': description,
           'is_video': isVideo
         };
-        final res = await Dependancies.http().post('livestreams', data: data);
+        final res = await Dependancies.http.post('livestreams', data: data);
         // int id = res.data?['data']['id'];
         final livestream = Livestream.fromJson(res.data['data']);
         // print(id);

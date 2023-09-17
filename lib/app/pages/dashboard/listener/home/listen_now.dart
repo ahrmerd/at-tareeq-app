@@ -18,7 +18,6 @@ class ListenNow extends GetView<ListenNowController> {
           return const LoadingScreen();
         case ProcessingStatus.success:
           return SingleChildScrollView(
-            
             child: Column(
               children: [
                 HorizontalLectureListTiles(
@@ -29,13 +28,13 @@ class ListenNow extends GetView<ListenNowController> {
                   label: 'Popular',
                   lectures: controller.popularLectures,
                 ),
-                VerticalLectureListView(
-                  isPrimary: false,
-                  // onAddToFavorite: addToFavorite,
-                  // onAddToPlaylater: addToPlaylater,
-                  label: 'Lectures',
-                  lectures: controller.latestLectures,
-                ),
+                // VerticalLectureListView(
+                //   isPrimary: false,
+                //   // onAddToFavorite: addToFavorite,
+                //   // onAddToPlaylater: addToPlaylater,
+                //   label: 'Lectures',
+                //   lectures: controller.latestLectures,
+                // ),
                 // Expanded(child: ListenerLectureList(filter: LecturesFilter.all)),
                 // )
               ],

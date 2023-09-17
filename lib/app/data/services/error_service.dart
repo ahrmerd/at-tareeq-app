@@ -1,5 +1,6 @@
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
+import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:dio/dio.dart';
@@ -28,14 +29,14 @@ class ErrorService extends GetxService {
       // change(null, status: RxStatus.error(ApiClient.getDioErrorMessage(e)));
       // ApiClient.showErrorDialogue(e);
     } else {
-            errorTitle.value.contains(otherErrorTitle)
+      errorTitle.value.contains(otherErrorTitle)
           ? {}
           : errorTitle.value += otherErrorTitle;
       errorMessage = extractTextBeforeFullStop(exception);
     }
     if (!errorMessages.contains(errorMessage)) {
-        errorMessages.add(errorMessage);
-      }
+      errorMessages.add(errorMessage);
+    }
     if (Get.isDialogOpen ?? false) {
       return errorMessage;
     } else {
@@ -56,7 +57,6 @@ class ErrorService extends GetxService {
         : {};
     return errorMessage;
   }
-
 
   String addErrorWithCallback({
     required Exception exception,
@@ -110,8 +110,8 @@ class ErrorService extends GetxService {
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  TextButton(
-                    onPressed: () {
+                  MyButton(
+                    onTap: () {
                       errorMessages.clear();
                       errorTitle.value = "";
                       Get.back();

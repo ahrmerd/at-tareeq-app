@@ -1,20 +1,28 @@
+import 'package:at_tareeq/app/controllers/pagination_controller.dart';
 import 'package:at_tareeq/app/data/enums/library_type.dart';
+import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/models/library_item.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/data/repositories/library_repository.dart';
+import 'package:at_tareeq/app/data/repositories/repository.dart';
+import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
+import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
 import 'package:get/get.dart';
 
 class LibraryController extends GetxController
-    with StateMixin<List<LibraryItem>> {
+    with StateMixin<List<LibraryItem>>
+    implements PaginationController<LibraryItem> {
   LibraryType libraryType = Get.arguments['type'];
 
   @override
   void onInit() async {
-    await fetchLectures();
-    // TODO: implement onInit
+    setUp();
+    await fetchModels(true);
+
     super.onInit();
   }
 
@@ -30,7 +38,40 @@ class LibraryController extends GetxController
   //   });
   // }
 
-  Future fetchLectures() async {
+  @override
+  Future<void> fetchModels(bool isAfresh) async {
+    try {
+      if (isAfresh) {
+        change(null, status: RxStatus.loading());
+        // List<Lectumodels = [];
+        models = await paginator.start();
+      } else {
+        _isloadingMore.value = true;
+        models.addAll(await paginator.fetchNext());
+        _isloadingMore.value = false;
+      }
+      change(models, status: RxStatus.success());
+    } on Exception catch (e) {
+      Dependancies.errorService
+          .addStateMixinError(stateChanger: change as dynamic, exception: e);
+    }
+  }
+
+  @override
+  List<LibraryItem> models = [];
+
+  @override
+  late Paginator<LibraryItem> paginator;
+
+  @override
+  ScrollController? scroller;
+
+  final RxBool _isloadingMore = false.obs;
+
+  @override
+  bool get isLoadingMore => _isloadingMore.value;
+
+  void setUp() {
     String url;
     switch (libraryType) {
       case LibraryType.history:
@@ -43,40 +84,21 @@ class LibraryController extends GetxController
         url = 'favorites';
         break;
     }
-    try {
-      change(null, status: RxStatus.loading());
-      List<LibraryItem> models = [];
-
-      // final res = await (ApiClient.getInstance().req.get(url));
-      // models = libraryLectureListFromJson(res.data['data']);
-      // models = await LectureRepository().fetchModelsFromCustomPath(url,
-      //     customTransformer: libraryLectureListFromJson);
-      models = await LibraryRepository().fetchModelsFromCustomPath(url,query: {'sort': '-updated_at'});
-
-      switch (libraryType) {
-        case LibraryType.history:
-          break;
-        case LibraryType.playLater:
-          SharedPreferencesHelper.addLecturesToPlaylaters(models);
-          break;
-        case LibraryType.favorite:
-          SharedPreferencesHelper.addLecturesToFavorites(models);
-          break;
-      }
-
-      if (models.isEmpty) {
-        change(models, status: RxStatus.empty());
-      } else {
-        change(models, status: RxStatus.success());
-      }
-    } on DioError catch (e) {
-      change(null, status: RxStatus.error('Failed to Load Lectures'));
-      ApiClient.showErrorDialogue(e);
-      print(e);
-    } catch (err) {
-      print(err);
-      showErrorDialogue(err.toString());
-      change(null, status: RxStatus.error('Failed to Load Lecturers'));
-    }
+    paginator = LibraryRepository().paginator(
+        customPath: url, perPage: 10, query: {'sort': '-updated_at'});
+    scroller = addOnScollFetchMore(() {
+      fetchModels(false);
+    });
+    // fetchLectures(true);
   }
 }
+      // switch (libraryType) {
+      //   case LibraryType.history:
+      //     break;
+      //   case LibraryType.playLater:
+      //     SharedPreferencesHelper.addLecturesToPlaylaters(models);
+      //     break;
+      //   case LibraryType.favorite:
+      //     SharedPreferencesHelper.addLecturesToFavorites(models);
+      //     break;
+      // }

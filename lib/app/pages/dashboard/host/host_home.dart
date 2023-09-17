@@ -10,14 +10,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class HostHome extends GetView<HostController> {
+class HostHome extends GetView<HostHomeController> {
   const HostHome({super.key});
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.fetchLectures();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   controller.fetchLectures();
+    // });
     return Column(
       children: [
         Obx(() {
@@ -79,15 +79,19 @@ class HostHome extends GetView<HostController> {
         ),
         Expanded(
           child: controller.obx(
-            (state) => HostLecturesList(
-              lectures: state!,
+            (state) => RefreshIndicator(
+              onRefresh: controller.fetchLectures,
+              child: HostLecturesList(
+                onRefresh: controller.fetchLectures,
+                lectures: state!,
+                scrollController: null,
+              ),
             ),
             onEmpty: const EmptyScreen(),
-            onError: (error) =>ErrorScreen(
+            onError: (error) => ErrorScreen(
               messsage: error,
-              onRetry: (){
+              onRetry: () {
                 controller.fetchLectures();
-
               },
             ),
             onLoading: const LoadingScreen(),

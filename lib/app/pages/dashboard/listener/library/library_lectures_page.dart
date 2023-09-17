@@ -14,17 +14,24 @@ class LibraryLecturesPage extends GetView<LibraryController> {
     return Scaffold(
       appBar: AppBar(title: Text(controller.libraryType.getTitle())),
       body: controller.obx(
-        (state) => VerticalLectureListView(
-          lectures: state!.map((e) => e.lecture).toList(),
-          label: '',
-          // onAddToFavorite: addToFavorite,
-          // onAddToPlaylater: addToPlaylater,
+        (state) => RefreshIndicator(
+          onRefresh: () => controller.fetchModels(true),
+          child: Obx(() {
+            return VerticalLectureListView(
+              lectures: state!.map((e) => e.lecture).toList(),
+              label: '',
+              isLoadingMore: controller.isLoadingMore,
+              scrollController: controller.scroller,
+              // onAddToFavorite: addToFavorite,
+              // onAddToPlaylater: addToPlaylater,
+            );
+          }),
         ),
         onEmpty: const EmptyScreen(),
         onError: (error) => ErrorScreen(
           messsage: error,
           onRetry: () {
-            controller.fetchLectures();
+            controller.fetchModels(true);
           },
         ),
         onLoading: const LoadingScreen(),

@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
@@ -80,12 +82,10 @@ int dynamicIntParsing(dynamic val) {
   if (val is int) {
     return val;
   } else if (val is String) {
-    return int.tryParse(val)??0;
-  }
-  else if (val is double) {
+    return int.tryParse(val) ?? 0;
+  } else if (val is double) {
     return val.toInt();
-  }
-   else {
+  } else {
     return dynamicIntParsing(val.toString());
     // return 0;
   }
@@ -124,29 +124,28 @@ String formatLength(int seconds) {
   return result.trim();
 }
 
+String formatDuration(Duration duration) {
+  // String twoDigits(int n) {
+  //   if (n >= 10) return "$n";
+  //   return "0$n";
+  // }
 
-  String formatDuration(Duration duration) {
-    // String twoDigits(int n) {
-    //   if (n >= 10) return "$n";
-    //   return "0$n";
-    // }
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
 
-    String twoDigits(int n) => n.toString().padLeft(2, "0");
+  int hours = duration.inHours;
+  int minutes = duration.inMinutes.remainder(60);
+  int seconds = duration.inSeconds.remainder(60);
 
-    int hours = duration.inHours;
-    int minutes = duration.inMinutes.remainder(60);
-    int seconds = duration.inSeconds.remainder(60);
+  String twoDigitHours = twoDigits(hours);
+  String twoDigitMinutes = twoDigits(minutes);
+  String twoDigitSeconds = twoDigits(seconds);
 
-    String twoDigitHours = twoDigits(hours);
-    String twoDigitMinutes = twoDigits(minutes);
-    String twoDigitSeconds = twoDigits(seconds);
-
-    if (hours > 0) {
-      return '$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds';
-    } else {
-      return '$twoDigitMinutes:$twoDigitSeconds';
-    }
+  if (hours > 0) {
+    return '$twoDigitHours:$twoDigitMinutes:$twoDigitSeconds';
+  } else {
+    return '$twoDigitMinutes:$twoDigitSeconds';
   }
+}
 
 String fileEntityBasename(FileSystemEntity entity) {
   if (entity is Directory) {
@@ -160,16 +159,74 @@ String fileEntityBasename(FileSystemEntity entity) {
   }
 }
 
-String parsePhone(String phone, [String phoneCode = "234"]){
-  phone  = phone.trim();
-  if(phone.startsWith('+')){
+String parsePhone(String phone, [String phoneCode = "234"]) {
+  phone = phone.trim();
+  if (phone.startsWith('+')) {
     return phone;
-  }
-  else if(phone.length>=12){
+  } else if (phone.length >= 12) {
     return "+$phone";
-  }else if(phone.startsWith('0')) {
+  } else if (phone.startsWith('0')) {
     return "+$phoneCode${phone.substring(1)}";
-  }else{
+  } else {
     return "+$phoneCode$phone";
   }
 }
+
+ScrollController addOnScollFetchMore(VoidCallback dataFetcher) {
+  final scrollController = ScrollController();
+  scrollController.addListener(() {
+    print('sds');
+    if (scrollController.position.maxScrollExtent ==
+        scrollController.position.pixels) {
+      dataFetcher.call();
+    }
+  });
+  return scrollController;
+}
+
+
+// mixin MyScrollMixin{
+//   final ScrollController scroll = ScrollController();
+
+//     MyScrollMixin(){
+//     scroll.addListener(_listener);
+//     }
+
+//   bool _canFetchBottom = true;
+
+//   bool _canFetchTop = true;
+
+//   void _listener() {
+//     if (scroll.position.atEdge) {
+//       _checkIfCanLoadMore();
+//     }
+//   }
+
+//   Future<void> _checkIfCanLoadMore() async {
+//     if (scroll.position.pixels == 0) {
+//       if (!_canFetchTop) return;
+//       _canFetchTop = false;
+//       await onTopScroll();
+//       _canFetchTop = true;
+//     } else {
+//       if (!_canFetchBottom) return;
+//       _canFetchBottom = false;
+//       await onEndScroll();
+//       _canFetchBottom = true;
+//     }
+//   }
+
+//   Future<void> onEndScroll();
+
+//   Future<void> onTopScroll();
+
+//   @override
+//   void onClose() {
+//     scroll.removeListener(_listener);
+//     super.onClose();
+//   }
+// }
+
+
+
+// enum PopupMenuItemActionType { openDialgoue }

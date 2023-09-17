@@ -21,6 +21,7 @@ class Dependancies {
   static ErrorService get errorService => Get.find<ErrorService>();
 
   static ApiClient apiClient() => Get.find<ApiClient>();
-  static Dio http() => apiClient().req;
+  // static Dio http() => apiClient().req;
+  static Dio get http => apiClient().req;
   static AuthService authService() => Get.find<AuthService>();
 }

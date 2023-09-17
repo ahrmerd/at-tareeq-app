@@ -39,55 +39,52 @@ class _MyNetworkImageState extends State<MyNetworkImage> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.path!=null) {
-    final futureImage = getImage(widget.path!);
+    if (widget.path != null) {
+      final futureImage = getImage(widget.path!);
 
       return FutureBuilder(
-      future: futureImage,
-      builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
-        if (snapshot.hasData && snapshot.data!=null) {
-          return Image.memory(
-            snapshot.data!,
-            height: widget.height,
-            width: widget.width,
-            color: widget.color,
-            fit: widget.fit,
-            alignment: widget.alignment,
-          );
-        } else if (snapshot.hasError ||snapshot.data==null ) {
-          return Image.asset(widget.fallbackAsset,
+        future: futureImage,
+        builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Image.memory(
+              snapshot.data!,
               height: widget.height,
               width: widget.width,
               color: widget.color,
               fit: widget.fit,
-              alignment: widget.alignment);
-        }
-        return const CircularProgressIndicator();
-      },
-    );
-      
+              alignment: widget.alignment,
+            );
+          } else if (snapshot.hasError || snapshot.data == null) {
+            return Image.asset(widget.fallbackAsset,
+                height: widget.height,
+                width: widget.width,
+                color: widget.color,
+                fit: widget.fit,
+                alignment: widget.alignment);
+          }
+          return const CircularProgressIndicator();
+        },
+      );
     } else {
       return Image.asset(widget.fallbackAsset,
-              height: widget.height,
-              width: widget.width,
-              color: widget.color,
-              fit: widget.fit,
-              alignment: widget.alignment);
-      
+          height: widget.height,
+          width: widget.width,
+          color: widget.color,
+          fit: widget.fit,
+          alignment: widget.alignment);
     }
   }
 
   Future<Uint8List?> getImage(String path) async {
-    final req = widget.useAppRequest ? Dependancies.http() : Dio();
+    final req = widget.useAppRequest ? Dependancies.http : Dio();
     try {
-    final res = await req.get(path,
-        options: Options(responseType: ResponseType.bytes));
-    return Uint8List.fromList((res.data) as List<int>);
+      final res = await req.get(path,
+          options: Options(responseType: ResponseType.bytes));
+      return Uint8List.fromList((res.data) as List<int>);
     } catch (e) {
       return null;
     }

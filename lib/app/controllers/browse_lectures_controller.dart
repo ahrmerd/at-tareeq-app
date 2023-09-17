@@ -40,9 +40,9 @@ class BrowseLecturesController extends GetxController {
       // recomendedLectures.refresh();
       attachScrollListener();
     } on Exception catch (e) {
-        Dependancies.errorService
-            .addErrorWithCallback(callback: ()=> _status.value = ProcessingStatus.error, exception: e);
-      }
+      Dependancies.errorService.addErrorWithCallback(
+          callback: () => _status.value = ProcessingStatus.error, exception: e);
+    }
   }
 
   Future<void> fetchOrganizations([bool refresh = false]) async {
@@ -62,7 +62,7 @@ class BrowseLecturesController extends GetxController {
     } else {
       organizations.clear();
       organizationsPaginator =
-          UserOrOrganizationTepository().paginate(query: query, perPage: 8);
+          UserOrOrganizationTepository().paginator(query: query, perPage: 8);
       organizations.addAll(await organizationsPaginator!.start());
     }
     // return UserOrOrganizationTepository().fetchModels(query: query);

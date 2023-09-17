@@ -8,14 +8,17 @@ class HostLectureItem extends StatelessWidget {
   const HostLectureItem({
     Key? key,
     required this.onTap,
-    required this.onTapMenu,
+    // required this.onTapMenu,
     required this.lecture,
+    required this.popUpActions,
   }) : super(key: key);
 
   final Lecture lecture;
 
+  final List<PopupMenuItem<dynamic>> popUpActions;
+
   final Function(Lecture lecture) onTap;
-  final Function(Lecture lecture) onTapMenu;
+  // final Function(Lecture lecture) onTapMenu;
   // final VoidCallback onTapMenu;
 
   // final defaultImageAsset = 'assets/pic_two.png';
@@ -74,7 +77,7 @@ class HostLectureItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                        mainAxisSize: MainAxisSize.min,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               Flexible(child: SmallText(lecture.title)),
                             ],
@@ -88,8 +91,7 @@ class HostLectureItem extends StatelessWidget {
                                   formatDate(lecture.createdAt),
                                   fontSize: 12,
                                   color: Colors.grey,
-                                overflow: TextOverflow.ellipsis,
-                                  
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               const HorizontalSpace(8),
@@ -109,11 +111,9 @@ class HostLectureItem extends StatelessWidget {
               ),
               Row(
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        onTapMenu(lecture);
-                      },
-                      icon: const Icon(Icons.more_vert_rounded)),
+                  PopupMenuButton(itemBuilder: (_) {
+                    return popUpActions;
+                  }),
                 ],
               ),
             ],

@@ -11,8 +11,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HostController extends GetxController with StateMixin<List<Lecture>> {
-  final bottomNavTabIndex = 0.obs;
+class HostHomeController extends GetxController with StateMixin<List<Lecture>> {
   // late AnimationController animationController;
   final animationDuration = 200.milliseconds;
   final isExpanded = false.obs;
@@ -56,12 +55,10 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
       Get.toNamed(Routes.MYLIVE);
     })
   ];
-  void changeTabIndex(int index) {
-    bottomNavTabIndex.value = index;
-  }
 
   @override
   void onInit() {
+    fetchLectures();
     // animationController =
     // AnimationController.unbounded(duration: animationDuration, vsync: this);
     // TODO: implement onInit
@@ -72,15 +69,16 @@ class HostController extends GetxController with StateMixin<List<Lecture>> {
     try {
       change(null, status: RxStatus.loading());
       List<Lecture> models = [];
-      models = await LectureRepository().fetchModels();
+      models = await LectureRepository()
+          .fetchModelsFromCustomPath('lectures/user', query: {'limit': 5});
       if (models.isEmpty) {
         change([], status: RxStatus.empty());
       } else {
         change(models, status: RxStatus.success());
       }
-    } 
-    on Exception catch(e){
-      Dependancies.errorService.addStateMixinError(stateChanger: change as dynamic, exception: e);
+    } on Exception catch (e) {
+      Dependancies.errorService
+          .addStateMixinError(stateChanger: change as dynamic, exception: e);
     }
     // on DioError catch (e) {
     //   change(null, status: RxStatus.error(ApiClient.getDioErrorMessage(e)));

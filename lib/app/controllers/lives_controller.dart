@@ -1,38 +1,79 @@
+import 'package:at_tareeq/app/controllers/pagination_controller.dart';
 import 'package:at_tareeq/app/data/models/livestream.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/repositories/livestream_repository.dart';
+import 'package:at_tareeq/app/data/repositories/repository.dart';
+import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
+import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
 import 'package:get/get.dart';
 
-class LivesController extends GetxController with StateMixin<List<Livestream>> {
+class LivesController extends GetxController
+    with StateMixin<List<Livestream>>
+    implements PaginationController<Livestream> {
   // int count = 6;
   @override
   Future<void> onInit() async {
-    fetchLivestreams();
+    setUp();
+    fetchModels(true);
 
     // TODO: implement onInit
     super.onInit();
   }
 
-  Future fetchLivestreams() async {
+  @override
+  Future<void> fetchModels(bool isAfresh) async {
     try {
-      change(null, status: RxStatus.loading());
-      List<Livestream> models =
-          await LivestreamRepository().fetchModels(query: {"include": "user"});
-      if (models.isEmpty) {
-        change(models, status: RxStatus.empty());
+      if (isAfresh) {
+        change(null, status: RxStatus.loading());
+        // List<Lectumodels = [];
+        models = await paginator.start();
       } else {
-        change(models, status: RxStatus.success());
+        _isloadingMore.value = true;
+        models.addAll(await paginator.fetchNext());
+        _isloadingMore.value = false;
       }
-    } on DioError catch (e) {
-      change(null, status: RxStatus.error('Failed to Load Lectures'));
-      ApiClient.showErrorDialogue(e);
-      print(e);
-    } catch (err) {
-      print(err);
-      showErrorDialogue();
-      change(null, status: RxStatus.error('Failed to Load Lecturers'));
+      change(models, status: RxStatus.success());
+    } on Exception catch (e) {
+      Dependancies.errorService
+          .addStateMixinError(stateChanger: change as dynamic, exception: e);
     }
   }
+
+  void setUp() {
+    // String url;
+    // switch (libraryType) {
+    //   case LibraryType.history:
+    //     url = 'histories';
+    //     break;
+    //   case LibraryType.playLater:
+    //     url = 'playlaters';
+    //     break;
+    //   case LibraryType.favorite:
+    //     url = 'favorites';
+    //     break;
+    // }
+    paginator = LivestreamRepository().paginator(
+        perPage: 10, query: {'include': 'user', 'sort': '-updated_at'});
+    scroller = addOnScollFetchMore(() {
+      fetchModels(false);
+    });
+    // fetchLectures(true);
+  }
+
+  @override
+  List<Livestream> models = [];
+
+  @override
+  late Paginator<Livestream> paginator;
+
+  @override
+  ScrollController? scroller;
+
+  final RxBool _isloadingMore = false.obs;
+
+  @override
+  bool get isLoadingMore => _isloadingMore.value;
 }

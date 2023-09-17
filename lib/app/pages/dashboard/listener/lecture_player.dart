@@ -2,8 +2,11 @@
 
 import 'dart:async';
 import 'package:at_tareeq/app/data/models/lecture.dart';
+import 'package:at_tareeq/app/data/models/library_item.dart';
+import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
+import 'package:at_tareeq/app/widgets/lecture_options_menu_widget.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
@@ -31,11 +34,20 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
   Duration position = Duration.zero;
   bool isPlaying = false;
   bool isReady = false;
+  StreamSubscription<PlayerState>? playerStateSubscription;
+  StreamSubscription<Duration>? durationSubscription;
+  StreamSubscription<Duration>? positionSubscription;
 
   static bool isOpened = false;
   ExpandableController controller = ExpandableController(
     initialExpanded: isOpened,
   );
+
+  void stateSetter(VoidCallback stateSetter) {
+    if (mounted) {
+      setState(stateSetter);
+    }
+  }
 
   @override
   void initState() {
@@ -44,31 +56,48 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
       isOpened = !isOpened;
     });
     setAudio();
-    audioPlayer.onPlayerStateChanged.listen((state) {
-      setState(() {
+    setPlayerListeners();
+  }
+
+  void setPlayerListeners() {
+    playerStateSubscription = audioPlayer.onPlayerStateChanged.listen((state) {
+      stateSetter(() {
         isPlaying = state == PlayerState.playing;
       });
     });
-    audioPlayer.onDurationChanged.listen((d) {
-      setState(() {
+    durationSubscription = audioPlayer.onDurationChanged.listen((d) {
+      stateSetter(() {
         duration = d;
       });
     });
-    audioPlayer.onPositionChanged.listen((p) {
-      setState(() {
+    positionSubscription = audioPlayer.onPositionChanged.listen((p) {
+      stateSetter(() {
         position = p;
       });
     });
   }
 
   @override
-  void dispose() async {
-    try{
-    await audioPlayer.dispose();
-    }finally{
+  void dispose() {
+    // audioPlayer.dispose().whenComplete(() {
+    //   super.dispose();
+    // });
+    durationSubscription?.cancel();
+    durationSubscription?.cancel();
+    durationSubscription?.cancel();
+
+    // _stop(supressState: true).then((_) => _player.release());
+
+    audioPlayer.release();
+    // audioPlayer.dispose();
+    // try {
+    // } finally {
+    //   super.dispose();
+    // }
     super.dispose();
-    }
-      
+
+    // try {
+    // } finally {}
   }
 
   @override
@@ -107,11 +136,9 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(8),
-                        child: IconButton(
-                          icon: Icon(Icons.more_vert_rounded),
-                          onPressed: () {
-                            controller.toggle();
-                          },
+                        child: LectureOptionsMenuWidget(
+                          lecture: widget.lecture,
+                          // controller: controller,
                         ),
                       ),
                       Expanded(
@@ -125,17 +152,35 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
                         ),
                       )),
                       Container(
-                        padding: const EdgeInsets.all(8),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.favorite_outline_rounded,
-                          ),
-                          onPressed: () {
-                            // TODO: Handle this case. add lectures to favorites. and show a favorited state
-                            //also save favourited ids in your sharedpreferences
-                          },
-                        ),
-                      )
+                          padding: const EdgeInsets.all(8),
+                          child: IconButton(
+                            icon: SharedPreferencesHelper
+                                        .checkIfLectureInFavorites(
+                                            widget.lecture) !=
+                                    null
+                                ? const Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                  )
+                                : const Icon(
+                                    Icons.favorite_outline_rounded,
+                                    color: Colors.black,
+                                  ),
+                            onPressed: () async {
+                              final libraryItemId = SharedPreferencesHelper
+                                  .checkIfLectureInFavorites(widget.lecture);
+                              if (libraryItemId != null) {
+                                await removeFromFavorite(
+                                    LibraryItem.fromLecture(
+                                        int.parse(libraryItemId),
+                                        widget.lecture));
+                              } else {
+                                await addToFavorite(widget.lecture);
+                              }
+                              setState(() {});
+                              // closeMenu();
+                            },
+                          ))
                     ],
                   ),
                   const SizedBox(
@@ -432,8 +477,6 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
   */
     );
   }
-
-
 
   Future setAudio() async {
     String url = widget.lecture.url;

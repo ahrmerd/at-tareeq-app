@@ -86,20 +86,19 @@ class _PlaylistsDialogueState extends State<PlaylistsDialogue> {
                 ),
                 hasNoItems
                     ? const Padding(
-                      padding: EdgeInsets.all(18.0),
-                      child: EmptyScreen(),
-                    )
+                        padding: EdgeInsets.all(18.0),
+                        child: EmptyScreen(),
+                      )
                     : Expanded(
                         child: ListView.builder(
-                        
                             itemCount: filteredPlaylists.length,
                             itemBuilder: (_, i) {
                               Playlist playlist = filteredPlaylists[i];
                               return Card(
                                   child: ListTile(
-                                    onTap: () {
-                                      addLectureToPlaylsit(playlist);
-                                    },
+                                onTap: () {
+                                  addLectureToPlaylsit(playlist);
+                                },
                                 title: Text(playlist.name),
                               ));
                             }))
@@ -191,35 +190,32 @@ class _PlaylistsDialogueState extends State<PlaylistsDialogue> {
       processingStatus = ProcessingStatus.loading;
     });
     try {
-      await Dependancies.http().post('playlists', data: {
+      await Dependancies.http.post('playlists', data: {
         'name': _searchController.text,
         'lectures': [widget.lecture.id]
       });
       Get.back();
     } catch (e) {
-        showErrorDialogue(e.toString());
+      showErrorDialogue(e.toString());
       setState(() {
         processingStatus = ProcessingStatus.success;
       });
     }
   }
-  
+
   Future<void> addLectureToPlaylsit(Playlist playlist) async {
     setState(() {
       processingStatus = ProcessingStatus.loading;
     });
     try {
-      await Dependancies.http().post('playlists/${playlist.id}/lectures', data: {
-        'id': widget.lecture.id
-      });
+      await Dependancies.http.post('playlists/${playlist.id}/lectures',
+          data: {'id': widget.lecture.id});
       Get.back();
     } catch (e) {
-        showErrorDialogue(e.toString());
+      showErrorDialogue(e.toString());
       setState(() {
         processingStatus = ProcessingStatus.success;
       });
     }
-
-
   }
 }

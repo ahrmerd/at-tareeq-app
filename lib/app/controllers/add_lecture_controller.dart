@@ -58,6 +58,7 @@ class AddLectureController extends GetxController
   Future<bool> ensureRecordingFolderExists() async {
     final path = await getStoragePath('at-tareeq');
     // print(path);
+    // print(path);
 
     if (path != null) {
       recordingsPath = path;
@@ -211,7 +212,7 @@ class AddLectureController extends GetxController
         final formFile = await Dio.MultipartFile.fromFile(file.value!.path);
         Dio.FormData formData = Dio.FormData.fromMap(
             {'title': title, 'interest_id': sectionId, 'file': formFile});
-        await Dependancies.http().post('lectures', data: formData);
+        await Dependancies.http.post('lectures', data: formData);
         Get.back();
         // createLecture(name: name, sectionId: sectionId)
       } on Exception catch (e) {

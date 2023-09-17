@@ -76,20 +76,20 @@ class HostLiveController extends GetxController {
 
   @override
   void onInit() async {
-  _engine = createAgoraRtcEngine();
+    _engine = createAgoraRtcEngine();
 
     try {
       await initAbly();
       await initAgora();
       fetchAllMessages();
-    } catch (e) {
-      showErrorDialogue(e.toString());
-    }finally{
+    } on Exception catch (e) {
+      Dependancies.errorService.addError(exception: e);
+    } finally {
       super.onInit();
     }
   }
 
-  Future<void> disposeAbly()async {
+  Future<void> disposeAbly() async {
     await realtime.close();
   }
 
@@ -105,7 +105,7 @@ class HostLiveController extends GetxController {
     await _engine.release();
   }
 
-  Future<void>  initAgora() async {
+  Future<void> initAgora() async {
     // retrieve permissions
     try {
       final permissionStatus = await requestPermissions();
@@ -189,17 +189,15 @@ class HostLiveController extends GetxController {
         await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
         liveProcessingStatus.value = ProcessingStatus.success;
         await joinChannel();
-        await Dependancies.http()
+        await Dependancies.http
             .get('livestreams/${livestream.id}/start-broadcast');
         livestreamStatus.value = LivestreamStatus.started;
         livestream.status = LivestreamStatus.started;
         isLive.value = true;
         _engine.startPreview();
-      } catch (e) {
-        showErrorDialogue(e.toString());
-        // showDialogue(e.toString());
+      } on Exception catch (e) {
+        Dependancies.errorService.addError(exception: e);
         Logger.log(e.toString());
-        // print(e);
       }
     }
   }
@@ -231,6 +229,7 @@ class HostLiveController extends GetxController {
     await _engine.muteLocalVideoStream(true);
     isVideoMuted.value = true;
   }
+
   Future<void> unmuteAudioBroadcast() async {
     await _engine.muteLocalAudioStream(false);
     isAudioMuted.value = false;
@@ -241,29 +240,27 @@ class HostLiveController extends GetxController {
     isVideoMuted.value = false;
   }
 
-  Future<void> switchCamera()async{
+  Future<void> switchCamera() async {
     await _engine.switchCamera();
   }
 
-    Future<void> toggleFlash(bool shouldOn)async{
-    if(await _engine.isCameraTorchSupported()){
+  Future<void> toggleFlash(bool shouldOn) async {
+    if (await _engine.isCameraTorchSupported()) {
       _engine.setCameraTorchOn(shouldOn);
     }
   }
 
-
-
   Future<void> stopBroadcast() async {
     if (isReady.value) {
       try {
-        await Dependancies.http()
+        await Dependancies.http
             .get('livestreams/${livestream.id}/end-broadcast');
         await leaveChannel();
         isLive.value = false;
         livestream.status = LivestreamStatus.finished;
         livestreamStatus.value = LivestreamStatus.finished;
-      } catch (e) {
-        print(e);
+      } on Exception catch (e) {
+        Dependancies.errorService.addError(exception: e);
       }
     }
   }
@@ -285,15 +282,15 @@ class HostLiveController extends GetxController {
   Future<void> sendMessage(String strMsg) async {
     isSending.value = true;
     messages.add(LiveMessage.createSendingMessage(strMsg, livestream));
-      messages.refresh();
+    messages.refresh();
 
-    if(messageScrollController.hasClients){
+    if (messageScrollController.hasClients) {
       messageScrollController.animateTo(
           messageScrollController.position.maxScrollExtent + 100,
           duration: .5.seconds,
           curve: Curves.easeIn);
-      }
-    final res = await Dependancies.http().post('livemessages',
+    }
+    final res = await Dependancies.http.post('livemessages',
         data: {"message": strMsg, "livestream_id": livestream.id});
     // print(res);
     messageFieldControlller.clear();
@@ -301,7 +298,7 @@ class HostLiveController extends GetxController {
   }
 
   Future<void> fetchAllMessages([bool isRefresh = false]) async {
-    if(isRefresh){
+    if (isRefresh) {
       messagesProcessingStatus.value = ProcessingStatus.loading;
     }
     try {
@@ -314,22 +311,18 @@ class HostLiveController extends GetxController {
       messagesProcessingStatus.value = ProcessingStatus.success;
       // messagesProcessingStatus.value = ProcessingStatus.error;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(messageScrollController.hasClients){
-      messageScrollController.animateTo(
-          messageScrollController.position.maxScrollExtent + 100,
-          duration: .5.seconds,
-          curve: Curves.easeIn);
-      }
-});
-   
-    } on DioError catch (e) {
-      messagesProcessingStatus.value = ProcessingStatus.error;
-      // print(e);
-      ApiClient.showErrorDialogue(e);
-    } catch (err) {
-      // print(err);
-      messagesProcessingStatus.value = ProcessingStatus.error;
-      showErrorDialogue(err.toString());
+        if (messageScrollController.hasClients) {
+          messageScrollController.animateTo(
+              messageScrollController.position.maxScrollExtent + 100,
+              duration: .5.seconds,
+              curve: Curves.easeIn);
+        }
+      });
+    } on Exception catch (e) {
+      Dependancies.errorService.addErrorWithCallback(
+          callback: () =>
+              messagesProcessingStatus.value = ProcessingStatus.error,
+          exception: e);
     }
   }
 

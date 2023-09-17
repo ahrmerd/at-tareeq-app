@@ -6,32 +6,33 @@ import 'dart:convert';
 
 import 'package:at_tareeq/core/utils/helpers.dart';
 
-PaginationInfo paginationInfoFromJson(String str) => PaginationInfo.fromJson(json.decode(str));
+PaginationInfo paginationInfoFromJson(String str) =>
+    PaginationInfo.fromJson(json.decode(str));
 
 String paginationInfoToJson(PaginationInfo data) => json.encode(data.toJson());
 
 class PaginationInfo {
-    int currentPage;
-    int from;
-    int lastPage;
-    // List<Link> links;
-    String path;
-    int perPage;
-    int to;
-    int total;
+  int currentPage;
+  int from;
+  int lastPage;
+  // List<Link> links;
+  String path;
+  int perPage;
+  int to;
+  int total;
 
-    PaginationInfo({
-        required this.currentPage,
-        required this.from,
-        required this.lastPage,
-        // required this.links,
-        required this.path,
-        required this.perPage,
-        required this.to,
-        required this.total,
-    });
+  PaginationInfo({
+    required this.currentPage,
+    required this.from,
+    required this.lastPage,
+    // required this.links,
+    required this.path,
+    required this.perPage,
+    required this.to,
+    required this.total,
+  });
 
-    factory PaginationInfo.fromJson(Map<String, dynamic> json) => PaginationInfo(
+  factory PaginationInfo.fromJson(Map<String, dynamic> json) => PaginationInfo(
         currentPage: dynamicIntParsing(json["current_page"]),
         // currentPage: dynamicIntParsing(["current_page"]),
         from: dynamicIntParsing(json["from"]),
@@ -41,11 +42,18 @@ class PaginationInfo {
         perPage: dynamicIntParsing(json["per_page"]),
         to: dynamicIntParsing(json["to"]),
         total: dynamicIntParsing(json["total"]),
-    );
+      );
 
-    factory PaginationInfo.createEmpty()=>PaginationInfo(currentPage: 1, from: 1, lastPage: 1, path: '', perPage: 20, to: 1, total: 1);
+  factory PaginationInfo.createEmpty() => PaginationInfo(
+      currentPage: 0,
+      from: 1,
+      lastPage: 1,
+      path: '',
+      perPage: 20,
+      to: 1,
+      total: 1);
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "current_page": currentPage,
         "from": from,
         "last_page": lastPage,
@@ -54,7 +62,7 @@ class PaginationInfo {
         "per_page": perPage,
         "to": to,
         "total": total,
-    };
+      };
 }
 
 // class Link {

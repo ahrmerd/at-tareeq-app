@@ -61,7 +61,7 @@ class _UploadProfilePictureWidgetState
       case ProcessingStatus.success:
         return const SuccessScreen();
       case ProcessingStatus.error:
-        return ErrorScreen( onRetry: () {
+        return ErrorScreen(onRetry: () {
           onPickImage();
         });
       case ProcessingStatus.loading:
@@ -96,7 +96,7 @@ class _UploadProfilePictureWidgetState
         });
         final formFile = await dioLib.MultipartFile.fromFile(file!.path);
         dioLib.FormData formData = dioLib.FormData.fromMap({'image': formFile});
-        await Dependancies.http().post('profile-image', data: formData);
+        await Dependancies.http.post('profile-image', data: formData);
         setState(() {
           status = ProcessingStatus.success;
         });

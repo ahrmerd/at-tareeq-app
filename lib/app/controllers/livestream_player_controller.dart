@@ -1,4 +1,3 @@
-
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:at_tareeq/app/data/enums/livestream_status.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
@@ -39,14 +38,14 @@ class LivestreamPlayerController extends GetxController {
 
   @override
   void onInit() async {
-  _engine = createAgoraRtcEngine();
+    _engine = createAgoraRtcEngine();
     try {
       await initAbly();
       await initAgora();
       fetchAllMessages();
-    } catch (e) {
-      showErrorDialogue(e.toString());
-    }finally{
+    } on Exception catch (e) {
+      Dependancies.errorService.addError(exception: e);
+    } finally {
       super.onInit();
     }
   }
@@ -72,12 +71,11 @@ class LivestreamPlayerController extends GetxController {
       } else if (event.name == Events.livemessage) {
         fetchAllMessages();
         // addToMessages(event.data);
-      } else {
-      }
+      } else {}
     });
   }
 
-  Future<void> disposeAbly()async {
+  Future<void> disposeAbly() async {
     await realtime.close();
   }
 
@@ -101,18 +99,16 @@ class LivestreamPlayerController extends GetxController {
     }
   }
 
-  Future<void> startPlaying() async{
-    if(isReady.value){
-    await joinChannel();
+  Future<void> startPlaying() async {
+    if (isReady.value) {
+      await joinChannel();
       isPlaying.value = true;
-
     }
-
   }
 
-  Future<void> stopPlaying() async{
-  await leaveChannel();
-      isPlaying.value = false;
+  Future<void> stopPlaying() async {
+    await leaveChannel();
+    isPlaying.value = false;
   }
 
   Future<void> leaveChannel() async {
@@ -128,6 +124,7 @@ class LivestreamPlayerController extends GetxController {
     await engine.muteAllRemoteVideoStreams(true);
     isVideoMuted.value = true;
   }
+
   Future<void> unmuteAudioStream() async {
     await engine.muteAllRemoteAudioStreams(false);
     isAudioMuted.value = false;
@@ -149,7 +146,7 @@ class LivestreamPlayerController extends GetxController {
   Future<void> joinChannel() async {
     await engine.enableLocalAudio(false);
     await engine.enableLocalVideo(false);
-    if(livestream.value.isVideo){
+    if (livestream.value.isVideo) {
       await engine.muteAllRemoteVideoStreams(false);
     }
     await engine.joinChannel(
@@ -171,42 +168,40 @@ class LivestreamPlayerController extends GetxController {
 
     // //create the engine
     // _engine = createAgoraRtcEngine();
-    try{
-await engine.initialize(const RtcEngineContext(
-      appId: appId,
-      channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
-      audioScenario: AudioScenarioType.audioScenarioDefault,
-      // logConfig: LogConfig()
-    ));
+    try {
+      await engine.initialize(const RtcEngineContext(
+        appId: appId,
+        channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+        audioScenario: AudioScenarioType.audioScenarioDefault,
+        // logConfig: LogConfig()
+      ));
 
-    engine.registerEventHandler(RtcEngineEventHandler(onError: (err, _) {
-      print(_);
-    }
-        // on
-        ));
-    if (livestream.value.isVideo) {
-          await engine.enableVideo();
-        } else {
-          await engine.disableVideo();
-        }
-    // await _engine.disableVideo();
-    await engine.setClientRole(role: ClientRoleType.clientRoleAudience);
+      engine.registerEventHandler(RtcEngineEventHandler(onError: (err, _) {
+        print(_);
+      }
+          // on
+          ));
+      if (livestream.value.isVideo) {
+        await engine.enableVideo();
+      } else {
+        await engine.disableVideo();
+      }
+      // await _engine.disableVideo();
+      await engine.setClientRole(role: ClientRoleType.clientRoleAudience);
       isReady.value = true;
-    }catch(e){
+    } catch (e) {
       isReady.value = false;
       liveProcessingStatus.value = ProcessingStatus.error;
     }
-    
   }
 
-
-Future<void> fetchAllMessages([bool isRefresh = false]) async {
-    if(isRefresh){
+  Future<void> fetchAllMessages([bool isRefresh = false]) async {
+    if (isRefresh) {
       messagesProcessingStatus.value = ProcessingStatus.loading;
     }
     try {
-      final res = (await LiveMessageRepository()
-          .fetchModelsFromCustomPath("livestreams/${livestream.value.id}/messages"));
+      final res = (await LiveMessageRepository().fetchModelsFromCustomPath(
+          "livestreams/${livestream.value.id}/messages"));
       messages.clear();
       messages.addAll(res);
       messages.refresh();
@@ -214,37 +209,33 @@ Future<void> fetchAllMessages([bool isRefresh = false]) async {
       messagesProcessingStatus.value = ProcessingStatus.success;
       // messagesProcessingStatus.value = ProcessingStatus.error;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(messageScrollController.hasClients){
-      messageScrollController.animateTo(
-          messageScrollController.position.maxScrollExtent + 100,
-          duration: .5.seconds,
-          curve: Curves.easeIn);
-      }
-});
-   
-    } on DioError catch (e) {
+        if (messageScrollController.hasClients) {
+          messageScrollController.animateTo(
+              messageScrollController.position.maxScrollExtent + 100,
+              duration: .5.seconds,
+              curve: Curves.easeIn);
+        }
+      });
+    } on Exception catch (e) {
       messagesProcessingStatus.value = ProcessingStatus.error;
       // print(e);
-      ApiClient.showErrorDialogue(e);
-    } catch (err) {
-      // print(err);
-      messagesProcessingStatus.value = ProcessingStatus.error;
-      showErrorDialogue(err.toString());
+      Dependancies.errorService.addError(exception: e);
+      // ApiClient.showErrorDialogue(e);
     }
   }
 
-    Future<void> sendMessage(String strMsg) async {
+  Future<void> sendMessage(String strMsg) async {
     isSending.value = true;
-      messages.add(LiveMessage.createSendingMessage(strMsg, livestream.value));
-      messages.refresh();
+    messages.add(LiveMessage.createSendingMessage(strMsg, livestream.value));
+    messages.refresh();
 
-    if(messageScrollController.hasClients){
+    if (messageScrollController.hasClients) {
       messageScrollController.animateTo(
           messageScrollController.position.maxScrollExtent + 100,
           duration: .5.seconds,
           curve: Curves.easeIn);
-      }
-    final res = await Dependancies.http().post('livemessages',
+    }
+    final res = await Dependancies.http.post('livemessages',
         data: {"message": strMsg, "livestream_id": livestream.value.id});
     // print(res);
     messageFieldControlller.clear();

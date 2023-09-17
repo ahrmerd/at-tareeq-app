@@ -3,8 +3,6 @@ import 'package:at_tareeq/app/dependancies.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-
-
 class Paginator<T> {
   // final Future<List<T>>  datafetcher();
   final Future<Response> Function(int page) datafetcher;
@@ -13,7 +11,7 @@ class Paginator<T> {
   PaginationInfo paginationInfo = PaginationInfo.createEmpty();
 
   bool get hasRemainingData =>
-      !(paginationInfo.currentPage == paginationInfo.lastPage);
+      !(paginationInfo.currentPage >= paginationInfo.lastPage);
 
   List<T> allFetched = [];
   List<T> lastFetched = [];
@@ -29,7 +27,6 @@ class Paginator<T> {
   }
 
   Future<List<T>> fetchNext() async {
-
     if (hasRemainingData) {
       final nextPage = paginationInfo.currentPage + 1;
       final res = await datafetcher(nextPage);
@@ -66,18 +63,19 @@ abstract class Repository<T> {
     return transformModels(data);
   }
 
-  Paginator<T> paginate({
+  Paginator<T> paginator({
+    String? customPath,
     Map<String, dynamic>? query,
     List<T> Function(dynamic)? customTransformer,
     int? perPage,
   }) {
-    query = Map<String, dynamic>.from(query??{});
+    query = Map<String, dynamic>.from(query ?? {});
     // query ??= {};
     perPage != null ? (query['perPage'] = perPage) : {};
     Future<Response> dataFetcher(pageToFetch) async {
-      print(pageToFetch);
       query!['page'] = pageToFetch;
-      return await apiClient.get(resource, queryParameters: query);
+      return await apiClient.get(customPath ?? resource,
+          queryParameters: query);
     }
 
     return Paginator<T>(

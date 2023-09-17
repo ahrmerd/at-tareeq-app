@@ -14,24 +14,43 @@ class LivesPage extends GetView<LivesController> {
         title: const Text('Livestreams'),
       ),
       body: controller.obx((state) {
-        return ListView.builder(
-            itemCount: state!.length,
-            itemBuilder: (_, index) {
-              final livestream = state[index];
-              return Card(
-                child: ListTile(
-                  enabled: !livestream.status.isEnded(),
-                  onTap: () {
-                    Get.toNamed(Routes.STREAMPLAYER,
-                        arguments: {'livestream': livestream});
-                  },
-                  leading: Text(livestream.status.getString()),
-                  trailing: Text(formatDateTime(livestream.startTime)),
-                  title: Text(livestream.title),
-                  subtitle: Text(livestream.description),
+        return Obx(() {
+          return Column(
+            children: [
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () => controller.fetchModels(true),
+                  child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      controller: controller.scroller,
+                      itemCount: state!.length,
+                      itemBuilder: (_, index) {
+                        final livestream = state[index];
+                        return Card(
+                          child: ListTile(
+                            enabled: !livestream.status.isEnded(),
+                            onTap: () {
+                              Get.toNamed(Routes.STREAMPLAYER,
+                                  arguments: {'livestream': livestream});
+                            },
+                            leading: Text(livestream.status.getString()),
+                            trailing:
+                                Text(formatDateTime(livestream.startTime)),
+                            title: Text(livestream.title),
+                            subtitle: Text(livestream.description),
+                          ),
+                        );
+                      }),
                 ),
-              );
-            });
+              ),
+              if (controller.isLoadingMore)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircularProgressIndicator(),
+                )
+            ],
+          );
+        });
       }),
     );
   }
