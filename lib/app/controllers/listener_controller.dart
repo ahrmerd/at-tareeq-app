@@ -40,7 +40,7 @@ class ListenerController extends GetxController
   // ];
 
   final List<MyTab> homeTabs = const [
-    MyTab(tab: Tab(text:'Listen Now'), tabView: ListenNow()),
+    MyTab(tab: Tab(text: 'Listen Now'), tabView: ListenNow()),
     MyTab(
         tab: Tab(text: ('Routine Lecture')),
         tabView: ListenerLectureList(
@@ -58,18 +58,21 @@ class ListenerController extends GetxController
 
   final List<MyTab> exploreTabs = const [
     MyTab(
-      tab: Tab(text: ('Browse Lectures'),
+      tab: Tab(
+        text: ('Browse Lectures'),
       ),
       tabView: BrowseLectures(),
     ),
     MyTab(
-        tab: Tab(text: ('New Lectures'),
+        tab: Tab(
+          text: ('New Lectures'),
         ),
         tabView: ListenerLectureList(
           filter: LecturesFilter.latest,
         )),
     MyTab(
-        tab: Tab(text: ('Most Downloaded Lecture'),
+        tab: Tab(
+          text: ('Most Downloaded Lecture'),
         ),
         tabView: ListenerLectureList(
           filter: LecturesFilter.popular,
