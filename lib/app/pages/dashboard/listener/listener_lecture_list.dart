@@ -28,7 +28,7 @@ class ListenerLectureList extends StatelessWidget {
         // return Placeholder();
         return VerticalLectureListView(
           label: 'Lectures',
-          lectures: data as List<Lecture>,
+          lectures: data,
           isLoadingMore: isFetchingMore,
           scrollController: scroller,
         );

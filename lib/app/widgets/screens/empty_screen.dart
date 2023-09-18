@@ -30,7 +30,7 @@ class EmptyScreen extends StatelessWidget {
           if (onRetry != null) const HorizontalSpace(),
           if (onRetry != null)
             MyButton(
-                color: Colors.orangeAccent,
+                color: CustomColor.appPurple,
                 onTap: onRetry,
                 child: const Text('Retry'))
         ],

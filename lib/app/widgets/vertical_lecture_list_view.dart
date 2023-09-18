@@ -17,6 +17,7 @@ class VerticalLectureListView extends StatefulWidget {
   final List<Lecture> lectures;
   final ScrollController? scrollController;
   final bool isLoadingMore;
+  final Widget Function(Lecture lecture)? extraLectureItemWidget;
   // final void Function(Lecture lecture) onAddToFavorite;
   // final void Function(Lecture lecture) onAddToPlaylater;
   const VerticalLectureListView({
@@ -27,6 +28,7 @@ class VerticalLectureListView extends StatefulWidget {
     this.isPrimary = true,
     this.scrollController,
     this.isLoadingMore = false,
+    this.extraLectureItemWidget,
     // required this.onAddToPlaylater
   });
 
@@ -181,6 +183,8 @@ class _VerticalLectureListViewState extends State<VerticalLectureListView> {
                               const SizedBox(
                                 width: 9,
                               ),
+                              widget.extraLectureItemWidget?.call(item) ??
+                                  SizedBox(),
                               LectureOptionsMenuWidget(
                                 lecture: item,
                                 // controller: controller,

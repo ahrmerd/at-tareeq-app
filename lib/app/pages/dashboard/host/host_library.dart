@@ -43,7 +43,7 @@ class _HostLibraryState extends State<HostLibrary> {
           return HostLecturesList(
             isLoadingMore: isFetchingMore,
             scrollController: scrollController,
-            lectures: data as List<Lecture>,
+            lectures: data,
             onRefresh: () {
               toRefresh.call();
               // setState(() {});

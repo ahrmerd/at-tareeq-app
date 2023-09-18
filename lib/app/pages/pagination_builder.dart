@@ -15,7 +15,7 @@ class PaginationBuilder<T> extends StatefulWidget {
   final Widget? onEmpty;
   // final Widget content;
   // final Future<void> Function() onRefresh;
-  final Widget Function(ScrollController scrollController, List data,
+  final Widget Function(ScrollController scrollController, List<T> data,
       bool isFetchingMore, VoidCallback refresh) onSuccess;
 
   final Paginator<T> paginator;
@@ -32,10 +32,10 @@ class PaginationBuilder<T> extends StatefulWidget {
   });
 
   @override
-  State<PaginationBuilder> createState() => _AsyncDataBuilderState<T>();
+  State<PaginationBuilder<T>> createState() => _PaginationBuilderState<T>();
 }
 
-class _AsyncDataBuilderState<T> extends State<PaginationBuilder> {
+class _PaginationBuilderState<T> extends State<PaginationBuilder<T>> {
   ProcessingStatus status = ProcessingStatus.initial;
   List<T> models = [];
   late ScrollController scroller;
@@ -50,7 +50,7 @@ class _AsyncDataBuilderState<T> extends State<PaginationBuilder> {
 
   @override
   initState() {
-    paginator = widget.paginator as Paginator<T>;
+    paginator = widget.paginator;
     setUp();
     fetchModels(true);
     super.initState();

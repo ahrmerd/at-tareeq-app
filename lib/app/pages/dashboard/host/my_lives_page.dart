@@ -29,7 +29,7 @@ class MyLivesPage extends StatelessWidget {
                       controller: scrollController,
                       itemCount: data.length,
                       itemBuilder: (_, index) {
-                        final livestream = data[index] as Livestream;
+                        final livestream = data[index];
                         return Card(
                           child: ListTile(
                             onTap: () {

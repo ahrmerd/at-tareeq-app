@@ -95,11 +95,15 @@ class _PlaylistsDialogueState extends State<PlaylistsDialogue> {
                             itemBuilder: (_, i) {
                               Playlist playlist = filteredPlaylists[i];
                               return Card(
-                                  child: ListTile(
-                                onTap: () {
-                                  addLectureToPlaylsit(playlist);
-                                },
-                                title: Text(playlist.name),
+                                  // elevation: 0,
+                                  child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListTile(
+                                  onTap: () {
+                                    addLectureToPlaylsit(playlist);
+                                  },
+                                  title: Text(playlist.name),
+                                ),
                               ));
                             }))
               ],
