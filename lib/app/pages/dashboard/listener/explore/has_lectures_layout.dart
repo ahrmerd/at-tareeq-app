@@ -50,7 +50,9 @@ class HasLecturesLayout extends StatelessWidget {
                             lectures: state ?? [],
                           );
                         }),
-                    onEmpty: const EmptyScreen(),
+                    onEmpty: EmptyScreen(onRetry: () {
+                      controller.fetchLectures(true);
+                    }),
                     onLoading: const LoadingScreen(),
                     onError: (err) => ErrorScreen(
                           messsage: err,

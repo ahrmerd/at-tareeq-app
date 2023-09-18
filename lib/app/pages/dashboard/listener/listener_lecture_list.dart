@@ -24,7 +24,7 @@ class ListenerLectureList extends StatelessWidget {
   Widget build(BuildContext context) {
     return PaginationBuilder<Lecture>(
       paginator: getPaginator(),
-      onSuccess: (scroller, data, isFetchingMore) {
+      onSuccess: (scroller, data, isFetchingMore, toRefresh) {
         // return Placeholder();
         return VerticalLectureListView(
           label: 'Lectures',

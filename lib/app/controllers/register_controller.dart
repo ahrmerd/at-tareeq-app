@@ -27,8 +27,7 @@ class RegisterController extends GetxController {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   var _selectedState = '';
-  String get  selectedState => _selectedState;
-
+  String get selectedState => _selectedState;
 
   bool isHost = tryMapCast(
           key: 'userType',
@@ -140,13 +139,13 @@ class RegisterController extends GetxController {
     try {
       await register();
       _status.value = ProcessingStatus.success;
-    } on DioError catch (e) {
-      // print(e);
+    } on Exception catch (e) {
+      // print(e.response);
+      // rethrow;
       _status.value = ProcessingStatus.error;
-      ApiClient.showErrorDialogue(e);
-      Logger.log(e.toString());
+      Dependancies.errorService.addError(exception: e);
     } catch (e) {
-      Logger.log(e.toString());
+      // Logger.log(e.toString());
       _status.value = ProcessingStatus.error;
       showErrorDialogue(e.toString());
     }
@@ -154,11 +153,10 @@ class RegisterController extends GetxController {
 
   Future<void> register() async {
     // print(formKey.currentState!.value);
-  // return;
+    // return;
     if (formKey.currentState!.saveAndValidate()) {
       final data = {
-        for (var e in formItems)
-          e.field: formKey.currentState?.value[e.field]
+        for (var e in formItems) e.field: formKey.currentState?.value[e.field]
       };
 
       data['type'] = isHost ? ServerUserTypes.host : ServerUserTypes.listener;
@@ -186,29 +184,27 @@ class RegisterController extends GetxController {
     states.addAll(json.decode(data) as List);
   }
 
-  
-
   changeSelectedState(String? state) {
-    _selectedState=state??'';
+    _selectedState = state ?? '';
   }
 }
 
 List<String> getFromAutoFillHints(String field) {
-    // return [AutofillHints.birthdayDay];
-    switch (field) {
-      case 'name':
-        return [AutofillHints.name, AutofillHints.givenName];
-      case 'email':
-        return [AutofillHints.email];
-      case 'password':
-        return [AutofillHints.password];
-      case 'password_confirmation':
-        return [AutofillHints.password];
-      case 'organization':
-        return [AutofillHints.organizationName];
-      case 'phone':
-        return [AutofillHints.telephoneNumber];
-      default:
-        return [];
-    }
+  // return [AutofillHints.birthdayDay];
+  switch (field) {
+    case 'name':
+      return [AutofillHints.name, AutofillHints.givenName];
+    case 'email':
+      return [AutofillHints.email];
+    case 'password':
+      return [AutofillHints.password];
+    case 'password_confirmation':
+      return [AutofillHints.password];
+    case 'organization':
+      return [AutofillHints.organizationName];
+    case 'phone':
+      return [AutofillHints.telephoneNumber];
+    default:
+      return [];
   }
+}

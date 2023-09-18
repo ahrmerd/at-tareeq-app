@@ -32,7 +32,7 @@ class EmptyScreen extends StatelessWidget {
             MyButton(
                 color: Colors.orangeAccent,
                 onTap: onRetry,
-                child: const Text('Return'))
+                child: const Text('Retry'))
         ],
       ),
     );

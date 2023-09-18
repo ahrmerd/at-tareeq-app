@@ -2,6 +2,7 @@ import 'package:at_tareeq/app/controllers/pagination_controller.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/repositories/repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
+import 'package:at_tareeq/app/widgets/screens/empty_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
@@ -11,11 +12,11 @@ class PaginationBuilder<T> extends StatefulWidget {
   final Widget? onLoading;
   // final Widget? onInitial;
   final Widget? onError;
+  final Widget? onEmpty;
   // final Widget content;
   // final Future<void> Function() onRefresh;
-  final Widget Function(
-          ScrollController scrollController, List data, bool isFetchingMore)
-      onSuccess;
+  final Widget Function(ScrollController scrollController, List data,
+      bool isFetchingMore, VoidCallback refresh) onSuccess;
 
   final Paginator<T> paginator;
   const PaginationBuilder({
@@ -27,6 +28,7 @@ class PaginationBuilder<T> extends StatefulWidget {
     // required this.onRefresh,
     required this.paginator,
     required this.onSuccess,
+    this.onEmpty,
   });
 
   @override
@@ -68,12 +70,21 @@ class _AsyncDataBuilderState<T> extends State<PaginationBuilder> {
             },
           );
         case ProcessingStatus.success:
+          if (models.isEmpty) {
+            return widget.onEmpty ??
+                EmptyScreen(
+                  onRetry: () {
+                    fetchModels(true);
+                  },
+                );
+          }
           return RefreshIndicator(
               // key: Key(widget.filter.toString()),
               onRefresh: () async {
                 await fetchModels(true);
               },
-              child: widget.onSuccess(scroller, models, isLoadingMore));
+              child: widget.onSuccess(
+                  scroller, models, isLoadingMore, () => fetchModels(true)));
       }
     });
   }

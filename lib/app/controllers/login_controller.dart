@@ -68,22 +68,12 @@ class LoginController extends GetxController {
     try {
       await login();
       _status.value = ProcessingStatus.success;
-    } on DioError catch (e) {
-      print(e.response);
+    } on Exception catch (e) {
+      // print(e.response);
       // rethrow;
       _status.value = ProcessingStatus.error;
-      final errorMessage = ApiClient.processError(e);
-      Get.defaultDialog(title: "Error", middleText: errorMessage, actions: [
-        TextButton(
-          onPressed: () {
-            Get.back();
-          },
-          child: const Text("Close"),
-        ),
-      ]);
+      Dependancies.errorService.addError(exception: e);
     } catch (e) {
-      print(e);
-      // rethrow;
       _status.value = ProcessingStatus.error;
       Get.defaultDialog(
           title: "Error",

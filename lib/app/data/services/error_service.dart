@@ -49,12 +49,10 @@ class ErrorService extends GetxService {
   String addStateMixinError({
     required Exception exception,
     // void Funtion(dynamic newState, {RxStatus? status})? gs,
-    void Function(dynamic newState, {RxStatus? status})? stateChanger,
+    required void Function(dynamic newState, {RxStatus? status}) stateChanger,
   }) {
     final errorMessage = addError(exception: exception);
-    stateChanger != null
-        ? stateChanger(null, status: RxStatus.error(errorMessage))
-        : {};
+    stateChanger(null, status: RxStatus.error(errorMessage));
     return errorMessage;
   }
 

@@ -27,7 +27,11 @@ class LibraryLecturesPage extends GetView<LibraryController> {
             );
           }),
         ),
-        onEmpty: const EmptyScreen(),
+        onEmpty: EmptyScreen(
+          onRetry: () {
+            controller.fetchModels(true);
+          },
+        ),
         onError: (error) => ErrorScreen(
           messsage: error,
           onRetry: () {

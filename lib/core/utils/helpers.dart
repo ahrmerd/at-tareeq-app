@@ -175,7 +175,7 @@ String parsePhone(String phone, [String phoneCode = "234"]) {
 ScrollController addOnScollFetchMore(VoidCallback dataFetcher) {
   final scrollController = ScrollController();
   scrollController.addListener(() {
-    print('sds');
+    print('scrolling');
     if (scrollController.position.maxScrollExtent ==
         scrollController.position.pixels) {
       dataFetcher.call();

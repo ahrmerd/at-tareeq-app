@@ -24,16 +24,14 @@ class Events {
   static String livemessage = "App\\Events\\LiveMessageSentEvent";
 }
 
-class HostLiveController extends GetxController {
+abstract class LiveStreamController extends GetxController {
   Rx<ProcessingStatus> liveProcessingStatus = ProcessingStatus.initial.obs;
   Rx<ProcessingStatus> messagesProcessingStatus = ProcessingStatus.initial.obs;
   Livestream livestream = Get.arguments['livestream'];
   Rx<LivestreamStatus> livestreamStatus =
       (Get.arguments['livestream'] as Livestream).status.obs;
-  // PermissionStatus _permissionStatus = PermissionStatus.limited;
   RxBool isAudioMuted = false.obs;
   RxBool isVideoMuted = false.obs;
-  // PermissionStatus broadcastingStatus = PermissionStatus.limited;
   late final RtcEngine _engine;
   RtcEngine get engine => _engine;
   // late Echo<PusherClient, PusherChannel> _echo;
@@ -42,6 +40,7 @@ class HostLiveController extends GetxController {
   TextEditingController messageFieldControlller = TextEditingController();
   RxBool isSending = false.obs;
   ScrollController messageScrollController = ScrollController();
+  ClientRoleType get clientRole;
 
   RxList<LiveMessage> messages = <LiveMessage>[].obs;
 
@@ -74,8 +73,9 @@ class HostLiveController extends GetxController {
     });
   }
 
+  @mustCallSuper
   @override
-  void onInit() async {
+  Future<void> onInit() async {
     _engine = createAgoraRtcEngine();
 
     try {
@@ -108,29 +108,30 @@ class HostLiveController extends GetxController {
   Future<void> initAgora() async {
     // retrieve permissions
     try {
-      final permissionStatus = await requestPermissions();
-      if (permissionStatus) {
-        await _engine.initialize(const RtcEngineContext(
-          appId: appId,
-          channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
-          audioScenario: AudioScenarioType.audioScenarioDefault,
-          // logConfig: LogConfig()
-        ));
+      // final permissionStatus = await requestPermissions();//host alone in oninit
+      // if (permissionStatus) { //should implement in host alone
+      await _engine.initialize(const RtcEngineContext(
+        appId: appId,
+        channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
+        audioScenario: AudioScenarioType.audioScenarioDefault,
+        // logConfig: LogConfig()
+      ));
 
-        _engine.registerEventHandler(RtcEngineEventHandler(onError: (err, _) {
-          handleAgoraError(err, _);
-        }));
-        if (livestream.isVideo) {
-          await _engine.enableVideo();
-        } else {
-          await _engine.disableVideo();
-        }
-        isReady.value = true;
+      _engine.registerEventHandler(RtcEngineEventHandler(onError: (err, _) {
+        handleAgoraError(err, _);
+      }));
+      if (livestream.isVideo) {
+        await _engine.enableVideo();
       } else {
-        liveProcessingStatus.value = ProcessingStatus.error;
-        showErrorDialogue('Please accept all permissions');
-        isReady.value = false;
+        await _engine.disableVideo();
       }
+      isReady.value = true;
+      // }
+      // else {
+      // liveProcessingStatus.value = ProcessingStatus.error;
+      // showErrorDialogue('Please accept all permissions');
+      // isReady.value = false;
+      // }
     } catch (e) {
       isReady.value = false;
       liveProcessingStatus.value = ProcessingStatus.error;
@@ -143,24 +144,24 @@ class HostLiveController extends GetxController {
     // }
   }
 
-  Future<bool> requestPermissions() async {
-    if (Platform.isAndroid || Platform.isIOS) {
-      final statuses =
-          await [Permission.microphone, Permission.camera].request();
-      for (var status in statuses.values) {
-        if (status.isDenied && status.isLimited) {
-          return false;
-        }
-      }
-      return true;
-      // final permissionStatus = await Permission.microphone.request();
-      // if (permissionStatus.isGranted) {
-      //   return true;
-      // }
-    } else {
-      return true;
-    }
-  }
+  // Future<bool> requestPermissions() async {
+  //   if (Platform.isAndroid || Platform.isIOS) {
+  //     final statuses =
+  //         await [Permission.microphone, Permission.camera].request();
+  //     for (var status in statuses.values) {
+  //       if (status.isDenied && status.isLimited) {
+  //         return false;
+  //       }
+  //     }
+  //     return true;
+  //     // final permissionStatus = await Permission.microphone.request();
+  //     // if (permissionStatus.isGranted) {
+  //     //   return true;
+  //     // }
+  //   } else {
+  //     return true;
+  //   }
+  // }
 
 //   void initEcho() {
 //     PusherOptions options = PusherOptions(
@@ -183,87 +184,57 @@ class HostLiveController extends GetxController {
 //     });
 //   }
 
-  Future<void> startBroadcast() async {
-    if (isReady.value && !isLive.value) {
-      try {
-        await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
-        liveProcessingStatus.value = ProcessingStatus.success;
-        await joinChannel();
-        await Dependancies.http
-            .get('livestreams/${livestream.id}/start-broadcast');
-        livestreamStatus.value = LivestreamStatus.started;
-        livestream.status = LivestreamStatus.started;
-        isLive.value = true;
-        _engine.startPreview();
-      } on Exception catch (e) {
-        Dependancies.errorService.addError(exception: e);
-        Logger.log(e.toString());
-      }
-    }
-  }
+  // Future<void> startBroadcast() async {
+  //   if (isReady.value && !isLive.value) {
+  //     try {
+  //       await _engine.setClientRole(role: ClientRoleType.clientRoleBroadcaster);
+  //       liveProcessingStatus.value = ProcessingStatus.success;
+  //       await joinChannel();
+  //       await Dependancies.http
+  //           .get('livestreams/${livestream.id}/start-broadcast');
+  //       livestreamStatus.value = LivestreamStatus.started;
+  //       livestream.status = LivestreamStatus.started;
+  //       isLive.value = true;
+  //       _engine.startPreview();
+  //     } on Exception catch (e) {
+  //       Dependancies.errorService.addError(exception: e);
+  //       Logger.log(e.toString());
+  //     }
+  //   }
+  // }
 
   Future<void> joinChannel() async {
-    await _engine.enableLocalAudio(true);
-    if (livestream.isVideo) {
-      await _engine.enableLocalVideo(true);
-    }
+    // await _engine.enableLocalAudio(true);
+    // if (livestream.isVideo) {
+    //   await _engine.enableLocalVideo(true);
+    // }
     await _engine.joinChannel(
       token: livestream.token ?? '',
       channelId: livestream.channel,
       uid: SharedPreferencesHelper.getUserId(),
-      options: const ChannelMediaOptions(
+      options: ChannelMediaOptions(
         autoSubscribeVideo: false,
         autoSubscribeAudio: true,
         channelProfile: ChannelProfileType.channelProfileLiveBroadcasting,
-        clientRoleType: ClientRoleType.clientRoleBroadcaster,
+        clientRoleType: clientRole,
       ),
     );
   }
 
-  Future<void> muteAudioBroadcast() async {
-    await _engine.muteLocalAudioStream(true);
-    isAudioMuted.value = true;
-  }
-
-  Future<void> muteVideoBroadcast() async {
-    await _engine.muteLocalVideoStream(true);
-    isVideoMuted.value = true;
-  }
-
-  Future<void> unmuteAudioBroadcast() async {
-    await _engine.muteLocalAudioStream(false);
-    isAudioMuted.value = false;
-  }
-
-  Future<void> unmuteVideoBroadcast() async {
-    await _engine.muteLocalVideoStream(false);
-    isVideoMuted.value = false;
-  }
-
-  Future<void> switchCamera() async {
-    await _engine.switchCamera();
-  }
-
-  Future<void> toggleFlash(bool shouldOn) async {
-    if (await _engine.isCameraTorchSupported()) {
-      _engine.setCameraTorchOn(shouldOn);
-    }
-  }
-
-  Future<void> stopBroadcast() async {
-    if (isReady.value) {
-      try {
-        await Dependancies.http
-            .get('livestreams/${livestream.id}/end-broadcast');
-        await leaveChannel();
-        isLive.value = false;
-        livestream.status = LivestreamStatus.finished;
-        livestreamStatus.value = LivestreamStatus.finished;
-      } on Exception catch (e) {
-        Dependancies.errorService.addError(exception: e);
-      }
-    }
-  }
+  // Future<void> stopBroadcast() async {
+  //   if (isReady.value) {
+  //     try {
+  //       await Dependancies.http
+  //           .get('livestreams/${livestream.id}/end-broadcast');
+  //       await leaveChannel();
+  //       isLive.value = false;
+  //       livestream.status = LivestreamStatus.finished;
+  //       livestreamStatus.value = LivestreamStatus.finished;
+  //     } on Exception catch (e) {
+  //       Dependancies.errorService.addError(exception: e);
+  //     }
+  //   }
+  // }
 
   Future<void> leaveChannel() async {
     await _engine.leaveChannel();
@@ -286,7 +257,7 @@ class HostLiveController extends GetxController {
 
     if (messageScrollController.hasClients) {
       messageScrollController.animateTo(
-          messageScrollController.position.maxScrollExtent + 100,
+          messageScrollController.position.maxScrollExtent + 50,
           duration: .5.seconds,
           curve: Curves.easeIn);
     }
@@ -313,7 +284,7 @@ class HostLiveController extends GetxController {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (messageScrollController.hasClients) {
           messageScrollController.animateTo(
-              messageScrollController.position.maxScrollExtent + 100,
+              messageScrollController.position.maxScrollExtent + 50,
               duration: .5.seconds,
               curve: Curves.easeIn);
         }

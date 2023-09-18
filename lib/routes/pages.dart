@@ -10,7 +10,7 @@ import 'package:at_tareeq/app/bindings/register_binding.dart';
 import 'package:at_tareeq/app/controllers/download_controller.dart';
 import 'package:at_tareeq/app/controllers/interest_lectures_controller.dart';
 import 'package:at_tareeq/app/controllers/library_controller.dart';
-import 'package:at_tareeq/app/controllers/livestream_player_controller.dart';
+import 'package:at_tareeq/app/controllers/listener_ivestream_controller.dart';
 import 'package:at_tareeq/app/controllers/lives_controller.dart';
 import 'package:at_tareeq/app/controllers/playlist_controller.dart';
 import 'package:at_tareeq/app/controllers/user_lectures_controller.dart';
@@ -18,7 +18,7 @@ import 'package:at_tareeq/app/pages/dashboard/guest/guest_dashboard.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/add_lecture_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/add_livestream.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/host_dashboard.dart';
-import 'package:at_tareeq/app/pages/dashboard/host/host_live.dart';
+import 'package:at_tareeq/app/pages/dashboard/host/host_livestream_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/my_lives_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/explore/interest_lectures_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/explore/user_lectures_page.dart';
@@ -27,7 +27,7 @@ import 'package:at_tareeq/app/pages/dashboard/listener/library/download_player_p
 import 'package:at_tareeq/app/pages/dashboard/listener/library/library_lectures_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/listener_dashboard.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/lives_page.dart';
-import 'package:at_tareeq/app/pages/dashboard/listener/livestream_player.dart';
+import 'package:at_tareeq/app/pages/dashboard/listener/listener_livestream_page.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/playlists_page.dart';
 import 'package:at_tareeq/app/pages/home.dart';
 // import 'package:at_tareeq/app/pages/onboarding.dart';
@@ -105,7 +105,7 @@ class Pages {
     ),
     GetPage(
       name: Routes.HOSTLIVE,
-      page: () => const HostLivePage(),
+      page: () => const HostLivestreamPage(),
       binding: HostLiveBinding(),
     ),
     GetPage(
@@ -117,10 +117,10 @@ class Pages {
     ),
     GetPage(
       name: Routes.STREAMPLAYER,
-      page: () => const LivestreamPlayer(),
+      page: () => const ListenerLivestreamPage(),
       binding: BindingsBuilder(() {
-        Get.lazyPut<LivestreamPlayerController>(
-            () => LivestreamPlayerController());
+        Get.lazyPut<ListenerLivestreamController>(
+            () => ListenerLivestreamController());
       }),
     ),
     GetPage(
@@ -162,9 +162,9 @@ class Pages {
     GetPage(
       name: Routes.PLAYLISTS,
       page: () => const PlaylistsPage(),
-      binding: BindingsBuilder(() {
-        Get.lazyPut<PlaylistController>(() => PlaylistController());
-      }),
+      // binding: BindingsBuilder(() {
+      //   Get.lazyPut<PlaylistController>(() => PlaylistController());
+      // }),
     ),
   ];
 }

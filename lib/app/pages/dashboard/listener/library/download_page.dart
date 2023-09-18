@@ -57,70 +57,75 @@ class DownloadsPage extends GetView<DownloadController> {
                           ),
                         ),
                         Obx(() {
-                            return Row(
-                              children: [
-                                controller.currPlayingIndex.value == index
-                                    ? PlayButton(
-                                        playingStatus:
-                                            controller.playingStatus.value,
-                                        onPlay: () {
-                                          controller.play(index);
-                                          // controller.playAudio();
-                                        },
-                                        onPause: () {
-                                          controller.pauseAudio();
-                                        },
-                                        onStop: () {
-                                          controller.stopAudio();
-                                        },
-                                      )
-                                    : GestureDetector(
-                                        onTap: () => controller.play(index),
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            padding: const EdgeInsets.all(5),
-                                            decoration: const BoxDecoration(
-                                                color: CustomColor.appPurple,
-                                                shape: BoxShape.circle),
-                                            child: const Icon(
-                                              Icons.play_arrow,
-                                              color: Colors.white,
-                                            )),
-                                      ),
-                                const HorizontalSpace(9),
-                                GestureDetector(
-                                        onTap: () {
-                                          controller.deleteItem(item);
-                                        },
-                                        child: Container(
-                                            alignment: Alignment.center,
-                                            padding: const EdgeInsets.all(5),
-                                            decoration: const BoxDecoration(
-                                                color: dangerColor,
-                                                shape: BoxShape.circle),
-                                            child: const Icon(
-                                              Icons.delete_forever,
-                                              color: Colors.white,
-                                            )),
-                                      ),
-                                // LectureOptionsMenuWidget(
-                                //   lecture: item,
-                                //   // controller: controller,
-                                // ),
-                              ],
-                            );
-                          }
-                        ),
+                          return Row(
+                            children: [
+                              controller.currPlayingIndex.value == index
+                                  ? PlayButton(
+                                      playingStatus:
+                                          controller.playingStatus.value,
+                                      onPlay: () {
+                                        controller.play(index);
+                                        // controller.playAudio();
+                                      },
+                                      onPause: () {
+                                        controller.pauseAudio();
+                                      },
+                                      onStop: () {
+                                        controller.stopAudio();
+                                      },
+                                    )
+                                  : GestureDetector(
+                                      onTap: () => controller.play(index),
+                                      child: Container(
+                                          alignment: Alignment.center,
+                                          padding: const EdgeInsets.all(5),
+                                          decoration: const BoxDecoration(
+                                              color: CustomColor.appPurple,
+                                              shape: BoxShape.circle),
+                                          child: const Icon(
+                                            Icons.play_arrow,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                              const HorizontalSpace(9),
+                              GestureDetector(
+                                onTap: () {
+                                  controller.deleteItem(item);
+                                },
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: const BoxDecoration(
+                                        color: dangerColor,
+                                        shape: BoxShape.circle),
+                                    child: const Icon(
+                                      Icons.delete_forever,
+                                      color: Colors.white,
+                                    )),
+                              ),
+                              // LectureOptionsMenuWidget(
+                              //   lecture: item,
+                              //   // controller: controller,
+                              // ),
+                            ],
+                          );
+                        }),
                       ],
                     ),
                   ),
                 ),
               );
             }),
-        onEmpty: const EmptyScreen(),
+        onEmpty: EmptyScreen(
+          onRetry: () {
+            controller.fetchDownloads();
+          },
+        ),
         onError: (error) => ErrorScreen(
-            onRetry: (){controller.fetchDownloads();},
-           messsage: error.toString()),
+            onRetry: () {
+              controller.fetchDownloads();
+            },
+            messsage: error.toString()),
         onLoading: const LoadingScreen(),
       ),
     );

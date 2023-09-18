@@ -38,14 +38,19 @@ class _HostDashboardState extends State<HostDashboard> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.person_outlined), label: 'Profile'),
           ]),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: const [
-          HostHome(),
-          HostLibrary(),
-          HostProfile(),
-        ],
-      ),
+      body: const [
+        HostHome(),
+        HostLibrary(),
+        HostProfile(),
+      ][_currentIndex],
+      //  IndexedStack(
+      //   index: _currentIndex,
+      //   children: const [
+      //     HostHome(),
+      //     HostLibrary(),
+      //     HostProfile(),
+      //   ],
+      // ),
     );
   }
 

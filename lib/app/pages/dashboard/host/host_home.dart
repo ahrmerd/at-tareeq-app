@@ -87,7 +87,11 @@ class HostHome extends GetView<HostHomeController> {
                 scrollController: null,
               ),
             ),
-            onEmpty: const EmptyScreen(),
+            onEmpty: EmptyScreen(
+              onRetry: () {
+                controller.fetchLectures();
+              },
+            ),
             onError: (error) => ErrorScreen(
               messsage: error,
               onRetry: () {
