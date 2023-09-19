@@ -59,6 +59,10 @@
 			<string>http</string>
 			<string>https</string>
 		</array>
+		<key>LSSupportsOpeningDocumentsInPlace</key>
+		<true />
+		<key>UIFileSharingEnabled</key>
+		<true />
 		<key>NSAppleMusicUsageDescription</key>
 		<string>We need access to your audio library to upload and play audio files for lectures and
 			content.</string>

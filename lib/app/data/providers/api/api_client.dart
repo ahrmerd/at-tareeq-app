@@ -9,8 +9,17 @@ import 'package:get/get.dart' as get_x;
 
 class ApiClient {
   // ApiClient._create();
-  late Dio req = Dio(_options)..interceptors.addAll([UnAuthorizedInterceptor(), RequireUpdateOrMaintenanceInterceptor()]);
+  late Dio req = Dio(_options)
+    ..interceptors.addAll(
+        [UnAuthorizedInterceptor(), RequireUpdateOrMaintenanceInterceptor()]);
   // static final ApiClient _client = ApiClient._create();
+
+  static final requestHeaders = {
+    "Authorization": "Bearer ${SharedPreferencesHelper.getToken()}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "X-Client-Version": clientVersion
+  };
 
   void init() {
     req = Dio(_options);
@@ -44,7 +53,7 @@ class ApiClient {
       case DioErrorType.sendTimeout:
         return "We are having problems sending your response";
       case DioErrorType.receiveTimeout:
-        return "We are having problems recieving the respone from the server";
+        return "We are having problems recieving the response from the server";
       case DioErrorType.badCertificate:
         return "There is a problem validating your request";
       case DioErrorType.cancel:
@@ -61,7 +70,8 @@ class ApiClient {
         }
     }
 
-    return err.message ??extractTextBeforeFullStop(err.error??"unknown error");
+    return err.message ??
+        extractTextBeforeFullStop(err.error ?? "unknown error");
     // if (err.response?.statusCode == 422) {
     //   var errorStr = '';
     //   err.response?.data['errors'].forEach((key, value) {
@@ -86,14 +96,9 @@ class ApiClient {
   final BaseOptions _options = BaseOptions(
       baseUrl: apiUrl,
       // baseUrl: "http://127.0.0.1:8000/api/",
-      connectTimeout: const Duration(seconds: 300),
-      receiveTimeout: const Duration(seconds: 300),
-      headers: {
-        "Authorization": "Bearer ${SharedPreferencesHelper.getToken()}",
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "X-Client-Version": clientVersion
-      });
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
+      headers: requestHeaders);
 
   static String getDioErrorMessage(DioError e) {
     if (e.type == DioErrorType.connectionTimeout) {

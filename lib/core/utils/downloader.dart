@@ -1,27 +1,59 @@
 import 'dart:io';
 
 import 'package:at_tareeq/app/data/models/lecture.dart';
+import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/dependancies.dart';
+import 'package:at_tareeq/core/extentions/string_extensions.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
+import 'package:at_tareeq/core/values/const.dart';
+import 'package:background_downloader/background_downloader.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Downloader {
+  Future<void> init() async {
+    FileDownloader().configureNotification(
+        running: const TaskNotification('Downloading', 'file: {filename}'),
+        progressBar: true);
+    await FileDownloader().trackTasks();
+    await FileDownloader().resumeFromBackground();
+    FileDownloader().updates.listen((update) {
+      if (update is TaskStatusUpdate) {
+        Get.snackbar('Download Status Update',
+            'Your file: ${update.task.filename} is ${update.status}');
+        // print(' with status ${update.status}');
+      }
+    });
+  }
+
   static downloadLecture(Lecture lecture) async {
     //  final res = await Dependancies.http().get('',
     //       options: Options(responseType: ResponseType.bytes));
     final urlPath = "lectures/${lecture.id}/download";
     final savePath = await completeLecturePath(lecture);
     if (!(await checkIfFileExist(lecture))) {
-      Dependancies.http.download(urlPath, savePath,
-          onReceiveProgress: ((count, total) => {
-                if (count >= total)
-                  {Get.snackbar('SuccessFull', "your download has finished")}
-                else if (count >= total * 0.7 && count < total * 0.72)
-                  {Get.snackbar('Progress', "your download is almost done")}
-                else if (count >= total * 0.25 && count < total * 0.27)
-                  {Get.snackbar('Progress', "your download is still going on")}
-              }));
+      final downloadTask = DownloadTask(
+          taskId: "lecture-${lecture.id}",
+          url: "${apiUrl.removeTrailing("/")}/$urlPath",
+          urlQueryParameters: ApiClient.requestHeaders,
+          filename: lectureFilename(lecture),
+          baseDirectory: BaseDirectory.applicationSupport,
+          directory: downloadsLocalDirectory,
+          updates: Updates.statusAndProgress,
+          retries: 5,
+          // metaData: lecture.toJson(),
+          allowPause: true);
+      final successfullyEnqueued = await FileDownloader().enqueue(downloadTask);
+
+      // Dependancies.http.download(urlPath, savePath,
+      //     onReceiveProgress: ((count, total) => {
+      //           if (count >= total)
+      //             {Get.snackbar('SuccessFull', "your download has finished")}
+      //           else if (count >= total * 0.7 && count < total * 0.72)
+      //             {Get.snackbar('Progress', "your download is almost done")}
+      //           else if (count >= total * 0.25 && count < total * 0.27)
+      //             {Get.snackbar('Progress', "your download is still going on")}
+      //         }));
     } else {
       Get.snackbar('Warning',
           "File already exists please delete downloaded file before redownloading");
@@ -30,8 +62,12 @@ class Downloader {
     // return Uint8List.fromList((res.data) as List<int>);
   }
 
+  static String get downloadsLocalDirectory =>
+      'downloads${Platform.pathSeparator}lectures';
+
   static Future<String> getDownloadsPath() async {
-    return '${(await getApplicationSupportDirectory()).path}${Platform.pathSeparator}downloads${Platform.pathSeparator}lectures${Platform.pathSeparator}';
+    // get
+    return '${(await getApplicationSupportDirectory()).path}${Platform.pathSeparator}$downloadsLocalDirectory${Platform.pathSeparator}';
   }
 
   static Future<bool> checkIfFileExist(Lecture lecture) async {
@@ -51,7 +87,7 @@ class Downloader {
   }
 
   static Future<List<File>> getDownloads() async {
-    await Downloader.ensureDownloadFolderExist();
+    await ensureDownloadFolderExist();
     return (Directory(await getDownloadsPath()))
         .listSync()
         .whereType<File>()

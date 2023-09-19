@@ -67,6 +67,7 @@ dependencies:
   # awesome_notifications: ^0.7.4+1
   intl: ^0.18.1
   url_launcher: ^6.1.14
+  background_downloader: ^7.9.4
   # country_pickers: ^2.0.0
   # fluttertoast: any
   # laravel_echo: ^0.2.9

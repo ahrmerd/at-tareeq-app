@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PlaylistsPage extends StatefulWidget {
-  PlaylistsPage({super.key});
+  const PlaylistsPage({super.key});
 
   @override
   State<PlaylistsPage> createState() => _PlaylistsPageState();
@@ -136,7 +136,7 @@ class _PlaylistsPageState extends State<PlaylistsPage> {
 Future<void> deletePlaylist(int playlistId) async {
   try {
     await Dependancies.http.delete('playlists/$playlistId');
-    Get.back();
+    // Get.back();
   } on Exception catch (e) {
     Dependancies.errorService.addError(exception: e);
   }
