@@ -56,6 +56,6 @@ class MyLivesPage extends StatelessWidget {
     return LivestreamRepository().paginator(
         customPath: 'livestreams/user',
         perPage: 10,
-        query: {"include": "user"});
+        query: Query(includes: ["user"]));
   }
 }

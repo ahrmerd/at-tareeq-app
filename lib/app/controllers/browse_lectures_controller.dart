@@ -46,13 +46,16 @@ class BrowseLecturesController extends GetxController {
   }
 
   Future<void> fetchOrganizations([bool refresh = false]) async {
-    final query = {
-      'filter': {
-        'type':
-            '${ServerUserTypes.host},${ServerUserTypes.verifiedHost},${ServerUserTypes.admin}'
-        // 'type': '${ServerUserTypes.host},${ServerUserTypes.'
-      }
-    };
+    // final query = {
+    //   'filter': {
+    //     'type':
+    //         '${ServerUserTypes.host},${ServerUserTypes.verifiedHost},${ServerUserTypes.admin}'
+    //     // 'type': '${ServerUserTypes.host},${ServerUserTypes.'
+    //   }
+    // };
+    final query = Query()
+      ..addFilter('type',
+          '${ServerUserTypes.host},${ServerUserTypes.verifiedHost},${ServerUserTypes.admin}');
 
     if (organizationsPaginator != null && !refresh) {
       // organizationsPaginator!.fetchNext();

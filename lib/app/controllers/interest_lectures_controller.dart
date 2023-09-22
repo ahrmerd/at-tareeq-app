@@ -33,15 +33,13 @@ class InterestLecturesController extends GetxController
 
   @override
   void onInit() {
-    paginator = LectureRepository().paginator(perPage: 10, query: {
-      'filter': {'interest_id': interest.id}
-    });
+    paginator = LectureRepository().paginator(
+        perPage: 10, query: Query(filters: {'interest_id': interest.id}));
     // scroller?.addListener(() {
     //   print('ssd');
     // });
     scroller = addOnScollFetchMore(() {
       fetchLectures(false);
-      print('as');
     });
     fetchLectures(true);
     super.onInit();

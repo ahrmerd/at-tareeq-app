@@ -54,7 +54,7 @@ class ListenerLectureList extends StatelessWidget {
 
   Paginator<Lecture> getPaginator() {
     String url = 'lectures';
-    Map<String, dynamic> query = {};
+    Query query = Query();
     switch (filter) {
       case LecturesFilter.all:
         break;
@@ -66,11 +66,12 @@ class ListenerLectureList extends StatelessWidget {
         break;
       case LecturesFilter.latest:
         url = 'lectures';
-        query['sort'] = '-created_at';
+        query.addSort('created_at', Sorts.desc);
         break;
       case LecturesFilter.popular:
         url = 'lectures';
-        query['sort'] = '-downloaded';
+        query.addSort('downloaded', Sorts.desc);
+        // query['sort'] = '-downloaded';
         break;
     }
     return LectureRepository()

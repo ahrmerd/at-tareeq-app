@@ -85,7 +85,7 @@ class LibraryController extends GetxController
         break;
     }
     paginator = LibraryRepository().paginator(
-        customPath: url, perPage: 10, query: {'sort': '-updated_at'});
+        customPath: url, perPage: 10, query: Query(sorts: ['-updated_at']));
     scroller = addOnScollFetchMore(() {
       fetchModels(false);
     });

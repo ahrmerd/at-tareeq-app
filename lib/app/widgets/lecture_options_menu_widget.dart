@@ -1,4 +1,3 @@
-
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/models/library_item.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
@@ -206,13 +205,20 @@ class _LectureOptionsMenuWidgetState extends State<LectureOptionsMenuWidget> {
                         // AudioPlayerOptionsMenuItem(
                         //     icon: Icons.skip_next, text: 'Play Next'),
                         AudioPlayerOptionsMenuItem(
-                            icon: Icons.playlist_add, text: 'Add to Playlist', onTap: () {
-                              closeMenu();
-                              showDialog(context: context, builder: (_){
-                                return PlaylistsDialogue(lecture: widget.lecture,);
-                              });
-                              // Get.showOverlay(asyncFunction: asyncFunction)
-                            },),
+                          icon: Icons.playlist_add,
+                          text: 'Add to Playlist',
+                          onTap: () {
+                            closeMenu();
+                            showDialog(
+                                context: context,
+                                builder: (_) {
+                                  return PlaylistsDialogue(
+                                    lecture: widget.lecture,
+                                  );
+                                });
+                            // Get.showOverlay(asyncFunction: asyncFunction)
+                          },
+                        ),
                         AudioPlayerOptionsMenuItem(
                           icon: Icons.download_rounded,
                           text: 'Download',
@@ -226,15 +232,20 @@ class _LectureOptionsMenuWidgetState extends State<LectureOptionsMenuWidget> {
                           text: 'View Host',
                           onTap: () {
                             Get.toNamed(Routes.USERLECTURES,
-                                arguments: {'user': widget.lecture.user});
+                                arguments: {'userId': widget.lecture.userId});
+                            closeMenu();
                           },
                         ),
 
                         AudioPlayerOptionsMenuItem(
-                            icon: Icons.share_outlined, text: 'Share', onTap: (){
-                              Share.share("check out this amazing lecture, titled '${widget.lecture.title}' by ${widget.lecture.user?.getOrganization()??'unknown individual'}. $appUrl/lectures/${widget.lecture.id}/download2");
-                              closeMenu();
-                            },),
+                          icon: Icons.share_outlined,
+                          text: 'Share',
+                          onTap: () {
+                            Share.share(
+                                "check out this amazing lecture, titled '${widget.lecture.title}' by ${widget.lecture.user?.getOrganization() ?? 'unknown individual'}. $appUrl/lectures/${widget.lecture.id}/download2");
+                            closeMenu();
+                          },
+                        ),
                       ],
                     ),
                   ],

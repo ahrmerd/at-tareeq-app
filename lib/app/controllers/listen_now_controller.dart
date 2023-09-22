@@ -7,6 +7,8 @@ import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
+import '../data/repositories/repository.dart';
+
 class ListenNowController extends GetxController {
   final _status = ProcessingStatus.initial.obs;
   ProcessingStatus get status => _status.value;
@@ -39,16 +41,16 @@ class ListenNowController extends GetxController {
 
   Future<List<Lecture>> getLatestLectures() async {
     return LectureRepository().fetchModels(
-        query: {"sort": "-created_at", "limit": 5, "include": "user"});
+        query: Query(sorts: ["-created_at"], limit: 5, includes: ["user"]));
   }
 
   Future<List<Lecture>> getPopularLectures() {
     return LectureRepository().fetchModels(
-        query: {"sort": "-downloaded", "limit": 5, "include": "user"});
+        query: Query(sorts: ["-downloaded"], limit: 5, includes: ["user"]));
   }
 
   Future<List<Lecture>> getRecommendedLectures() {
     return LectureRepository().fetchModelsFromCustomPath('lectures/recommended',
-        query: {"limit": 5, "include": "user"});
+        query: Query(limit: 5, includes: ["user"]));
   }
 }

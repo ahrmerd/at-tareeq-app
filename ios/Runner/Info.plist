@@ -63,6 +63,11 @@
 		<true />
 		<key>UIFileSharingEnabled</key>
 		<true />
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true />
+		</dict>
 		<key>NSAppleMusicUsageDescription</key>
 		<string>We need access to your audio library to upload and play audio files for lectures and
 			content.</string>

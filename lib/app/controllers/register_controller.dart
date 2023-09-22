@@ -65,7 +65,7 @@ class RegisterController extends GetxController {
             validator: FormBuilderValidators.compose([
               if (isHost) FormBuilderValidators.required(),
             ])),
-      FormItem('phone',
+      FormItem('phone_no',
           icon: const Icon(Icons.phone_outlined),
           type: TextInputType.phone,
           controller: _phoneController,

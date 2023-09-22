@@ -6,6 +6,7 @@ import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/downloader.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
 class DownloadController extends GetxController with StateMixin<List<File>> {
   final audioPlayer = Dependancies.audioPlayer();
@@ -14,7 +15,6 @@ class DownloadController extends GetxController with StateMixin<List<File>> {
   bool get isPlaying => playingStatus.value == PlayingStatus.playing;
   final Rx<int?> currPlayingIndex = Rxn(null);
   Rx<PlayingStatus> playingStatus = PlayingStatus.stopped.obs;
-
 
   final RxBool isReady = false.obs;
   final RxList<File> downloads = <File>[].obs;
@@ -28,13 +28,13 @@ class DownloadController extends GetxController with StateMixin<List<File>> {
         change(lDownloads, status: RxStatus.empty());
       } else {
         downloads.addAll(lDownloads);
-        currPlayingIndex.value=0;
+        currPlayingIndex.value = 0;
         change(lDownloads, status: RxStatus.success());
       }
     } on Exception catch (e) {
-        Dependancies.errorService
-            .addStateMixinError(stateChanger: change as dynamic, exception: e);
-      }
+      Dependancies.errorService
+          .addStateMixinError(stateChanger: change as dynamic, exception: e);
+    }
     downloads.refresh();
   }
 
@@ -46,19 +46,18 @@ class DownloadController extends GetxController with StateMixin<List<File>> {
       playNext();
     });
     audioPlayer.onPlayerStateChanged.listen((state) {
-      switch(state){
-        
+      switch (state) {
         case PlayerState.stopped:
-        playingStatus.value =PlayingStatus.stopped;
+          playingStatus.value = PlayingStatus.stopped;
           break;
         case PlayerState.playing:
-        playingStatus.value =PlayingStatus.playing;
+          playingStatus.value = PlayingStatus.playing;
           break;
         case PlayerState.paused:
-        playingStatus.value =PlayingStatus.paused;
+          playingStatus.value = PlayingStatus.paused;
           break;
         case PlayerState.completed:
-        playingStatus.value =PlayingStatus.stopped;
+          playingStatus.value = PlayingStatus.stopped;
           break;
       }
     });
@@ -85,7 +84,7 @@ class DownloadController extends GetxController with StateMixin<List<File>> {
     }
     await setAudio(nextindex);
     await audioPlayer.resume();
-      playingStatus.value = PlayingStatus.playing;
+    playingStatus.value = PlayingStatus.playing;
     // isPlaying.value = true;
   }
 
@@ -96,7 +95,7 @@ class DownloadController extends GetxController with StateMixin<List<File>> {
     }
     await setAudio(previndex);
     await audioPlayer.resume();
-      playingStatus.value = PlayingStatus.playing;
+    playingStatus.value = PlayingStatus.playing;
 
     // isPlaying.value = true;
   }
@@ -124,9 +123,9 @@ class DownloadController extends GetxController with StateMixin<List<File>> {
   Future pauseAudio() async {
     await audioPlayer.pause();
     playingStatus.value = PlayingStatus.paused;
-    }
+  }
 
-  Future play(int i) async{
+  Future play(int i) async {
     await setAudio(i);
     playAudio();
   }
@@ -134,5 +133,9 @@ class DownloadController extends GetxController with StateMixin<List<File>> {
   deleteItem(File item) {
     item.delete();
     fetchDownloads();
+  }
+
+  void share(File item) {
+    Share.shareXFiles([XFile(item.path)]);
   }
 }

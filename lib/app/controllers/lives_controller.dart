@@ -56,7 +56,7 @@ class LivesController extends GetxController
     //     break;
     // }
     paginator = LivestreamRepository().paginator(
-        perPage: 10, query: {'include': 'user', 'sort': '-updated_at'});
+        perPage: 10, query: Query(includes: ['user'], sorts: ['-updated_at']));
     scroller = addOnScollFetchMore(() {
       fetchModels(false);
     });

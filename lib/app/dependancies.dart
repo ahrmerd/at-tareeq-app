@@ -1,5 +1,6 @@
 import 'package:at_tareeq/app/data/services/auth_service.dart';
 import 'package:at_tareeq/app/data/services/error_service.dart';
+import 'package:at_tareeq/core/utils/downloader.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ class Dependancies {
   static Future<void> init() async {
     await SharedPreferencesHelper.init();
     Get.put(ApiClient());
+    await Downloader.init();
     await Get.putAsync(() => AuthService().init());
     Get.put(AudioPlayer());
     Get.put(ErrorService());

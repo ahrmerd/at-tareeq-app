@@ -7,7 +7,7 @@ extension StringCasingExtension on String {
     if (pattern.isEmpty) return this;
     var source = this;
     while (source.endsWith(pattern)) {
-      source.substring(0, source.length - pattern.length);
+      source = source.substring(0, source.length - pattern.length);
     }
     return source;
   }

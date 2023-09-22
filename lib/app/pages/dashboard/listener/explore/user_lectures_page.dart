@@ -18,7 +18,9 @@ class UserLecturesPage extends GetView<UserLecturesController> {
   @override
   Widget build(BuildContext context) {
     return HasLecturesLayout(
-        hasInfoWidget: UserInfoWidget(user: controller.user),
+        hasInfoWidget: Obx(() => controller.user.value != null
+            ? UserInfoWidget(user: controller.user.value!)
+            : CircularProgressIndicator()),
         controller: controller);
   }
 }

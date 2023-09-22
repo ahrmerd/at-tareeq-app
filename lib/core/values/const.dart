@@ -1,6 +1,8 @@
 // const apiUrl = "http://192.168.13.251:8001/api/v1/";
 const apiUrl = "$appUrl/api/v1/";
-const appUrl = "http://127.0.0.1:8000";
+
+// const appUrl = "https://at-tareeq.fly.dev";
+const appUrl = "http://192.168.130.251:8000";
 // const url = "https://at-tareeq.fly.dev";
 const defaultUpdateUrl = "https://at-tareeq.fly.dev";
 // const apiUrl = "https://staging.at-tareeq.org/api/v1/";

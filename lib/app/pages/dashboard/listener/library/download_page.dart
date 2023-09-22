@@ -90,6 +90,23 @@ class DownloadsPage extends GetView<DownloadController> {
                               const HorizontalSpace(9),
                               GestureDetector(
                                 onTap: () {
+                                  controller.share(item);
+                                  // controller.deleteItem(item);
+                                },
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: const BoxDecoration(
+                                        color: CustomColor.appBlue,
+                                        shape: BoxShape.circle),
+                                    child: const Icon(
+                                      Icons.share,
+                                      color: Colors.white,
+                                    )),
+                              ),
+                              const HorizontalSpace(9),
+                              GestureDetector(
+                                onTap: () {
                                   controller.deleteItem(item);
                                 },
                                 child: Container(
@@ -103,6 +120,7 @@ class DownloadsPage extends GetView<DownloadController> {
                                       color: Colors.white,
                                     )),
                               ),
+
                               // LectureOptionsMenuWidget(
                               //   lecture: item,
                               //   // controller: controller,

@@ -2,6 +2,7 @@ import 'package:at_tareeq/app/controllers/playlist_controller.dart';
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/models/playlist.dart';
 import 'package:at_tareeq/app/data/repositories/playlist_repository.dart';
+import 'package:at_tareeq/app/data/repositories/repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/app/pages/pagination_builder.dart';
 import 'package:at_tareeq/app/widgets/deletion_dialogue.dart';
@@ -30,7 +31,7 @@ class _PlaylistsPageState extends State<PlaylistsPage> {
       appBar: AppBar(title: const Text('Playlists')),
       body: PaginationBuilder(
         paginator: PlaylistRepository()
-            .paginator(perPage: 10, query: {"include": 'lectures'}),
+            .paginator(perPage: 10, query: Query(includes: ['lectures'])),
         onSuccess: (scrollController, data, isFetchingMore, refresh) {
           triggerRefresh = refresh;
           return Column(
@@ -120,7 +121,7 @@ class _PlaylistsPageState extends State<PlaylistsPage> {
     Get.dialog(
       DelectionConfirmationDialogue(
           message:
-              "Are You sure you want to detach the lecture '${lecture.title}'. from Your Playlist.",
+              "Are You sure you want to remove the lecture '${lecture.title}'. from Your Playlist.",
           onConfirmDelete: () async {
             await detachLectureFromPlaylsit(
                 lectureId: lecture.id, playlistId: playlist.id);

@@ -2,6 +2,7 @@ import 'package:at_tareeq/app/controllers/add_lecture_controller.dart';
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/repositories/lecture_repository.dart';
+import 'package:at_tareeq/app/data/repositories/repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/logger.dart';
@@ -70,7 +71,7 @@ class HostHomeController extends GetxController with StateMixin<List<Lecture>> {
       change(null, status: RxStatus.loading());
       List<Lecture> models = [];
       models = await LectureRepository()
-          .fetchModelsFromCustomPath('lectures/user', query: {'limit': 5});
+          .fetchModelsFromCustomPath('lectures/user', query: Query(limit: 5));
       if (models.isEmpty) {
         change([], status: RxStatus.empty());
       } else {

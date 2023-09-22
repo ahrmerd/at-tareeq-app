@@ -14,7 +14,8 @@ import 'package:get/get.dart';
 class UserLecturesController extends GetxController
     with StateMixin<List<Lecture>>
     implements HasLecturesController {
-  User user = Get.arguments['user'];
+  Rx<User?> user = Rxn(Get.arguments['user']);
+  int? userId = Get.arguments['userId'];
   // User user = User(id: 1, name: '3', email: 'ee', type: 5, thumb: 's');
 
   @override
@@ -32,11 +33,18 @@ class UserLecturesController extends GetxController
 
   // final ScrollController scroller = ScrollController();
 
+  Future setUser() async {
+    final userJson = await Dependancies.http.get('users/$userId');
+    user.value = User.fromJson(userJson.data['data']);
+  }
+
   @override
   void onInit() {
-    paginator = LectureRepository().paginator(perPage: 10, query: {
-      'filter': {'user_id': user.id}
-    });
+    if (user.value == null) {
+      setUser();
+    }
+    paginator = LectureRepository()
+        .paginator(perPage: 10, query: Query(filters: {'user_id': userId}));
     // scroller?.addListener(() {
     //   print('ssd');
     // });
