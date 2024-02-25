@@ -1,7 +1,7 @@
 import 'package:at_tareeq/app/data/models/pagination_info.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 enum Sorts { asc, desc }
 
@@ -251,7 +251,9 @@ abstract class Repository<T> {
     if (customTransformer != null) {
       return customTransformer(data);
     }
-    print(data);
+    if (kDebugMode) {
+      print(data);
+    }
     return transformModels(data);
   }
 }

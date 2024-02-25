@@ -4,7 +4,7 @@ import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
-import 'package:dio/dio.dart' as dioLib;
+import 'package:dio/dio.dart' as dio;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -94,8 +94,8 @@ class _UploadProfilePictureWidgetState
         setState(() {
           status = ProcessingStatus.loading;
         });
-        final formFile = await dioLib.MultipartFile.fromFile(file!.path);
-        dioLib.FormData formData = dioLib.FormData.fromMap({'image': formFile});
+        final formFile = await dio.MultipartFile.fromFile(file!.path);
+        dio.FormData formData = dio.FormData.fromMap({'image': formFile});
         await Dependancies.http.post('profile-image', data: formData);
         setState(() {
           status = ProcessingStatus.success;

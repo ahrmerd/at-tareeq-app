@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class LiveAudio extends StatefulWidget {
   const LiveAudio({
-    Key? key,
+    super.key,
     // required this.bottomWidget,
-  }) : super(key: key);
+  });
 
   // final Widget? bottomWidget;
 

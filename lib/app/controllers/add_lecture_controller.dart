@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/models/section_or_interest.dart';
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/repositories/section_interest_repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/app/widgets/playbutton.dart';
@@ -10,7 +9,8 @@ import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:audioplayers/audioplayers.dart';
 // import 'package:audioplayers/audioplayers.dart';
-import 'package:dio/dio.dart' as Dio;
+import 'package:dio/dio.dart' as dio;
+import 'package:flutter/foundation.dart';
 // import 'package:flutter_sound/flutter_sound.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -25,7 +25,7 @@ class AddLectureController extends GetxController
   Rx<PlayingStatus> playingStatus = PlayingStatus.stopped.obs;
   String recordingsPath = '';
   String filePath = '';
-  final recorder = Record();
+  final recorder = AudioRecorder();
   final player = Dependancies.audioPlayer();
 
   RxBool recorderReady = false.obs;
@@ -88,7 +88,7 @@ class AddLectureController extends GetxController
     // await recorder.start(path: filePath);
     // recordingStatus.value = RecordingStatus.recording;
     if (await recorder.hasPermission() && recorderReady.value) {
-      await recorder.start(path: filePath);
+      await recorder.start(const RecordConfig(), path: filePath);
       recordingStatus.value = RecordingStatus.recording;
     } else {
       Get.defaultDialog(
@@ -97,8 +97,10 @@ class AddLectureController extends GetxController
               'please accept all permissions requests; it you have previously denied the permissions. go to your device settings. check the app settings and provide alll the required permissions',
           onConfirm: () => Get.back());
       requestPermissions();
-      print("mic ${(await Permission.microphone.request())}");
-      print("storage ${(await Permission.storage.request())}");
+      if (kDebugMode) {
+        print("mic ${(await Permission.microphone.request())}");
+        print("storage ${(await Permission.storage.request())}");
+      }
 
       // Get.showSnackbar(GetSnackBar(
       // title: 'unable to start recording',
@@ -209,8 +211,8 @@ class AddLectureController extends GetxController
       try {
         change([], status: RxStatus.loading());
         // print('we reach here');
-        final formFile = await Dio.MultipartFile.fromFile(file.value!.path);
-        Dio.FormData formData = Dio.FormData.fromMap(
+        final formFile = await dio.MultipartFile.fromFile(file.value!.path);
+        dio.FormData formData = dio.FormData.fromMap(
             {'title': title, 'interest_id': sectionId, 'file': formFile});
         await Dependancies.http.post('lectures', data: formData);
         Get.back();

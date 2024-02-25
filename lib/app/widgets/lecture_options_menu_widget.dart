@@ -9,6 +9,7 @@ import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:at_tareeq/core/utils/downloader.dart';
 import 'package:at_tareeq/core/values/const.dart';
 import 'package:at_tareeq/routes/pages.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:get/get.dart';
@@ -146,7 +147,9 @@ class _LectureOptionsMenuWidgetState extends State<LectureOptionsMenuWidget> {
                           onPressed: () {
                             final libraryItemId = SharedPreferencesHelper
                                 .checkIfLectureInFavorites(widget.lecture);
-                            print(libraryItemId ?? 'nill');
+                            if (kDebugMode) {
+                              print(libraryItemId ?? 'nill');
+                            }
                             if (libraryItemId != null) {
                               removeFromFavorite(LibraryItem.fromLecture(
                                   int.parse(libraryItemId), widget.lecture));
@@ -259,11 +262,11 @@ class _LectureOptionsMenuWidgetState extends State<LectureOptionsMenuWidget> {
 
 class AudioPlayerOptionsMenuItem extends StatelessWidget {
   const AudioPlayerOptionsMenuItem({
-    Key? key,
+    super.key,
     required this.icon,
     required this.text,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final void Function()? onTap;
   final IconData icon;

@@ -1,15 +1,13 @@
-import 'package:at_tareeq/app/controllers/host_controller.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/host_home.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/host_library.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/host_profile.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 // import 'host_home2.dart';
 
 class HostDashboard extends StatefulWidget {
-  const HostDashboard({Key? key}) : super(key: key);
+  const HostDashboard({super.key});
 
   @override
   State<HostDashboard> createState() => _HostDashboardState();

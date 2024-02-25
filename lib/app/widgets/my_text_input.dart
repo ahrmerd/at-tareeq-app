@@ -3,12 +3,11 @@ import 'package:get/get.dart';
 
 class MyTextInput extends StatelessWidget {
   const MyTextInput(
-      {Key? key,
+      {super.key,
       required this.controller,
       required this.hintText,
       this.icon,
-      this.obscureText = false})
-      : super(key: key);
+      this.obscureText = false});
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;

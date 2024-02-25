@@ -110,11 +110,9 @@ class FileControls extends StatelessWidget {
                   ],
                 ),
               )
-            : Container(
-                child: Text(controller.mode == AddLectureMode.uploading
-                    ? 'No File Selected'
-                    : 'No Recordings Yet'),
-              );
+            : Text(controller.mode == AddLectureMode.uploading
+                ? 'No File Selected'
+                : 'No Recordings Yet');
       }),
     );
   }
@@ -353,7 +351,7 @@ class RecorderWidget extends StatelessWidget {
                 bottom: 10,
                 child: AvatarGlow(
                   glowColor: Colors.redAccent,
-                  endRadius: 20,
+                  glowBorderRadius: BorderRadius.circular(20),
                   child: Container(
                     // height: 30,
                     decoration: const BoxDecoration(shape: BoxShape.circle),

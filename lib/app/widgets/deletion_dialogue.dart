@@ -28,7 +28,7 @@ class _DelectionConfirmationDialogueState<T>
   Widget build(BuildContext context) {
     switch (_status) {
       case ProcessingStatus.loading:
-        return AlertDialog(
+        return const AlertDialog(
           content: Center(child: ColorLoader()),
         );
       case ProcessingStatus.error:
@@ -42,13 +42,13 @@ class _DelectionConfirmationDialogueState<T>
                 child: const Text("Close"),
               ),
             ],
-            content: ErrorScreen(
+            content: const ErrorScreen(
               messsage: "Couldnt perfrom. refresh the page before trying again",
             ));
       case ProcessingStatus.initial:
       case ProcessingStatus.success:
         return AlertDialog(
-          icon: Icon(
+          icon: const Icon(
             Icons.delete,
             color: Colors.red,
           ),

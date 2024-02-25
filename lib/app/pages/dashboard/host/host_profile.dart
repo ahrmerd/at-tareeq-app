@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HostProfile extends StatefulWidget {
-  const HostProfile({Key? key}) : super(key: key);
+  const HostProfile({super.key});
 
   @override
   State<HostProfile> createState() => _HostProfileState();

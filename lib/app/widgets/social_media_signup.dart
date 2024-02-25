@@ -6,7 +6,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 class SocialMediaSignup extends StatelessWidget {
   final VoidCallback? onGoogleSignup;
   final VoidCallback? onFacebookSignup;
-  const SocialMediaSignup({super.key, this.onGoogleSignup, this.onFacebookSignup});
+  const SocialMediaSignup(
+      {super.key, this.onGoogleSignup, this.onFacebookSignup});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +61,7 @@ class SocialMediaSignup extends StatelessWidget {
             if (onGoogleSignup != null)
               GestureDetector(
                 onTap: onGoogleSignup,
-                child: const Icon(
+                child: Icon(
                   MdiIcons.google,
                   size: 50,
                 ),

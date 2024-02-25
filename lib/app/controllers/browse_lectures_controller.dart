@@ -2,13 +2,10 @@ import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/models/section_or_interest.dart';
 import 'package:at_tareeq/app/data/models/user.dart';
 import 'package:at_tareeq/app/data/models/user_type.dart';
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/repositories/repository.dart';
 import 'package:at_tareeq/app/data/repositories/section_interest_repository.dart';
 import 'package:at_tareeq/app/data/repositories/user_organization_repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
-import 'package:at_tareeq/core/utils/dialogues.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

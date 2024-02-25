@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListenerProfile extends StatefulWidget {
-  const ListenerProfile({Key? key}) : super(key: key);
+  const ListenerProfile({super.key});
 
   @override
   State<ListenerProfile> createState() => _ListenerProfileState();

@@ -5,7 +5,7 @@ import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class PrivacyPage extends StatefulWidget {
-  const PrivacyPage({Key? key}) : super(key: key);
+  const PrivacyPage({super.key});
 
   @override
   State<PrivacyPage> createState() => _PrivacyPageState();

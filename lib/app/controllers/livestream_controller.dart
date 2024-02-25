@@ -1,21 +1,16 @@
-import 'dart:io';
-
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/models/livestream.dart';
 import 'package:at_tareeq/app/data/enums/livestream_status.dart';
 import 'package:at_tareeq/app/data/models/live_messages.dart';
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/data/repositories/live_message_repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/logger.dart';
 import 'package:at_tareeq/core/values/const.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:ably_flutter/ably_flutter.dart' as ably;
 
 class Events {
@@ -261,8 +256,6 @@ abstract class LiveStreamController extends GetxController {
           duration: .5.seconds,
           curve: Curves.easeIn);
     }
-    final res = await Dependancies.http.post('livemessages',
-        data: {"message": strMsg, "livestream_id": livestream.id});
     // print(res);
     messageFieldControlller.clear();
     isSending.value = false;
@@ -297,14 +290,14 @@ abstract class LiveStreamController extends GetxController {
     }
   }
 
-  void addToMessages(Map data) {
-    // print(data.runtimeType);
-    final messageMap = Map<String, dynamic>.from(data['message']);
-    print(messageMap);
-    final message = LiveMessage.fromJson(messageMap);
-    // print(message.toJson());
-    // print( as Map));
-    // print(event.name);
-    // print(event.data);
-  }
+  // void addToMessages(Map data) {
+  //   // print(data.runtimeType);
+  //   final messageMap = Map<String, dynamic>.from(data['message']);
+  //   print(messageMap);
+  //   final message = LiveMessage.fromJson(messageMap);
+  //   // print(message.toJson());
+  //   // print( as Map));
+  //   // print(event.name);
+  //   // print(event.data);
+  // }
 }

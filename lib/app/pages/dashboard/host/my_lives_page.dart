@@ -7,7 +7,6 @@ import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../data/models/lecture.dart';
 
 class MyLivesPage extends StatelessWidget {
   const MyLivesPage({super.key});
@@ -25,7 +24,7 @@ class MyLivesPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       controller: scrollController,
                       itemCount: data.length,
                       itemBuilder: (_, index) {
@@ -45,7 +44,7 @@ class MyLivesPage extends StatelessWidget {
                         );
                       }),
                 ),
-                if (isFetchingMore) CircularProgressIndicator(),
+                if (isFetchingMore) const CircularProgressIndicator(),
               ],
             );
           },

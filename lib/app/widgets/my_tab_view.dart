@@ -12,8 +12,7 @@ class MyTabView extends StatefulWidget {
   final List<MyTab> tabs;
   final TabController? tabController;
 
-  const MyTabView({Key? key, required this.tabs, this.tabController})
-      : super(key: key);
+  const MyTabView({super.key, required this.tabs, this.tabController});
 
   @override
   State<MyTabView> createState() => _MyTabViewState();

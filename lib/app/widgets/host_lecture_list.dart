@@ -1,18 +1,10 @@
-import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/repositories/lecture_repository.dart';
-import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/lecture_player.dart';
-import 'package:at_tareeq/app/widgets/color_loader.dart';
 import 'package:at_tareeq/app/widgets/deletion_dialogue.dart';
 import 'package:at_tareeq/app/widgets/host_lecture_item.dart';
 import 'package:at_tareeq/app/widgets/playbutton.dart';
-import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
-import 'package:at_tareeq/app/widgets/widgets.dart';
-import 'package:at_tareeq/core/styles/text_styles.dart';
-import 'package:at_tareeq/core/utils/dialogues.dart';
-import 'package:at_tareeq/core/utils/helpers.dart';
 // import 'package:at_tareeq/core/themes/colors.dart';
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +67,7 @@ class _HostLecturesListState extends State<HostLecturesList> {
           child: ListView.builder(
               // shrinkWrap: true,
               controller: widget.scrollController,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               // physics: NeverScrollableScrollPhysics(),
               itemCount: widget.lectures.length,
               itemBuilder: (_, i) {
@@ -153,7 +145,7 @@ class _HostLecturesListState extends State<HostLecturesList> {
               }),
         ),
         if (widget.isLoadingMore)
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(8),
             child: Center(
               child: CircularProgressIndicator(),

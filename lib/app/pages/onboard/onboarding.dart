@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Onboarding extends StatelessWidget {
-  Onboarding({Key? key}) : super(key: key);
+  Onboarding({super.key});
   final _controller = OnBoardingController();
   @override
   Widget build(BuildContext context) {
@@ -222,7 +222,7 @@ class PageViewBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView.builder(
         controller: _controller.pageController,
-        onPageChanged: _controller.onPageIndex,
+        onPageChanged: _controller.onPageIndex.call,
         itemCount: _controller.onBoardingPages.length,
         itemBuilder: (context, index) {
           OnBoardingPageItem pageItem = _controller.onBoardingPages[index];

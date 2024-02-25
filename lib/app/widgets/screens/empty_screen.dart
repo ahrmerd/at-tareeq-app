@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class EmptyScreen extends StatelessWidget {
   final String? message;
   final VoidCallback? onRetry;
-  const EmptyScreen({Key? key, this.message, this.onRetry}) : super(key: key);
+  const EmptyScreen({super.key, this.message, this.onRetry});
 
   @override
   Widget build(BuildContext context) {

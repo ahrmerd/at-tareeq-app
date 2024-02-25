@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListenerDashboard extends GetView<ListenerController> {
-  const ListenerDashboard({Key? key}) : super(key: key);
+  const ListenerDashboard({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

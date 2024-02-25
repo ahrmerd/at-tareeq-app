@@ -91,7 +91,7 @@ class _VerticalLectureListViewState extends State<VerticalLectureListView> {
               // primary: widget.isPrimary,
               // shrinkWrap: true,
               controller: widget.scrollController,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               // physics: NeverScrollableScrollPhysics(),
               itemCount: widget.lectures.length,
               itemBuilder: (_, i) {
@@ -184,7 +184,7 @@ class _VerticalLectureListViewState extends State<VerticalLectureListView> {
                                 width: 9,
                               ),
                               widget.extraLectureItemWidget?.call(item) ??
-                                  SizedBox(),
+                                  const SizedBox(),
                               LectureOptionsMenuWidget(
                                 lecture: item,
                                 // controller: controller,
@@ -215,8 +215,8 @@ class _VerticalLectureListViewState extends State<VerticalLectureListView> {
               }),
         ),
         if (widget.isLoadingMore)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
             child: CircularProgressIndicator(),
           )
         // PortalTarget(

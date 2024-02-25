@@ -2,18 +2,16 @@ import 'dart:io';
 
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
-import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/extentions/string_extensions.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:at_tareeq/core/values/const.dart';
 // import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:background_downloader/background_downloader.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:media_store_plus/media_store_platform_interface.dart';
 import 'package:media_store_plus/media_store_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:saf/saf.dart';
 
 class Downloader2 {
   static final mediaStorePlugin = MediaStore();
@@ -99,6 +97,9 @@ class Downloader2 {
       // );
       final successfullyEnqueued = await FileDownloader().enqueue(downloadTask);
       Get.snackbar('Progress', "Your dowmload is starting");
+      if (kDebugMode) {
+        print(successfullyEnqueued);
+      }
       // Dependancies.http.download(urlPath, savePath,
       //     onReceiveProgress: ((count, total) => {
       //           if (count >= total)
@@ -132,7 +133,9 @@ class Downloader2 {
 
   static Future<bool> checkIfFileExist(Lecture lecture) async {
     // final dir = Directory(await getDownloadsPath());
-    print(await completeLecturePath(lecture));
+    if (kDebugMode) {
+      print(await completeLecturePath(lecture));
+    }
     final fileExist = File(await completeLecturePath(lecture)).existsSync();
     if (fileExist) {
       return true;

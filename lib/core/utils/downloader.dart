@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
-import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/extentions/string_extensions.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:at_tareeq/core/values/const.dart';
 // import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:background_downloader/background_downloader.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -64,7 +64,9 @@ class Downloader {
   static Future<void> ensureFolderPermission() async {
     Saf saf = Saf(localDownloadsPath);
     // await saf.getDirectoryPermission();
-    print((await saf.getFilesPath()));
+    if (kDebugMode) {
+      print((await saf.getFilesPath()));
+    }
   }
 
   static downloadLecture(Lecture lecture) async {
@@ -107,6 +109,9 @@ class Downloader {
       //       true, // click on notification to open downloaded file (for Android)
       // );
       final successfullyEnqueued = await FileDownloader().enqueue(downloadTask);
+      if (kDebugMode) {
+        print(successfullyEnqueued);
+      }
       Get.snackbar('Progress', "Your dowmload is starting");
       // Dependancies.http.download(urlPath, savePath,
       //     onReceiveProgress: ((count, total) => {
@@ -141,7 +146,9 @@ class Downloader {
 
   static Future<bool> checkIfFileExist(Lecture lecture) async {
     // final dir = Directory(await getDownloadsPath());
-    print(await completeLecturePath(lecture));
+    if (kDebugMode) {
+      print(await completeLecturePath(lecture));
+    }
     final fileExist = File(await completeLecturePath(lecture)).existsSync();
     if (fileExist) {
       return true;

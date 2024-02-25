@@ -5,6 +5,7 @@ import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
 import 'package:at_tareeq/app/widgets/vertical_lecture_list_view.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,9 +68,11 @@ class HasLecturesLayout extends StatelessWidget {
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: MyButton(
-                child: Icon(Icons.arrow_back_rounded),
+                child: const Icon(Icons.arrow_back_rounded),
                 onTap: () {
-                  print('pressed');
+                  if (kDebugMode) {
+                    print('pressed');
+                  }
                   Get.back();
                 },
               )),

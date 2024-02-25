@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatelessWidget {
   final String? messsage;
-  const SuccessScreen({Key? key, this.messsage}) : super(key: key);
+  const SuccessScreen({super.key, this.messsage});
 
   @override
   Widget build(BuildContext context) {

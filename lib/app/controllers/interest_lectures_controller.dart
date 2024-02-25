@@ -1,13 +1,10 @@
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/models/section_or_interest.dart';
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/repositories/lecture_repository.dart';
 import 'package:at_tareeq/app/data/repositories/repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/explore/has_lectures_layout.dart';
-import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

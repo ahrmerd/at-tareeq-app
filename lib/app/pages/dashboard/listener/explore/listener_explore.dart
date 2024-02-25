@@ -33,7 +33,7 @@ class ListenerExplore extends StatelessWidget {
 
 
 class CustomSearch extends StatelessWidget {
-  const CustomSearch({Key? key}) : super(key: key);
+  const CustomSearch({super.key});
 
   @override
   Widget build(BuildContext context) {

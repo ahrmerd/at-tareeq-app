@@ -5,6 +5,7 @@ import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -127,7 +128,9 @@ class AuthService extends GetxService {
   }
 
   Future loginLocally(dynamic data) async {
-    print(data);
+    if (kDebugMode) {
+      print(data);
+    }
     Map<String, dynamic> userdetails = data['data'];
     var token = data['token'];
 

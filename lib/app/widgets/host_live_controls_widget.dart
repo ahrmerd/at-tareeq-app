@@ -24,7 +24,8 @@ class HostLiveControlsWidget extends StatelessWidget {
                 children: [
                   AvatarGlow(
                     glowColor: Colors.redAccent,
-                    endRadius: controller.isLive.value ? 30 : 20,
+
+                    // endRadius: controller.isLive.value ? 30 : 20,
                     child: CircleAvatar(
                       backgroundColor:
                           controller.isLive.value ? Colors.red : Colors.grey,

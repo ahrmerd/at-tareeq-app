@@ -1,12 +1,18 @@
+import 'package:flutter/foundation.dart';
+
 void main() {
   String inputString = "https://example.com/";
 
 // Remove trailing '/'
   String resultString = inputString.replaceAll(RegExp(r'\/$'), '');
 
-  print(resultString);
+  if (kDebugMode) {
+    print(resultString);
+  }
 
-  print(removeTrailing(inputString, '/'));
+  if (kDebugMode) {
+    print(removeTrailing(inputString, '/'));
+  }
 
 //   var myColor = Color(0xff2c195c);
 //   print ('red: ${myColor.red} green: ${myColor.green} blue: ${myColor.blue}');

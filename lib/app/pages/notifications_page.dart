@@ -4,7 +4,7 @@ import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsPage extends StatefulWidget {
-  const NotificationsPage({Key? key}) : super(key: key);
+  const NotificationsPage({super.key});
 
   @override
   State<NotificationsPage> createState() => _NotificationsPageState();
@@ -42,10 +42,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
 
 class NotificationItem extends StatelessWidget {
-  const NotificationItem({Key? key,
+  const NotificationItem({super.key,
     required this.text,
     this.fontSize = 16,
-  }) : super(key: key);
+  });
 
   final String text;
   final double fontSize;

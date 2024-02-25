@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/app/widgets/playbutton.dart';
-import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/downloader.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
@@ -59,6 +58,8 @@ class DownloadController extends GetxController with StateMixin<List<File>> {
         case PlayerState.completed:
           playingStatus.value = PlayingStatus.stopped;
           break;
+        case PlayerState.disposed:
+          playingStatus.value = PlayingStatus.stopped;
       }
     });
     audioPlayer.onDurationChanged.listen((d) {

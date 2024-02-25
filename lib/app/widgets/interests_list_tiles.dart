@@ -13,14 +13,14 @@ class InterestsListTiles extends StatelessWidget {
   // final bool usePagination;
 
   const InterestsListTiles({
-    Key? key,
+    super.key,
     required this.label,
     required this.interests,
     required this.onTap,
     this.scrollController,
     this.isLoadingMore = false,
     // this.usePagination = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class InterestsListTiles extends StatelessWidget {
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: interests.length,
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       controller: scrollController,
                       itemBuilder: (_, i) {
                         final interest = interests[i];
@@ -78,8 +78,8 @@ class InterestsListTiles extends StatelessWidget {
                       }),
                 ),
                 if (isLoadingMore)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Center(child: CircularProgressIndicator()),
                   )
               ],

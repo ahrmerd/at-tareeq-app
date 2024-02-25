@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DownloadPlayerPage extends GetView<DownloadController> {
-  const DownloadPlayerPage ({super.key});
+  const DownloadPlayerPage({super.key});
   // final DownloadController controller = Get.find();
 
   @override
@@ -28,152 +28,149 @@ class DownloadPlayerPage extends GetView<DownloadController> {
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Obx(() {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          'assets/pic_two.png',
-                          // useAppRequest: false,
-                          // path: widget.lecture.thumb,
-                          height: 350,
-                          fit: BoxFit.cover,
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.asset(
+                        'assets/pic_two.png',
+                        // useAppRequest: false,
+                        // path: widget.lecture.thumb,
+                        height: 350,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const VerticalSpace(32),
+                    Obx(() {
+                      return Row(
+                        children: [
+                          Expanded(
+                              child: BigText(
+                            Downloader.lectureTitleFromFile(
+                                controller.downloads[
+                                    controller.currPlayingIndex.value ?? 0]),
+                            color: Colors.black,
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          )),
+                        ],
+                      );
+                    }),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    // SmallText(widget.lecture.),
+                    Obx(() {
+                      return SliderTheme(
+                        data: const SliderThemeData(
+                          thumbColor: Colors.black,
+                          trackHeight: 2,
+                          thumbShape:
+                              RoundSliderThumbShape(enabledThumbRadius: 6),
                         ),
-                      ),
-                      const VerticalSpace(32),
-                      Obx(() {
-                          return Row(
-                            children: [
-                              
-                              Expanded(
-                                  child: Container(
-                                child: BigText(
-                                  Downloader.lectureTitleFromFile(controller.downloads[controller.currPlayingIndex.value??0]),
-                                  color: Colors.black,
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                              )),
-                              
-                            ],
-                          );
-                        }
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      // SmallText(widget.lecture.),
-                      Obx(() {
-                          return SliderTheme(
-                            data: const SliderThemeData(
-                              thumbColor: Colors.black,
-                              trackHeight: 2,
-                              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
-                            ),
-                            child: Slider(
-                              activeColor: Colors.black,
-                              inactiveColor: Colors.grey,
-                              min: 0,
-                              max: controller.duration.value.inSeconds.toDouble() > 0
-                                  ? controller.duration.value.inSeconds.toDouble()
-                                  : double.infinity,
-                              value: controller.position.value.inSeconds.toDouble(),
-                              onChanged: (value) async {
-                                final position = Duration(seconds: value.toInt());
-                                await controller.audioPlayer.seek(position);
+                        child: Slider(
+                          activeColor: Colors.black,
+                          inactiveColor: Colors.grey,
+                          min: 0,
+                          max: controller.duration.value.inSeconds.toDouble() >
+                                  0
+                              ? controller.duration.value.inSeconds.toDouble()
+                              : double.infinity,
+                          value: controller.position.value.inSeconds.toDouble(),
+                          onChanged: (value) async {
+                            final position = Duration(seconds: value.toInt());
+                            await controller.audioPlayer.seek(position);
 
-                                await controller.audioPlayer.resume();
-                              },
-                            ),
-                          );
-                        }
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(formatDuration(controller.position.value)),
-                            Text(formatDuration(controller.duration.value)),
-                          ],
+                            await controller.audioPlayer.resume();
+                          },
                         ),
-                      ),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      Row(
+                      );
+                    }),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.replay,
-                              color: Colors.black,
-                            ),
-                            iconSize: 38,
-                            onPressed: () {
-                              controller.replayAudio();
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.skip_previous_rounded,
-                              color: Colors.black,
-                            ),
-                            iconSize: 38,
-                            onPressed: () {
-                              controller.playPrev();
-                            },
-                          ),
-                          CircleAvatar(
-                            backgroundColor: Colors.black,
-                            radius: 35,
-                            child: IconButton(
-                              icon: Icon(
-                                controller.isPlaying
-                                    ? Icons.pause_rounded
-                                    : Icons.play_arrow_rounded,
-                                color: Colors.white,
-                              ),
-                              iconSize: 50,
-                              onPressed: () async {
-                                if (controller.isPlaying) {
-                                  controller.pauseAudio();
-                                  // await audioPlayer.pause();
-                                } else {
-                                  controller.playAudio();
-                                  // await audioPlayer.resume();
-                                }
-                              },
-                            ),
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.skip_next_rounded,
-                              color: Colors.black,
-                            ),
-                            iconSize: 38,
-                            onPressed: () {
-                              controller.playNext();
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.stop,
-                              color: Colors.black,
-                            ),
-                            iconSize: 38,
-                            onPressed: () {
-                              controller.stopAudio();
-                            },
-                          ),
+                          Text(formatDuration(controller.position.value)),
+                          Text(formatDuration(controller.duration.value)),
                         ],
                       ),
-                    ],
-                  );
-                }
-              ),
+                    ),
+                    const SizedBox(
+                      height: 32,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.replay,
+                            color: Colors.black,
+                          ),
+                          iconSize: 38,
+                          onPressed: () {
+                            controller.replayAudio();
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.skip_previous_rounded,
+                            color: Colors.black,
+                          ),
+                          iconSize: 38,
+                          onPressed: () {
+                            controller.playPrev();
+                          },
+                        ),
+                        CircleAvatar(
+                          backgroundColor: Colors.black,
+                          radius: 35,
+                          child: IconButton(
+                            icon: Icon(
+                              controller.isPlaying
+                                  ? Icons.pause_rounded
+                                  : Icons.play_arrow_rounded,
+                              color: Colors.white,
+                            ),
+                            iconSize: 50,
+                            onPressed: () async {
+                              if (controller.isPlaying) {
+                                controller.pauseAudio();
+                                // await audioPlayer.pause();
+                              } else {
+                                controller.playAudio();
+                                // await audioPlayer.resume();
+                              }
+                            },
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.skip_next_rounded,
+                            color: Colors.black,
+                          ),
+                          iconSize: 38,
+                          onPressed: () {
+                            controller.playNext();
+                          },
+                        ),
+                        IconButton(
+                          icon: const Icon(
+                            Icons.stop,
+                            color: Colors.black,
+                          ),
+                          iconSize: 38,
+                          onPressed: () {
+                            controller.stopAudio();
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }),
             ),
             // Positioned(
             //   bottom: 0,

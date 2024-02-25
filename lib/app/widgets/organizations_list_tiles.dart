@@ -12,13 +12,13 @@ class OrganizationsListTiles extends StatelessWidget {
   final bool isLoadingMore;
 
   const OrganizationsListTiles({
-    Key? key,
+    super.key,
     required this.label,
     required this.users,
     required this.onTap,
     required this.scrollController,
     this.isLoadingMore = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class OrganizationsListTiles extends StatelessWidget {
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: users.length,
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       controller: scrollController,
                       itemBuilder: (_, i) {
                         final user = users[i];
@@ -78,7 +78,7 @@ class OrganizationsListTiles extends StatelessWidget {
                       }),
                 ),
                 if (isLoadingMore)
-                Padding(
+                const Padding(
                   padding: EdgeInsets.all(8),
                   child: Center(
                     child: CircularProgressIndicator(),

@@ -1,4 +1,3 @@
-import 'package:at_tareeq/app/controllers/playlist_controller.dart';
 import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/models/playlist.dart';
 import 'package:at_tareeq/app/data/repositories/playlist_repository.dart';
@@ -6,9 +5,6 @@ import 'package:at_tareeq/app/data/repositories/repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/app/pages/pagination_builder.dart';
 import 'package:at_tareeq/app/widgets/deletion_dialogue.dart';
-import 'package:at_tareeq/app/widgets/screens/empty_screen.dart';
-import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
-import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
 import 'package:at_tareeq/app/widgets/vertical_lecture_list_view.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
@@ -39,7 +35,7 @@ class _PlaylistsPageState extends State<PlaylistsPage> {
               Expanded(
                   child: ListView.builder(
                       controller: scrollController,
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       itemCount: data.length,
                       itemBuilder: (_, i) {
                         final Playlist playlist = data[i];
@@ -65,7 +61,7 @@ class _PlaylistsPageState extends State<PlaylistsPage> {
                                                     lecture: lect,
                                                     playlist: playlist);
                                               },
-                                              child: Icon(
+                                              child: const Icon(
                                                 Icons.delete_forever_outlined,
                                                 color: Colors.red,
                                               ),
@@ -77,14 +73,14 @@ class _PlaylistsPageState extends State<PlaylistsPage> {
                               subtitle: Text(
                                 "Created: ${formatDateTime(playlist.createdAt)}",
                                 style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
+                                    const TextStyle(color: Colors.grey, fontSize: 12),
                               ),
                               trailing: MyButton(
                                 danger: true,
                                 onTap: () async {
                                   confirmDeletePlaylist(playlist);
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.delete_forever_outlined,
                                   color: Colors.red,
                                 ),
@@ -93,7 +89,7 @@ class _PlaylistsPageState extends State<PlaylistsPage> {
                           ),
                         );
                       })),
-              if (isFetchingMore) CircularProgressIndicator()
+              if (isFetchingMore) const CircularProgressIndicator()
             ],
           );
         },

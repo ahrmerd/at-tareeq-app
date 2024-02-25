@@ -1,11 +1,9 @@
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
-import 'package:at_tareeq/core/values/const.dart';
 import 'package:at_tareeq/routes/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class MaintenanceModePage extends StatefulWidget {
   const MaintenanceModePage({super.key, this.url});
@@ -33,7 +31,7 @@ class _MaintenanceModePageState extends State<MaintenanceModePage> {
           //   color: CustomColor.appPurple,
           //   size: 70,
           // ),
-          VerticalSpace(),
+          const VerticalSpace(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -48,7 +46,7 @@ class _MaintenanceModePageState extends State<MaintenanceModePage> {
                 Get.offNamed(Pages.initial);
               },
               child: const BigText('Recheck', fontSize: 20,)),
-          VerticalSpace(),
+          const VerticalSpace(),
           MyButton(
               color: CustomColor.appPurple,
               onTap: () {

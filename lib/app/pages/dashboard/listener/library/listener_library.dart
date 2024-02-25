@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListenerLibrary extends StatelessWidget {
-  const ListenerLibrary({Key? key}) : super(key: key);
+  const ListenerLibrary({super.key});
 
   @override
   Widget build(BuildContext context) {

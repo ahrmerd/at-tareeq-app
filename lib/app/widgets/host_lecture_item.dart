@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 
 class HostLectureItem extends StatelessWidget {
   const HostLectureItem({
-    Key? key,
+    super.key,
     required this.onTap,
     // required this.onTapMenu,
     required this.lecture,
     required this.popUpActions,
-  }) : super(key: key);
+  });
 
   final Lecture lecture;
 

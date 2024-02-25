@@ -1,13 +1,9 @@
 import 'package:at_tareeq/app/controllers/add_lecture_controller.dart';
 import 'package:at_tareeq/app/data/models/lecture.dart';
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/repositories/lecture_repository.dart';
 import 'package:at_tareeq/app/data/repositories/repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
-import 'package:at_tareeq/core/utils/dialogues.dart';
-import 'package:at_tareeq/core/utils/logger.dart';
 import 'package:at_tareeq/routes/pages.dart';
-import 'package:dio/dio.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

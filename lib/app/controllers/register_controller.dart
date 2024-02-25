@@ -4,14 +4,12 @@ import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/enums/user_type.dart';
 import 'package:at_tareeq/app/data/models/form_item.dart';
 import 'package:at_tareeq/app/data/models/user_type.dart';
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/data/services/auth_service.dart';
 import 'package:at_tareeq/app/dependancies.dart';
 import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
-import 'package:at_tareeq/core/utils/logger.dart';
 import 'package:at_tareeq/routes/pages.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -162,7 +160,9 @@ class RegisterController extends GetxController {
       data['type'] = isHost ? ServerUserTypes.host : ServerUserTypes.listener;
       data['location'] = formKey.currentState?.fields['location']?.value;
       data['device_name'] = await getDeviceName();
-      print(data);
+      if (kDebugMode) {
+        print(data);
+      }
       // return;
       await _authService.registerFromData(data: data);
     } else {

@@ -13,10 +13,9 @@ class HorizontalLectureListTiles extends StatelessWidget {
   final bool isPrimary;
   
   const HorizontalLectureListTiles(
-      {Key? key, required this.label, required this.lectures, 
+      {super.key, required this.label, required this.lectures, 
       this.isPrimary = true,
-      })
-      : super(key: key);
+      });
 
   @override
   Widget build(BuildContext context) {

@@ -34,7 +34,7 @@ class MyButton extends StatelessWidget {
   final bool maxWidth;
   final bool filled;
   const MyButton({
-    Key? key,
+    super.key,
     this.color,
     this.onTap,
     this.bgColor,
@@ -44,7 +44,7 @@ class MyButton extends StatelessWidget {
     this.maxWidth = false,
     this.filled = false,
     // required Null Function() onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +83,7 @@ class MyButton extends StatelessWidget {
 class TitleValue extends StatelessWidget {
   final String title;
   final String value;
-  const TitleValue({Key? key, required this.title, required this.value})
-      : super(key: key);
+  const TitleValue({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +106,13 @@ class TitleValue extends StatelessWidget {
 class BigText extends StatelessWidget {
   const BigText(
     this.text, {
-    Key? key,
+    super.key,
     this.fontSize = 24,
     this.color = CustomColor.appBlue,
     this.textAlign = TextAlign.start,
     this.maxLines,
     this.overflow,
-  }) : super(key: key);
+  });
   final int? maxLines;
   final String text;
   final double fontSize;
@@ -139,16 +138,14 @@ class BigText extends StatelessWidget {
 }
 
 class SmallText extends StatelessWidget {
-  const SmallText(
-    this.text, {
-    Key? key,
-    this.fontSize = 16,
-    this.color = Colors.black,
-    this.textAlign = TextAlign.start,
-    this.maxLines,
-    this.overflow,
-    this.softWrap
-  }) : super(key: key);
+  const SmallText(this.text,
+      {super.key,
+      this.fontSize = 16,
+      this.color = Colors.black,
+      this.textAlign = TextAlign.start,
+      this.maxLines,
+      this.overflow,
+      this.softWrap});
 
   final String text;
   final double fontSize;
@@ -179,12 +176,12 @@ class SmallText extends StatelessWidget {
 
 class CustomIconButton extends StatelessWidget {
   const CustomIconButton({
-    Key? key,
+    super.key,
     required this.text,
     this.icon = Icons.arrow_forward,
     required this.onPressed,
     this.alignment = Alignment.centerLeft,
-  }) : super(key: key);
+  });
 
   final String text;
   final IconData icon;
@@ -209,12 +206,12 @@ class CustomIconButton extends StatelessWidget {
 
 class CustomTextButton extends StatelessWidget {
   const CustomTextButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     this.color = Colors.black,
     this.fontSize = 16,
-  }) : super(key: key);
+  });
 
   final String text;
   final VoidCallback onPressed;

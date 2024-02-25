@@ -2,11 +2,11 @@ import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class MyListTile extends StatelessWidget {
-  const MyListTile({Key? key,
+  const MyListTile({super.key,
     required this.icon,
     required this.text,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final Icon icon;
   final String text;

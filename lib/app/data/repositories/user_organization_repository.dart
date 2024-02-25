@@ -1,4 +1,5 @@
 import 'package:at_tareeq/app/data/models/user.dart';
+import 'package:flutter/foundation.dart';
 
 import 'repository.dart';
 
@@ -8,14 +9,16 @@ class UserOrOrganizationTepository extends Repository<User> {
 
   @override
   User transformModel(data) {
-    print(data);
+    if (kDebugMode) {
+      print(data);
+    }
 
     return User.fromJson(data);
   }
 
   @override
   List<User> transformModels(data) {
-    print(data);
+    // print(data);
     return userListFromJson(data);
   }
 }

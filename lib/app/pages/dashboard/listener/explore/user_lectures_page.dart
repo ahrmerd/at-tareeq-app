@@ -2,10 +2,6 @@ import 'package:at_tareeq/app/controllers/user_lectures_controller.dart';
 import 'package:at_tareeq/app/data/models/user.dart';
 import 'package:at_tareeq/app/pages/dashboard/listener/explore/has_lectures_layout.dart';
 import 'package:at_tareeq/app/widgets/my_network_image.dart';
-import 'package:at_tareeq/app/widgets/screens/empty_screen.dart';
-import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
-import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
-import 'package:at_tareeq/app/widgets/vertical_lecture_list_view.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
 import 'package:at_tareeq/core/styles/text_styles.dart';
 import 'package:at_tareeq/core/themes/colors.dart';
@@ -20,7 +16,7 @@ class UserLecturesPage extends GetView<UserLecturesController> {
     return HasLecturesLayout(
         hasInfoWidget: Obx(() => controller.user.value != null
             ? UserInfoWidget(user: controller.user.value!)
-            : CircularProgressIndicator()),
+            : const CircularProgressIndicator()),
         controller: controller);
   }
 }

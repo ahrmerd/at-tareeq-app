@@ -21,7 +21,7 @@ class LivesPage extends GetView<LivesController> {
                 child: RefreshIndicator(
                   onRefresh: () => controller.fetchModels(true),
                   child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
+                      physics: const BouncingScrollPhysics(),
                       controller: controller.scroller,
                       itemCount: state!.length,
                       itemBuilder: (_, index) {
@@ -44,8 +44,8 @@ class LivesPage extends GetView<LivesController> {
                 ),
               ),
               if (controller.isLoadingMore)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: CircularProgressIndicator(),
                 )
             ],

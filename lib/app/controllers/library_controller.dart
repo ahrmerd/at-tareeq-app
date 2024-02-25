@@ -1,16 +1,11 @@
 import 'package:at_tareeq/app/controllers/pagination_controller.dart';
 import 'package:at_tareeq/app/data/enums/library_type.dart';
-import 'package:at_tareeq/app/data/models/lecture.dart';
 import 'package:at_tareeq/app/data/models/library_item.dart';
-import 'package:at_tareeq/app/data/providers/api/api_client.dart';
-import 'package:at_tareeq/app/data/providers/shared_preferences_helper.dart';
 import 'package:at_tareeq/app/data/repositories/library_repository.dart';
 import 'package:at_tareeq/app/data/repositories/repository.dart';
 import 'package:at_tareeq/app/dependancies.dart';
-import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/src/widgets/scroll_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LibraryController extends GetxController

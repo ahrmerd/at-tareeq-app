@@ -3,7 +3,6 @@ import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/widgets/horizontal_lectures_list_tiles.dart';
 import 'package:at_tareeq/app/widgets/screens/error_screen.dart';
 import 'package:at_tareeq/app/widgets/screens/loading_screen.dart';
-import 'package:at_tareeq/app/widgets/vertical_lecture_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

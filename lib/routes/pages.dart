@@ -12,7 +12,6 @@ import 'package:at_tareeq/app/controllers/interest_lectures_controller.dart';
 import 'package:at_tareeq/app/controllers/library_controller.dart';
 import 'package:at_tareeq/app/controllers/listener_ivestream_controller.dart';
 import 'package:at_tareeq/app/controllers/lives_controller.dart';
-import 'package:at_tareeq/app/controllers/playlist_controller.dart';
 import 'package:at_tareeq/app/controllers/user_lectures_controller.dart';
 import 'package:at_tareeq/app/pages/dashboard/guest/guest_dashboard.dart';
 import 'package:at_tareeq/app/pages/dashboard/host/add_lecture_page.dart';

@@ -27,7 +27,7 @@ class _RequireUpdatePageState extends State<RequireUpdatePage> {
           //   color: CustomColor.appPurple,
           //   size: 70,
           // ),
-          VerticalSpace(),
+          const VerticalSpace(),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(

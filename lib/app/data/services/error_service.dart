@@ -1,7 +1,5 @@
-import 'package:at_tareeq/app/data/enums/processing_status.dart';
 import 'package:at_tareeq/app/data/providers/api/api_client.dart';
 import 'package:at_tareeq/app/widgets/widgets.dart';
-import 'package:at_tareeq/core/utils/dialogues.dart';
 import 'package:at_tareeq/core/utils/helpers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -21,11 +19,11 @@ class ErrorService extends GetxService {
   }) {
     String errorMessage = '';
     // String errorTitle = '';
-    if (exception is DioError) {
+    if (exception is DioException) {
       errorTitle.value.contains(dioErrorTitle)
           ? {}
           : errorTitle.value += dioErrorTitle;
-      errorMessage = ApiClient.getDioErrorMessage(exception);
+      errorMessage = ApiClient.getDioExceptionMessage(exception);
       // change(null, status: RxStatus.error(ApiClient.getDioErrorMessage(e)));
       // ApiClient.showErrorDialogue(e);
     } else {
@@ -90,15 +88,13 @@ class ErrorService extends GetxService {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            ...errorMessages
-                .map(
-                  (message) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(message,
-                        textAlign: TextAlign.center, style: messageStyle),
-                  ),
-                )
-                .toList(),
+            ...errorMessages.map(
+              (message) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(message,
+                    textAlign: TextAlign.center, style: messageStyle),
+              ),
+            ),
             const SizedBox(height: 16),
             ButtonTheme(
               minWidth: 78.0,

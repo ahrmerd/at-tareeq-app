@@ -44,21 +44,21 @@ class ApiClient {
     }
   }
 
-  static String processError(DioError err) {
+  static String processError(DioException err) {
     switch (err.type) {
-      case DioErrorType.connectionError:
-      case DioErrorType.connectionTimeout:
-      case DioErrorType.unknown:
+      case DioExceptionType.connectionError:
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.unknown:
         return "Please Check Your Internet connection";
-      case DioErrorType.sendTimeout:
+      case DioExceptionType.sendTimeout:
         return "We are having problems sending your response";
-      case DioErrorType.receiveTimeout:
+      case DioExceptionType.receiveTimeout:
         return "We are having problems recieving the response from the server";
-      case DioErrorType.badCertificate:
+      case DioExceptionType.badCertificate:
         return "There is a problem validating your request";
-      case DioErrorType.cancel:
+      case DioExceptionType.cancel:
         return "Your request was cancelled";
-      case DioErrorType.badResponse:
+      case DioExceptionType.badResponse:
         if (err.response?.statusCode == 422) {
           var errorStr = '';
           err.response?.data['errors'].forEach((key, value) {
@@ -81,7 +81,7 @@ class ApiClient {
     //   });
     //   return errorStr;
     // }
-    // if (err.type == DioErrorType.unknown) {
+    // if (err.type == DioExceptionType.unknown) {
     //   return extractTextBeforeFullStop(err.error ?? "unknown error");
     //   // err.error.toString().split('.').first;
     // }
@@ -100,14 +100,14 @@ class ApiClient {
       receiveTimeout: const Duration(seconds: 60),
       headers: requestHeaders);
 
-  static String getDioErrorMessage(DioError e) {
-    if (e.type == DioErrorType.connectionTimeout) {
+  static String getDioExceptionMessage(DioException e) {
+    if (e.type == DioExceptionType.connectionTimeout) {
       return "Please Check Your Internet connection";
     }
     return processError(e);
   }
 
-  static void showErrorDialogue(DioError e) {
+  static void showErrorDialogue(DioException e) {
     final errorMessage = processError(e);
     get_x.Get.defaultDialog(
         title: "Network Error",

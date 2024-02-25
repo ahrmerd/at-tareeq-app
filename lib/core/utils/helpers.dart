@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
@@ -51,7 +52,7 @@ Future<String> getDeviceName() async {
   if (Platform.isAndroid) {
     return (await deviceInfo.androidInfo).model;
   } else if (Platform.isIOS) {
-    return (await deviceInfo.iosInfo).utsname.machine ?? 'unknown';
+    return (await deviceInfo.iosInfo).utsname.machine;
   } else if (Platform.isLinux) {
     return (await deviceInfo.linuxInfo).prettyName;
   } else if (Platform.isWindows) {
@@ -153,8 +154,10 @@ String fileEntityBasename(FileSystemEntity entity) {
   } else if (entity is File) {
     return entity.path.split(Platform.pathSeparator).last;
   } else {
-    print(
-        "Please provide a Object of type File, Directory or FileSystemEntity");
+    if (kDebugMode) {
+      print(
+          "Please provide a Object of type File, Directory or FileSystemEntity");
+    }
     return "";
   }
 }
@@ -175,7 +178,9 @@ String parsePhone(String phone, [String phoneCode = "234"]) {
 ScrollController addOnScollFetchMore(VoidCallback dataFetcher) {
   final scrollController = ScrollController();
   scrollController.addListener(() {
-    print('scrolling');
+    if (kDebugMode) {
+      print('scrolling');
+    }
     if (scrollController.position.maxScrollExtent ==
         scrollController.position.pixels) {
       dataFetcher.call();

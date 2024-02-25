@@ -3,7 +3,7 @@ import 'package:at_tareeq/core/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class ThirdOnBoarding extends StatelessWidget {
-  const ThirdOnBoarding({Key? key}) : super(key: key);
+  const ThirdOnBoarding({super.key});
 
   @override
   Widget build(BuildContext context) {

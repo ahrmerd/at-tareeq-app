@@ -142,14 +142,12 @@ class _LecturePlayerScreenState extends State<LecturePlayerScreen> {
                         ),
                       ),
                       Expanded(
-                          child: Container(
-                        child: BigText(
-                          widget.lecture.title,
-                          color: Colors.black,
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
+                          child: BigText(
+                        widget.lecture.title,
+                        color: Colors.black,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       )),
                       Container(
                           padding: const EdgeInsets.all(8),
